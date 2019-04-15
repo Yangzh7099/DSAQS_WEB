@@ -310,7 +310,7 @@ desired effect
                 <div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered  table-hover">
                             <tr>
                                 <th style="width: 10px">#</th>
                                 <th>举报说明</th>
@@ -348,12 +348,12 @@ desired effect
                         </table>
                     </div>
                     <div class="box-footer clearfix">
+
+
                         <ul class="pagination pagination-sm no-margin pull-right">
-                            <li><a href="#">&laquo;</a></li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">&raquo;</a></li>
+                            <div id="Paginator" style="text-align: center">
+                                <ul id="pageLimit"></ul>
+                            </div>
                         </ul>
                     </div>
                 </div>
@@ -457,7 +457,8 @@ desired effect
 <!-- date-range-picker -->
 <script src="../bower_components/moment/min/moment.min.js"></script>
 <script src="../bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-
+<!--分页插件-->
+<script src="../bower_components/bootstrap/dist/js/bootstrap-paginator.js"></script>
 <script>
     let app = new Vue({
         el: '#search',
@@ -467,8 +468,48 @@ desired effect
             }
         }
     });
+    $('#pageLimit').bootstrapPaginator({
+        currentPage: 1,
+        totalPages: 10,
+        size: "normal",
+        bootstrapMajorVersion: 3,
+        alignment: "right",
+        numberOfPages: 5,
+        itemTexts: function (type, page, current) {
+            switch (type) {
+                case "first":
+                    return "首页";
+                case "prev":
+                    return "上一页";
+                case "next":
+                    return "下一页";
+                case "last":
+                    return "末页";
+                case "page":
+                    return page;
+            }
+        }
+    });
+
+    function queryReport() {
+        $.ajax({
+            async: true,
+            type: 'get',
+            url: '/asds',
+            dataType: 'json',
+            data: {
+                currentPage: 1,
+                size: 10
+            },
+            success:function (data) {
+               //
+            }
+
+        })
+    }
 
     $(function () {
+        queryReport()
         $('#reservation').daterangepicker({
             "locale": {
                 format: 'YYYY-MM-DD',//日期格式
