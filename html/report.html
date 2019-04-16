@@ -317,30 +317,6 @@ desired effect
                             </tr>
                             </thead>
                             <tbody id="table-report">
-                            <tr>
-                                <td>1</td>
-                                <td>Update software</td>
-                                <td>
-                                </td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td><a href="#">处理</a> <a href="#">忽略</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Update software</td>
-                                <td>
-                                </td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td><a href="#">处理</a> <a href="#">忽略</a>
-                                </td>
-                            </tr>
                             </tbody>
 
                         </table>
@@ -472,6 +448,12 @@ desired effect
                 type: 'get',
                 dataType: 'json',
                 data: params,
+                beforeSend() {
+                    $('#table-report').html(' <th style="height: 400px;background: rgba(255,255,255,0.7)" class="overlay">\n' +
+                        '              <i class="fa fa-refresh fa-spin"></i>\n' +
+                        '            </th>')
+
+                },
                 success(res) {
                     let data = res.body.data;
                     addTableInfo(data);
@@ -497,11 +479,20 @@ desired effect
                             }
                         },
                         onPageClicked: function (event, originalEvent, type, page) {
+                            params['current'] = page;
+                            console.log(params);
                             $.ajax({
                                 url: url + '/report/manage/page',
                                 type: 'get',
                                 dataType: 'json',
                                 data: params,
+                                beforeSend() {
+                                    $('#table-report').html('');
+                                    $('#table-report').html(' <th style="height: 400px;background: rgba(255,255,255,0.7)" class="overlay">\n' +
+                                        '              <i class="fa fa-refresh fa-spin"></i>\n' +
+                                        '            </th>')
+
+                                },
                                 success(res) {
                                     //处理
                                     addTableInfo(res.body.data);
@@ -519,10 +510,26 @@ desired effect
     $(function () {
         getReportReason();
         setDaterangepicker();
-        searchInfo(null);
+        searchInfo({});
         //处理状态搜索
         $('#search').on('click', handelParamsAndSearch);
+        //处理按钮
+        $('#table-report').on('click', '.handle', handelDealWith);
+        // 忽略
+        $('#table-report').on('click', '.ignore', ignoreDealWith);
     });
+
+    // 忽略事件
+    function ignoreDealWith() {
+        console.log($(this).parent().siblings().first().attr('id'))
+    }
+
+    // 处理事件
+    function handelDealWith() {
+        // 获取要处理的id
+        console.log($(this).parent().siblings().first().attr('id'))
+    }
+
 
     // 处理搜索
     function handelParamsAndSearch() {
@@ -540,9 +547,10 @@ desired effect
     // 添加到tbody中
     function addTableInfo(data) {
         let reportDom = $('#table-report');
+        reportDom.empty();
         $.each(data.records, function (index, val) {
             let reportTh = $('<tr></tr>');
-            let id = $('<td></td>').text(index + 1).attr('id', val.id);
+            let id = $('<td></td>').text((data.current - 1) * 10 + index + 1).attr('id', val.id);
             let reportDes = $('<td></td>').text(val.reportReason);
             let reportReason = $('<td></td>').text(reasonArray[val.reportReasonId]);
             let reportType = $('<td></td>').text(reportTypeArray[val.reportType]);
@@ -560,13 +568,11 @@ desired effect
             // 处理 和 忽略
             // <td><a href="#">处理</a> <a href="#">忽略</a>
             let operate = $('<td></td>');
-            let handle = $("<a></a>").attr('class', 'handle').attr('href', '#').text('处理 ');
-            let ignore = $("<a></a>").attr('class', 'ignore').attr('href', '#').text('忽略');
+            let handle = $("<a></a>").attr('class', 'handle').attr('href', 'javascript:void(0);').text('处理 ');
+            let ignore = $("<a></a>").attr('class', 'ignore').attr('href', 'javascript:void(0);').text('忽略');
             operate.append(handle);
             operate.append(ignore);
-
             reportTh.append(operate);
-
             reportDom.append(reportTh)
         });
     }
