@@ -254,156 +254,57 @@ desired effect
               -------------------------->
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Bordered Table</h3>
+                    <h3 class="box-title"></h3>
                 </div>
                 <div style="height: 60px;margin-top: 10px;margin-left: 100px">
 
                     <div class="col-md-3" style="margin-left: 50px">用户名：
                         <label>
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" id="username">
                         </label>
                     </div>
                     <div class="col-md-3" style="margin-left: 50px">电话：
                         <label>
-                            <input type="text" class="form-control">
+                            <input type="tel" class="form-control" id="telephone">
                         </label>
                     </div>
                     <div class="col-md-2">封禁状态： <label>
-                        <select class="form-control">
-                            <option>封禁</option>
-                            <option>未封禁</option>
+                        <select class="form-control" id="report">
+                            <option value="" selected></option>
+                            <option  value="1" >封禁</option>
+                            <option  value="0" >未封禁</option>
                         </select>
                     </label>
                     </div>
                     <div class="col-md-1" style="margin-left: 50px">
-                        <button type="button" class="btn btn-info pull-right">搜索</button>
+                        <button type="button" class="btn btn-info pull-right" id="search">搜索</button>
                     </div>
                     <button type="button" class="btn btn-info" style="width: 120px;float: right">导出数据</button>
                 </div>
                 <div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                    <table class="table table-bordered">
-                        <tr>
-                            <th style="width: 10px">#</th>
-                            <th>用户名</th>
-                            <th>电话号码</th>
-                            <th>被举报次数</th>
-                            <th>是否封禁</th>
-                            <th>操作</th>
-                        </tr>
-                        <tr>
-                            <td>1.</td>
-                            <td>Update software</td>
-                            <td>
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <td><a href="#">封禁</a> <a href="#">解封</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1.</td>
-                            <td>Update software</td>
-                            <td>
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <td><a href="#">封禁</a> <a href="#">解封</a>
-                            </td>
-                        </tr><tr>
-                        <td>1.</td>
-                        <td>Update software</td>
-                        <td>
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#">封禁</a> <a href="#">解封</a>
-                        </td>
-                    </tr><tr>
-                        <td>1.</td>
-                        <td>Update software</td>
-                        <td>
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#">封禁</a> <a href="#">解封</a>
-                        </td>
-                    </tr><tr>
-                        <td>1.</td>
-                        <td>Update software</td>
-                        <td>
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#">封禁</a> <a href="#">解封</a>
-                        </td>
-                    </tr><tr>
-                        <td>1.</td>
-                        <td>Update software</td>
-                        <td>
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#">封禁</a> <a href="#">解封</a>
-                        </td>
-                    </tr><tr>
-                        <td>1.</td>
-                        <td>Update software</td>
-                        <td>
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#">封禁</a> <a href="#">解封</a>
-                        </td>
-                    </tr><tr>
-                        <td>1.</td>
-                        <td>Update software</td>
-                        <td>
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#">封禁</a> <a href="#">解封</a>
-                        </td>
-                    </tr><tr>
-                        <td>1.</td>
-                        <td>Update software</td>
-                        <td>
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#">封禁</a> <a href="#">解封</a>
-                        </td>
-                    </tr><tr>
-                        <td>1.</td>
-                        <td>Update software</td>
-                        <td>
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#">封禁</a> <a href="#">解封</a>
-                        </td>
-                    </tr><tr>
-                        <td>1.</td>
-                        <td>Update software</td>
-                        <td>
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td><a href="#">封禁</a> <a href="#">解封</a>
-                        </td>
-                    </tr>
-                    </table>
-                </div>
-                <!-- /.box-body -->
-                <div class="box-footer clearfix">
-                    <ul class="pagination pagination-sm no-margin pull-right">
-                        <li><a href="#">&laquo;</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">&raquo;</a></li>
-                    </ul>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th style="width: 10px">#</th>
+                                <th>用户名</th>
+                                <th>电话号码</th>
+                                <th>被举报次数</th>
+                                <th>是否封禁</th>
+                                <th>操作</th>
+                            </tr>
+                            <tbody id="table-report">
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer clearfix">
+                        <ul class="pagination pagination-sm no-margin pull-right">
+                            <div id="Paginator" style="text-align: center">
+                                <ul id="pageLimit"></ul>
+                            </div>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
@@ -509,7 +410,171 @@ desired effect
 <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../dist/js/adminlte.min.js"></script>
+<script src="../bower_components/bootstrap/dist/js/bootstrap-paginator.js"></script>
 
+<script>
+    let url = 'http://localhost:8080';
+    function searchInfo(params) {
+        nowParams = params;
+        $.ajax({
+                url: url + '/userAccount/info/list',
+                type: 'get',
+                dataType: 'json',
+                data: params,
+                beforeSend() {
+                    $('#table-report').html(' <th style="height: 400px;background: rgba(255,255,255,0.7)" class="overlay">\n' +
+                        '              <i class="fa fa-refresh fa-spin"></i>\n' +
+                        '            </th>')
+                },
+                success(res) {
+                    let data = res.body.data;
+                    addTableInfo(data);
+                    let options = {
+                        bootstrapMajorVersion: 3,  // 版本
+                        currentPage: data.currentPage,
+                        totalPages: data.totalPage,
+                        size: "normal",
+                        alignment: "right",
+                        numberOfPages: data.size,
+                        itemTexts: function (type, page, currentPage) {
+                            switch (type) {
+                                case "first":
+                                    return "首页";
+                                case "prev":
+                                    return "上一页";
+                                case "next":
+                                    return "下一页";
+                                case "last":
+                                    return "末页";
+                                case "page":
+                                    return page;
+                            }
+                        },
+                        onPageClicked: function (event, originalEvent, type, page) {
+                            params['currentPage'] = page;
+                            console.log(params);
+                            nowParams = params;
+                            $.ajax({
+                                url: url + '/userAccount/info/list' ,
+                                type: 'get',
+                                dataType: 'json',
+                                data: params,
+                                beforeSend() {
+                                    $('#table-report').html(' <th style="height: 400px;background: rgba(255,255,255,0.7)" class="overlay">\n' +
+                                        '              <i class="fa fa-refresh fa-spin"></i>\n' +
+                                        '            </th>')
+
+                                },
+                                success(res) {
+                                    //处理
+                                    addTableInfo(res.body.data);
+                                }
+                            });
+                        }
+                    };
+                    $('#pageLimit').bootstrapPaginator(options)
+
+                }
+            }
+        )
+    }
+    var nowParams = {};
+
+    function admit(id) {
+        $.ajax({
+            url: url + '/userAccount/admit',
+            type: 'post',
+            dataType: 'json',
+            data: {'id':id},
+            success(res) {
+                alert("解禁成功");
+                searchInfo(nowParams);
+                //处理
+            }
+        });
+
+    }
+
+    function prohibit(id) {
+        $.ajax({
+            url: url + '/userAccount/prohibit',
+            type: 'post',
+            dataType: 'json',
+            data: {'id':id},
+            success(res) {
+                alert("禁用成功");
+                searchInfo(nowParams);
+                //处理
+            }
+        });
+
+    }
+
+    function addTableInfo(data) {
+        let reportDom = $('#table-report');
+        reportDom.empty();
+        $.each(data.result, function (index, val) {
+            let reportTh = $('<tr></tr>');
+            let id = $('<td></td>').text((data.currentPage - 1) * 10 + index + 1).attr('id', val["accountId"]);
+            let reportDes = $('<td></td>').text(val.username);
+            let reportReason = $('<td></td>').text(val.telephone);
+            let reportType = $('<td></td>').text(val.reportNums);
+            let reportUser = $('<td></td>').text(val.isProhibition);
+
+            reportTh.append(id);
+            reportTh.append(reportDes);
+            reportTh.append(reportReason);
+            reportTh.append(reportType);
+            reportTh.append(reportUser);
+            // 处理 和 忽略
+            let operate = $('<td></td>');
+            let handle;
+            if(val["isProhibition"]===("已封禁")){
+                handle= $("<a id=url" + index + "></a>").attr('class', 'handle').attr("url", "#").text('解封');
+            }
+            if(val["isProhibition"]==="未封禁"){
+                handle= $("<a id=url" + index + "></a>").attr('class', 'handle').attr("url", "#").text('封禁');
+            }
+            operate.append(handle);
+            reportTh.append(operate);
+            reportDom.append(reportTh);
+            console.log(val["accountId"])
+            if(val["isProhibition"]===("已封禁")){
+                $("#url" + index).click(function () {
+                    admit(val["accountId"])
+                })
+            }
+            if(val["isProhibition"]==="未封禁"){
+                $("#url" + index).click(function () {
+                    prohibit(val["accountId"])
+                })
+            }
+
+
+        });
+    }
+    $(function () {
+        $("#search").click(function () {
+            var param = {};
+            var telephone = $("#telephone").val().trim();
+            var username = $("#username").val().trim();
+            var report = $("#report option:selected").val();
+
+            if (report !== "") {
+                param["prohibition"] = report;
+            }
+            if (telephone !== "") {
+                param["telephone"] = name;
+            }
+            if (username !== "") {
+                param["username"] = username;
+            }
+            searchInfo(param);
+        })
+        searchInfo({});
+    })
+
+</script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
