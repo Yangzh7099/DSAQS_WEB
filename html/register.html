@@ -5,9 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>AdminLTE 2 | Registration Page</title>
     <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+          name="viewport">
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!--表单验证-->
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrapValidator.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
     <!-- Ionicons -->
@@ -37,40 +40,37 @@
     <div class="register-box-body">
         <p class="login-box-msg"></p>
 
-        <form action="../../index.html" method="post">
+        <form>
 
             <div class="form-group has-feedback">
-                <input type="email" class="form-control" placeholder="电话号码">
-                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                <input type="tel" class="form-control" id="phone" placeholder="电话号码">
+                <span class="glyphicon  glyphicon-phone form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
-                <input type="text" class="form-control" placeholder="用户名">
+                <input type="text" class="form-control" id="username" placeholder="用户名">
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
-                <input type="password" class="form-control" placeholder="原密码">
+                <input type="password" class="form-control" id="password" placeholder="新密码">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
-                <input type="password" class="form-control" placeholder="新密码">
-                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback">
-                <input type="password" class="form-control" placeholder="确认密码">
+                <input type="password" class="form-control" id="repassword" placeholder="确认密码">
                 <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
             </div>
             <div class="row">
                 <div class="col-xs-4">
                     <div class="checkbox icheck">
                         <a href="login.html"> 返回</a>
-
                     </div>
                 </div>
                 <!-- /.col -->
 
                 <!-- /.col -->
                 <div class="col-xs-4">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">重设密码</button>
+                    <button type="button" class="btn btn-primary btn-block btn-flat" id="reset-btn">
+                        重设密码
+                    </button>
                 </div>
                 <!-- /.col -->
             </div>
@@ -87,7 +87,47 @@
 <!-- iCheck -->
 <script src="../plugins/iCheck/icheck.min.js"></script>
 <script>
+    let url = 'http://localhost:8080';
+
+    function resetPwd() {
+        let phone = $('#phone').val();
+        let username = $('#username').val();
+        let password = $('#password').val();
+        let repassword = $('#repassword').val();
+        if (password !== repassword) {
+            alert('输入密码不一致!')
+            return
+        }
+
+        $.ajax({
+            url: url + '/userAccount/resetTeacher',
+            type: 'post',
+            dataType: 'json',
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            data: {
+                phone: phone,
+                username: username,
+                password: password,
+            },
+            success(res) {
+                if (res.head.stateCode === 200) {
+                    alert("设置成功!")
+                }
+                if (res.head.stateCode === 500) {
+                    alert(res.head.msg)
+                }
+            },
+            error(err) {
+                console.log(err);
+            }
+        })
+    }
+
+
     $(function () {
+
+        $('#reset-btn').on('click', resetPwd);
+
         $('input').iCheck({
             checkboxClass: 'icheckbox_square-blue',
             radioClass: 'iradio_square-blue',

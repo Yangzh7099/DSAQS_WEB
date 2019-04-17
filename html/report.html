@@ -308,12 +308,14 @@ desired effect
                             <tr>
                                 <th style="width: 10px">#</th>
                                 <th>举报说明</th>
-                                <th>举报类型</th>
                                 <th>举报原因</th>
+                                <th>举报类型</th>
                                 <th>举报人</th>
                                 <th>被举报用户</th>
                                 <th>举报时间</th>
-                                <th>操作</th>
+                                <th>操作
+                                </th>
+
                             </tr>
                             </thead>
                             <tbody id="table-report">
@@ -334,7 +336,34 @@ desired effect
             </div>
 
         </section>
-        <!-- /.content -->
+
+        <div class="modal fade" id="exampleModalLong" data-backdrop='static' tabindex="-1"
+             role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h5 class="modal-title" id="exampleModalLongTitle">举报内容</h5>
+
+                    </div>
+                    <div class="modal-body" id="mymodal-body">
+                        <div id="type">类型:问题</div>
+                        <p style="margin:20px 30px" id="report-content">
+                            赞和对垒
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                id="ignoreInfo">取消
+                        </button>
+                        <button type="button" class="btn btn-primary" id="deleteInfo">删除</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     <!-- /.content-wrapper -->
 
@@ -449,6 +478,7 @@ desired effect
                 dataType: 'json',
                 data: params,
                 beforeSend() {
+                    // 加载状态
                     $('#table-report').html(' <th style="height: 400px;background: rgba(255,255,255,0.7)" class="overlay">\n' +
                         '              <i class="fa fa-refresh fa-spin"></i>\n' +
                         '            </th>')
@@ -457,6 +487,8 @@ desired effect
                 success(res) {
                     let data = res.body.data;
                     addTableInfo(data);
+
+
                     let options = {
                         bootstrapMajorVersion: 3,  // 版本
                         currentPage: data.current,
@@ -500,6 +532,8 @@ desired effect
                             });
                         }
                     };
+
+
                     $('#pageLimit').bootstrapPaginator(options)
 
                 }
@@ -521,7 +555,29 @@ desired effect
 
     // 忽略事件
     function ignoreDealWith() {
-        console.log($(this).parent().siblings().first().attr('id'))
+        $.ajax({
+                url: url + '/report/manage/reportStatus',
+                type: 'post',
+                dataType: 'json',
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                data: {
+                    id: $(this).parent().siblings().first().attr('id')
+                },
+                success(res) {
+                    if (res.body.data) {
+                        alert('操作成功!');
+                        handelParamsAndSearch();
+                        return;
+                    }
+                    alert("操作失败!")
+                },
+                error(error) {
+                    console.log(error);
+                    alert("操作异常")
+                }
+            }
+        );
+
     }
 
     // 处理事件
@@ -531,17 +587,104 @@ desired effect
     }
 
 
+    let reportId;
+    // 显示模态框
+    $('#exampleModalLong').on('show.bs.modal', function (event) {
+        let btnThis = $(event.relatedTarget);
+        reportId = btnThis.parent().siblings().first().attr('id');
+        $('#mymodal-body').find('#type').empty();
+        $('#mymodal-body').find('#report-content').empty();
+        $.ajax({
+                url: url + '/report/manage/reportInfo',
+                type: 'get',
+                dataType: 'json',
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                data: {
+                    id: reportId
+                },
+                success(res) {
+                    console.log(res)
+                    if (res.body.data.problem) {
+                        let problem = res.body.data.problem;
+                        $('#mymodal-body').find('#type').text('类型：问题');
+                        $('#mymodal-body').find('#report-content').text(problem.title);
+                    }
+
+                    if (res.body.data.comment) {
+                        let comment = res.body.data.comment;
+                        $('#mymodal-body').find('#type').text('类型：评论');
+                        $('#mymodal-body').find('#report-content').text(comment.comments);
+                    }
+
+                    if (res.body.data.reply) {
+                        let reply = res.body.data.reply;
+                        $('#mymodal-body').find('#type').text('类型：回复');
+                        $('#mymodal-body').find('#report-content').text(reply.content);
+                    }
+
+
+                },
+                error(err) {
+                    console.log(err)
+                }
+            }
+        )
+
+    });
+    // 隐藏模态框
+    $('#exampleModalLong').on('hidden.bs.modal', function (event) {
+    });
+
+    // 删除
+    $('#deleteInfo').on('click', function () {
+        if (!reportId) {
+            return
+        }
+        $.ajax({
+            url: url + '/report/manage/handleReport',
+            type: 'post',
+            dataType: 'json',
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            data: {
+                id: reportId
+            },
+            success(res) {
+                alert("处理成功")
+                handelParamsAndSearch()
+            },
+            error(error) {
+                console.log("异常")
+            }
+        });
+
+    })
+
     // 处理搜索
     function handelParamsAndSearch() {
         // 获取举报原因id
-        console.log($('#report_reasons').find('option:selected').attr('id'))
+        let report_reason_id = $('#report_reasons').find('option:selected').attr('id');
         // 获取举报类型
-        console.log($('#report_type').find('option:selected').attr('id'))
-        // 获取举报时间范围
-        console.log(handePicker($('#reservation').val(), 0))
-        console.log(handePicker($('#reservation').val(), 1))
-        // 存入searchinfo
-        // searchInfo()
+        let report_type = $('#report_type').find('option:selected').attr('id');
+        // 开始时间
+        let start_time = handePicker($('#reservation').val(), 0);
+        // 结束时间
+        let end_time = handePicker($('#reservation').val(), 1);
+
+        let params = {};
+        if (report_reason_id) {
+            params['report_reason_id'] = report_reason_id;
+        }
+        if (report_type) {
+            params['report_type'] = report_type;
+        }
+        if (start_time) {
+            params['start_time'] = start_time;
+        }
+        if (end_time) {
+            params['end_time'] = end_time;
+        }
+
+        searchInfo(params)
     }
 
     // 添加到tbody中
@@ -568,7 +711,12 @@ desired effect
             // 处理 和 忽略
             // <td><a href="#">处理</a> <a href="#">忽略</a>
             let operate = $('<td></td>');
-            let handle = $("<a></a>").attr('class', 'handle').attr('href', 'javascript:void(0);').text('处理 ');
+            //data-toggle="modal" data-target=".bd-example-modal-lg"
+            let handle = $("<a></a>")
+                .attr('class', 'handle')
+                .attr('data-toggle', 'modal')
+                .attr('data-target', '#exampleModalLong')
+                .attr('href', 'javascript:void(0);').text('处理 ');
             let ignore = $("<a></a>").attr('class', 'ignore').attr('href', 'javascript:void(0);').text('忽略');
             operate.append(handle);
             operate.append(ignore);

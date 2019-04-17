@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>AdminLTE 2 | Log in</title>
     <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+          name="viewport">
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
     <!-- Font Awesome -->
@@ -37,26 +38,27 @@
     <div class="login-box-body">
         <p class="login-box-msg"></p>
 
-        <form action="#" method="post">
+        <form>
             <div class="form-group has-feedback">
-                <input type="tel" class="form-control" placeholder="用户名/手机号">
+                <input type="tel" class="form-control" id="account" placeholder="用户名/手机号">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
-                <input type="password" class="form-control" placeholder="密码">
+                <input type="password" class="form-control" id="pwd" placeholder="密码">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
             <div class="row">
                 <div class="col-xs-8">
                     <div class="checkbox icheck">
                         <label>
-                            <input type="checkbox"> Remember Me
+                            <input type="checkbox" checked id="remeber"> Remember Me
                         </label>
                     </div>
                 </div>
                 <!-- /.col -->
                 <div class="col-xs-4">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">登录</button>
+                    <button type="button" class="btn btn-primary btn-block btn-flat" id="login">登录
+                    </button>
                 </div>
                 <!-- /.col -->
             </div>
@@ -74,12 +76,74 @@
 
 <!-- jQuery 3 -->
 <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/jquery/dist/jquery.cookie.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- iCheck -->
 <script src="../plugins/iCheck/icheck.min.js"></script>
 <script>
+    // 项目地址
+    let url = 'http://localhost:8080';
+
+    $('#login').on('click', function () {
+
+        let username = $('#account').val();
+        let pwd = $('#pwd').val();
+        if ($('#remeber').is(':checked')) {
+            let account = {
+                username: username,
+                pwd: pwd
+            };
+            $.cookie('account', JSON.stringify(account), {expires: 7});
+            console.log(account);
+        } else {
+            $.cookie('account', null);
+        }
+
+        //登录
+        $.ajax({
+                url: url + '/userAccount/loginTeacher',
+                type: 'get',
+                dataType: 'json',
+                data: {
+                    username: username,
+                    password: pwd
+                },
+                success(res) {
+                    if (res.body.data != null) {
+                        $.cookie('token', JSON.stringify(res.body.data), {expires: 7, path: '/'})
+                        alert("登录成功")
+                        // 跳转界面
+                        window.location.href = './report.html';
+                    } else {
+                        alert("用户名或密码错误!")
+                    }
+                },
+                error(err) {
+                    console.log(err);
+                }
+
+            }
+        )
+
+
+    });
+
+    function initPage() {
+        let account = $.cookie('account');
+        console.log(account)
+        if (account !== 'null') {
+            account = JSON.parse(account);
+            $('#account').val(account.username);
+            $('#pwd').val(account.pwd);
+        }
+    }
+
     $(function () {
+
+        initPage();
+
+
         $('input').iCheck({
             checkboxClass: 'icheckbox_square-blue',
             radioClass: 'iradio_square-blue',
