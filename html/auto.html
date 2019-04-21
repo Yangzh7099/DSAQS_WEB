@@ -282,7 +282,7 @@ desired effect
                         <div class="col-md-1" style="margin-left: 50px">
                             <button type="button" class="btn btn-info pull-right" id="autoSearch">搜索</button>
                         </div>
-                        <button type="button" class="btn btn-info" style="width: 100px;float: right">导出数据</button>
+                        <button type="button" class="btn btn-info" style="width: 100px;float: right" id="exportAuto">导出数据</button>
                     </div>
                     <div>
 
@@ -427,7 +427,7 @@ desired effect
                         <div class="col-md-1" style="margin-left: 50px">
                             <button type="button" class="btn btn-info pull-right" id="search2">搜索</button>
                         </div>
-                        <button type="button" class="btn btn-info" style="width: 100px;float: right">导出数据</button>
+                        <button type="button" class="btn btn-info" style="width: 100px;float: right" id="exportInspection">导出数据</button>
                     </div>
                     <div>
 
@@ -564,8 +564,41 @@ desired effect
 <script src="../bower_components/bootstrap/dist/js/bootstrap-paginator.js"></script>
 <script>
     let url = 'http://localhost:8080';
+    function exportAuto(params) {
+        var i=0;
+        var m="";
+        $.each(params,function (key,val) {
+            console.log(i===0);
+            if(i===0)
+            {
+                m=m+"?"+key+"="+val;
+            }else {
+                m=m+"&"+key+"="+val;
+            }
+            i++;
+        });
+        window.location.href=url + '/problem/export/auto'+m;
+        console.log(url + '/problem/export/auto'+m);
+    }
+    function exportInspection(params) {
+        var i=0;
+        var m="";
+        $.each(params,function (key,val) {
+            console.log(i===0);
+            if(i===0)
+            {
+                m=m+"?"+key+"="+val;
+            }else {
+                m=m+"&"+key+"="+val;
+            }
+            i++;
+        });
+        window.location.href=url + '/problem/export/nspection'+m;
+        console.log(url + '/problem/export/auto'+m);
+    }
 
     function searchInfo(params) {
+        mparam=params;
         $.ajax({
                 url: url + '/problem/list/auto',
                 type: 'get',
@@ -602,6 +635,7 @@ desired effect
                             }
                         },
                         onPageClicked: function (event, originalEvent, type, page) {
+                            mparam=params;
                             params['currentPage'] = page;
                             console.log(params);
                             $.ajax({
@@ -629,6 +663,7 @@ desired effect
             }
         )
     }
+    var mparam={};
 
     function addTableInfo(data) {
         let reportDom = $('#table-report');
@@ -864,7 +899,22 @@ desired effect
                 }
             });
 
+        });
+        $("#exportAuto").click(function () {
+            var pageSize=mparam["pageSize"];
+            mparam["pageSize"]=-1;
+            console.log(mparam)
+            exportAuto(mparam);
+            mparam["pageSize"]=pageSize;
         })
+        $("#exportInspection").click(function () {
+            var pageSize=nowParams["pageSize"];
+            nowParams["pageSize"]=-1;
+            console.log(nowParams)
+            exportInspection(nowParams);
+            nowParams["pageSize"]=pageSize;
+        })
+
     })
 
 </script>

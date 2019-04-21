@@ -830,12 +830,14 @@ desired effect
                         let data = res.body.data;
                         var data1 = [];
                         var data2 = [];
+                        console.log(data);
                         $.each(data, function (index, val) {
                             data1[index] = val.date;
                             data2[index] = val.count;
                         })
 
                         areaChartData2.labels = data1;
+                        console.log(data1);
                         areaChartData2.datasets[0].data = data2;
                         console.log(areaChartData2);
                         lineChart2.Line(areaChartData2, lineChartOptions2)

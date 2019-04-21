@@ -279,7 +279,7 @@ desired effect
                     <div class="col-md-1" style="margin-left: 50px">
                         <button type="button" class="btn btn-info pull-right" id="search">搜索</button>
                     </div>
-                    <button type="button" class="btn btn-info" style="width: 120px;float: right">导出数据</button>
+                    <button type="button" class="btn btn-info" style="width: 120px;float: right" id="export">导出数据</button>
                 </div>
                 <div>
                     <!-- /.box-header -->
@@ -553,6 +553,23 @@ desired effect
 
         });
     }
+    function exportUser(params) {
+        var i=0;
+        var m="";
+        $.each(params,function (key,val) {
+            console.log(i===0);
+            if(i===0)
+            {
+                m=m+"?"+key+"="+val;
+            }else {
+                m=m+"&"+key+"="+val;
+            }
+            i++;
+        });
+        window.location.href=url + '/problem/export/user'+m;
+        console.log(url + '/problem/export/user'+m);
+    }
+
     $(function () {
         $("#search").click(function () {
             var param = {};
@@ -572,6 +589,14 @@ desired effect
             searchInfo(param);
         })
         searchInfo({});
+        $("#export").click(function () {
+            var pageSize=nowParams["pageSize"];
+            nowParams["pageSize"]=-1;
+            console.log(nowParams)
+            exportUser(nowParams);
+            nowParams["pageSize"]=pageSize;
+
+        })
     })
 
 </script>
