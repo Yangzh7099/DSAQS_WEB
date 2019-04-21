@@ -372,12 +372,13 @@ desired effect
                             </div>
                             <div class="modal-body" style="height: 150px">
                                 <div class="col-md-2" style="text-align: right">题目名:</div>
-                                <div class="col-md-9" style="text-align: left">
+                                <div class="col-md-9" style="text-align: left" id="answerTitle">
+
                                 </div>
                                 <br>
                                 <div class="col-md-2" style="text-align: right">题目答案:</div>
                                 <div class="col-md-9" style="text-align: left">
-                                    <textarea class="form-control" rows="4"
+                                    <textarea class="form-control" id="answerVal" rows="4"
                                               placeholder="Enter ..."></textarea>
                                 </div>
                             </div>
@@ -385,7 +386,8 @@ desired effect
                                 <button type="button" class="btn btn-default pull-left"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <button type="button" class="btn btn-primary">保存</button>
+                                <button type="button" id="answer-btn" class="btn btn-primary">保存
+                                </button>
                             </div>
                         </div>
                         <!-- /.modal-content -->
@@ -406,7 +408,7 @@ desired effect
                                     <thead>
                                     <tr>
                                         <th style="width: 10px">#</th>
-                                        <th>评论</th>
+                                        <th class="col-md-6">评论</th>
                                         <th>点赞数</th>
                                         <th>评论时间</th>
                                         <th>评论用户</th>
@@ -415,67 +417,16 @@ desired effect
                                     </thead>
 
                                     <tbody id="table-reply">
-                                    <tr>
-                                        <td>1.</td>
-                                        <td>Update software</td>
-                                        <td>
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td><a href="#">删除</a>
-                                            <a href="#">设为最佳答案</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>1.</td>
-                                        <td>Update software</td>
-                                        <td>
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td><a href="#">删除</a>
-                                            <a href="#">设为最佳答案</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>1.</td>
-                                        <td>Update software</td>
-                                        <td>
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td><a href="#">删除</a>
-                                            <a href="#">设为最佳答案</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>1.</td>
-                                        <td>Update software</td>
-                                        <td>
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td><a href="#">删除</a>
-                                            <a href="#">设为最佳答案</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>1.</td>
-                                        <td>Update software</td>
-                                        <td>
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td><a href="#">删除</a>
-                                            <a href="#">设为最佳答案</a></td>
-                                    </tr>
+
                                     </tbody>
                                 </table>
 
                             </div>
                             <div class="box-footer clearfix">
                                 <ul class="pagination pagination-sm no-margin pull-right">
-                                    <li><a href="#">&laquo;</a></li>
-                                    <li><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">&raquo;</a></li>
+                                    <div id="pagination" style="text-align: center">
+                                        <ul id="pageLimit1"></ul>
+                                    </div>
                                 </ul>
                             </div>
                             <div class="modal-footer">
@@ -679,6 +630,49 @@ desired effect
 
     $('#table-problem').on('click', '.deleteProblem', deleteProblem)
     $('#table-problem').on('click', '.updateProblem', updateProblem);
+    $('#table-problem').on('click', '.answerProblem', answerProblem);
+    $('#table-problem').on('click', '.queryReply', queryReply);
+
+    $('#table-reply').on('click', '.deletereply', deletereply);
+    $('#table-reply').on('click', '.bestreply', bestreply);
+
+    function deletereply() {
+        if (confirm("确定删除？")) {
+            $.ajax({
+                url: url + '/commentInfo/comment/id',
+                type: 'post',
+                data: {
+                    commentId: $(this).parent().siblings().first().attr('id')
+                },
+                success(res) {
+                    alert("删除成功");
+                },
+                error(res) {
+                    alert("删除失败");
+                }
+            })
+
+        }
+    }
+
+    // 最佳答案
+    function bestreply() {
+
+        $.ajax({
+            url:url+'/commentInfo/bestComment',
+            type:'post',
+            data: {
+                commentId: $(this).parent().siblings().first().attr('id')
+            },
+            success(res) {
+                alert("设置成功");
+            },
+            error(res) {
+                alert("设置失败");
+            }
+        })
+    }
+
 
     function deleteProblem() {
         // alert($(this).parent().siblings().first().attr('id'));
@@ -702,12 +696,152 @@ desired effect
 
     }
 
+    $('#answer-btn').on('click', saveAnswer);
     $('#saveNewTitle').on('click', updateTile)
 
-    function updateProblem() {
-        console.log($(this).parent().siblings().first().attr('id'))
+    // answerVal
+    function queryReply() {
         problemId = $(this).parent().siblings().first().attr('id')
+        // 通过id 请求评论数据
+        let params = {
+            problemId: problemId
+        }
+        $.ajax({
+            url: url + '/problemInfo/comments/page',
+            type: 'get',
+            data: params,
+            beforeSend() {
+                // 加载状态
+                $('#table-reply').html(' <th style="height: 200px;background: rgba(255,255,255,0.7)" class="overlay">\n' +
+                    '              <i class="fa fa-refresh fa-spin"></i>\n' +
+                    '            </th>')
 
+            },
+            success(res) {
+                let data = res.body.data;
+                addReplyInfo(data);
+                let options = {
+                    bootstrapMajorVersion: 3,  // 版本
+                    currentPage: data.current,
+                    totalPages: data.pages,
+                    size: "normal",
+                    alignment: "right",
+                    numberOfPages: data.size,
+                    itemTexts: function (type, page, current) {
+                        switch (type) {
+                            case "first":
+                                return "首页";
+                            case "prev":
+                                return "上一页";
+                            case "next":
+                                return "下一页";
+                            case "last":
+                                return "末页";
+                            case "page":
+                                return page;
+                        }
+                    },
+                    onPageClicked: function (event, originalEvent, type, page) {
+                        params['current'] = page;
+                        console.log(params);
+                        $.ajax({
+                            url: url + '/problemManager/problemPage',
+                            type: 'get',
+                            dataType: 'json',
+                            data: params,
+                            beforeSend() {
+                                $('#table-reply').html('');
+                                $('#table-reply').html(' <th style="height: 400px;background: rgba(255,255,255,0.7)" class="overlay">\n' +
+                                    '              <i class="fa fa-refresh fa-spin"></i>\n' +
+                                    '            </th>')
+
+                            },
+                            success(res) {
+                                //处理
+                                addTableInfo(res.body.data);
+                            }
+                        });
+                    }
+                };
+                $('#pageLimit1').bootstrapPaginator(options)
+            }
+        })
+
+    }
+
+    // 回复的分页
+    function addReplyInfo(data) {
+        let replyDom = $('#table-reply');
+        replyDom.empty();
+        $.each(data.records, function (index, val) {
+            let replyTh = $('<tr></tr>');
+            let id = $('<td></td>').text((data.current - 1) * 10 + index + 1).attr('id', val.id);
+            let replyDes = $('<td></td>').text(val.comments);
+            let replyType = $('<td></td>').text(val.awesome);
+            let replyUser = $('<td></td>').text(new Date(val.time).Format("yyyy-MM-dd HH:mm:ss"))
+            let replyToUser = $('<td></td>').text(val.username);
+
+            replyTh.append(id);
+            replyTh.append(replyDes);
+            replyTh.append(replyType);
+            replyTh.append(replyUser);
+            replyTh.append(replyToUser);
+
+            let operate = $('<td></td>');
+            //data-toggle="modal" data-target=".bd-example-modal-lg"
+            let deletereply = $("<a></a>")
+                .attr('class', 'deletereply')
+                .attr('href', 'javascript:void(0);').text('删除 ');
+            let bestreply = $("<a></a>")
+                .attr('class', 'bestreply')
+                .attr('href', 'javascript:void(0);').text('设为最佳答案 ')
+
+            operate.append(deletereply);
+            operate.append(bestreply);
+            replyTh.append(operate);
+            replyDom.append(replyTh);
+        });
+    }
+
+    // answerTitle
+    function answerProblem() {
+        problemId = $(this).parent().siblings().first().attr('id')
+        $('#answerTitle').text($(this).parent().siblings().eq(1).text())
+    }
+
+    // 点击更新题目a标签
+    function updateProblem() {
+        problemId = $(this).parent().siblings().first().attr('id')
+        $('#newTitle').val($(this).parent().siblings().eq(1).text());
+
+
+    }
+
+    // 保存回复答案
+    function saveAnswer() {
+        let newProblem = {}
+        if (!problemId) {
+            alert('回答异常!');
+            return;
+        }
+        newProblem['id'] = problemId
+        newProblem['answerContent'] = $('#answerVal').val();
+        $.ajax({
+            url: url + "/control/problem/problemInfo",
+            type: 'post',
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            data: {
+                problem: JSON.stringify(newProblem)
+            },
+            dataType: 'json',
+            success(res) {
+                alert("修改成功!")
+            },
+            error(res) {
+                alert("修改失败")
+            }
+        })
+        console.log(newProblem)
     }
 
     function updateTile() {
@@ -721,18 +855,19 @@ desired effect
         if ($('#categorys2').find('option:selected').attr('id')) {
             newProblem['category'] = $('#categorys2').find('option:selected').attr('id')
         }
-        newProblem['title']=$('#newTitle').val();
+        newProblem['title'] = $('#newTitle').val();
         $.ajax({
-            url:url+'/control/problem/problemInfo',
-            type:'post',
-            data:{
-                problem:newProblem
+            url: url + '/control/problem/problemInfo',
+            type: 'post',
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            data: {
+                problem: JSON.stringify(newProblem)
             },
-            dataType:'json',
+            dataType: 'json',
             success(res) {
-                alter("更新成工")
+                alert("更新成功")
             },
-            error(res){
+            error(res) {
                 alert("更新失败")
             }
         })
@@ -768,10 +903,12 @@ desired effect
                 .attr('data-toggle', 'modal')
                 .attr('data-target', '#modal-default');
             let answerProblem = $("<a></a>")
+                .attr('class', 'answerProblem')
                 .attr('href', 'javascript:void(0);').text('回答 ')
                 .attr('data-toggle', 'modal')
                 .attr('data-target', '#modal-answer');
             let showReply = $("<a></a>")
+                .attr('class', 'queryReply')
                 .attr('href', 'javascript:void(0);').text('回复 ')
                 .attr('data-toggle', 'modal')
                 .attr('data-target', '#modal-comment');
@@ -788,7 +925,7 @@ desired effect
 
     // 判断是否解决
     function hasSovle(data) {
-        if (data || data.trim() !== '') {
+        if (data || (data + '').trim() !== '') {
             return '已解决'
         }
         return '未解决'
@@ -810,6 +947,7 @@ desired effect
             if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         return fmt;
     }
+
 
     function searchInfo(params) {
         $.ajax({
@@ -852,7 +990,7 @@ desired effect
                             params['current'] = page;
                             console.log(params);
                             $.ajax({
-                                url: url + '/problem/manage/page',
+                                url: url + '/problemManager/problemPage',
                                 type: 'get',
                                 dataType: 'json',
                                 data: params,

@@ -9,7 +9,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>AdminLTE 2 | Starter</title>
     <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+          name="viewport">
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
@@ -94,7 +95,8 @@ desired effect
                                         <a href="#">
                                             <div class="pull-left">
                                                 <!-- User Image -->
-                                                <img src="../dist/img/user2-160x160.jpg" class="img-circle"
+                                                <img src="../dist/img/user2-160x160.jpg"
+                                                     class="img-circle"
                                                      alt="User Image">
                                             </div>
                                             <!-- Message title and timestamp -->
@@ -129,7 +131,8 @@ desired effect
                                 <ul class="menu">
                                     <li><!-- start notification -->
                                         <a href="#">
-                                            <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                            <i class="fa fa-users text-aqua"></i> 5 new members
+                                            joined today
                                         </a>
                                     </li>
                                     <!-- end notification -->
@@ -143,14 +146,16 @@ desired effect
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <!-- The user image in the navbar-->
-                            <img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                            <img src="../dist/img/user2-160x160.jpg" class="user-image"
+                                 alt="User Image">
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
                             <span class="hidden-xs">Alexander Pierce</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
                             <li class="user-header">
-                                <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                <img src="../dist/img/user2-160x160.jpg" class="img-circle"
+                                     alt="User Image">
 
                                 <p>
                                     Alexander Pierce - Web Developer
@@ -256,12 +261,8 @@ desired effect
                 <div class="box-body">
                     <div style="height: 60px;margin-top: 10px;margin-left: 80px">
                         <div class="col-md-2">题目类型： <label>
-                            <select class="form-control">
-                                <option>option 1</option>
-                                <option>option 2</option>
-                                <option>option 3</option>
-                                <option>option 4</option>
-                                <option>option 5</option>
+                            <select class="form-control categorys" id="categorys1">
+
                             </select>
                         </label></div>
                         <div class="col-md-3" style="margin-left: 50px">题目名：
@@ -272,9 +273,15 @@ desired effect
                         <div class="col-md-1" style="margin-left: 50px">
                             <button type="button" class="btn btn-info pull-right">搜索</button>
                         </div>
-                        <button type="button" class="btn btn-info" style="width: 100px;float: right">导出数据</button>
-                        <button type="button" class="btn btn-info" style="width: 100px;float: right">导出模板</button>
-                        <button type="button" class="btn btn-info" style="width: 100px;float: right">导入题库</button>
+                        <button type="button" class="btn btn-info"
+                                style="width: 100px;float: right">导出数据
+                        </button>
+                        <button type="button" class="btn btn-info"
+                                style="width: 100px;float: right">导出模板
+                        </button>
+                        <button type="button" class="btn btn-info"
+                                style="width: 100px;float: right">导入题库
+                        </button>
                     </div>
                     <div>
 
@@ -291,42 +298,9 @@ desired effect
                             <th>题目录入时间</th>
                             <th>操作</th>
                         </tr>
-                        <tr>
-                            <td>1.</td>
-                            <td>Update software</td>
-                            <td>
-                            </td>
-                            <td></td>
-                            <td><a href="#" data-toggle="modal" data-target="#modal-default">修改题库</a>
-                                <a href="#" data-toggle="modal" data-target="#modal-answer ">移除</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1.</td>
-                            <td>Update software</td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
+                        <tbody id="table-problem">
 
-                            <td></td>
-                            <td><a href="#" data-toggle="modal" data-target="#modal-default">修改题库</a>
-                                <a href="#" data-toggle="modal" data-target="# ">移除</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1.</td>
-                            <td>Update software</td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-
-                            <td></td>
-                            <td><a href="#" data-toggle="modal" data-target="#modal-default">修改题库</a>
-                                <a href="#" data-toggle="modal" data-target="#modal-answer ">移除</a>
-                            </td>
-                        </tr>
+                        </tbody>
                     </table>
 
                 </div>
@@ -334,14 +308,16 @@ desired effect
                     <div class="modal-dialog">
                         <div class="modal-content" style="width: 800px">
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close" data-dismiss="modal"
+                                        aria-label="Close">
                                     <span aria-hidden="true">&times;</span></button>
                                 <h4 class="modal-title">修改题库</h4>
                             </div>
                             <div class="modal-body" style="height: 100px">
                                 <div class="col-md-2" style="text-align: right">题目名:</div>
                                 <div class="col-md-5" style="text-align: left">
-                                    <textarea class="form-control" rows="4" placeholder="Enter ..."></textarea>
+                                    <textarea class="form-control" rows="4"
+                                              placeholder="Enter ..."></textarea>
                                 </div>
                                 <div class="col-md-2" style="text-align: right">
                                     题目类型：
@@ -362,11 +338,13 @@ desired effect
                             <div class="modal-body" style="height: 120px">
                                 <div class="col-md-2" style="text-align: right">答案:</div>
                                 <div class="col-md-5" style="text-align: left">
-                                    <textarea class="form-control" rows="4" placeholder="Enter ..."></textarea>
+                                    <textarea class="form-control" rows="4"
+                                              placeholder="Enter ..."></textarea>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭
+                                <button type="button" class="btn btn-default pull-left"
+                                        data-dismiss="modal">关闭
                                 </button>
                                 <button type="button" class="btn btn-primary">保存</button>
                             </div>
@@ -379,13 +357,13 @@ desired effect
                 <!-- /.modal -->
                 <!-- /.box-body -->
                 <div class="box-footer clearfix">
-                    <ul class="pagination pagination-sm no-margin pull-right">
-                        <li><a href="#">&laquo;</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">&raquo;</a></li>
-                    </ul>
+                    <div class="box-footer clearfix">
+                        <ul class="pagination pagination-sm no-margin pull-right">
+                            <div id="pagination" style="text-align: center">
+                                <ul id="pageLimit1"></ul>
+                            </div>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <!-- /.box -->
@@ -409,8 +387,10 @@ desired effect
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Create the tabs -->
         <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-            <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+            <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i
+                    class="fa fa-home"></i></a></li>
+            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i
+                    class="fa fa-gears"></i></a></li>
         </ul>
         <!-- Tab panes -->
         <div class="tab-content">
@@ -444,7 +424,8 @@ desired effect
                             </h4>
 
                             <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                                <div class="progress-bar progress-bar-danger"
+                                     style="width: 70%"></div>
                             </div>
                         </a>
                     </li>
@@ -492,7 +473,160 @@ desired effect
 <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../dist/js/adminlte.min.js"></script>
+<!--分页插件-->
+<script src="../bower_components/bootstrap/dist/js/bootstrap-paginator.js"></script>
+<script>
+    // 项目地址
+    let url = 'http://localhost:8080';
 
+    let param = {
+        currentPage: 1,
+        pageSize: 10
+    };
+    $(function () {
+        $.ajax({
+            url: url + '/problemManager/problemType',
+            type: 'get',
+            dataType: 'json',
+            success(res) {
+                $('.categorys').empty();
+                $('.categorys').append($('<option/>'))
+                $.each(res.body.data, function (index, val) {
+                    console.log(index)
+                    let op = $('<option/>').attr('id', val.id).text(val.categoryName);
+                    $('.categorys').append(op);
+                })
+
+            }
+        });
+
+
+        searchInfo(param)
+        // $('#clickSearch').on('click', clickSearch)
+
+    });
+
+
+    function searchInfo(params) {
+        $.ajax({
+                url: url + '/problem/list/library',
+                type: 'get',
+                dataType: 'json',
+                data: params,
+                beforeSend() {
+                    // 加载状态
+                    $('#table-problem').html(' <th style="height: 400px;background: rgba(255,255,255,0.7)" class="overlay">\n' +
+                        '              <i class="fa fa-refresh fa-spin"></i>\n' +
+                        '            </th>')
+
+                },
+                success(res) {
+                    let data = res.body.data;
+                    addTableInfo(data);
+                    let options = {
+                        bootstrapMajorVersion: 3,  // 版本
+                        currentPage: data.currentPage,
+                        totalPages: data.totalPage,
+                        size: "normal",
+                        alignment: "right",
+                        numberOfPages: 10,
+                        itemTexts: function (type, page, current) {
+                            switch (type) {
+                                case "first":
+                                    return "首页";
+                                case "prev":
+                                    return "上一页";
+                                case "next":
+                                    return "下一页";
+                                case "last":
+                                    return "末页";
+                                case "page":
+                                    return page;
+                            }
+                        },
+                        onPageClicked: function (event, originalEvent, type, page) {
+                            params['current'] = page;
+                            console.log(params);
+                            $.ajax({
+                                url: url + '/problem/list/library',
+                                type: 'get',
+                                dataType: 'json',
+                                data: params,
+                                beforeSend() {
+                                    $('#table-problem').html('');
+                                    $('#table-problem').html(' <th style="height: 400px;background: rgba(255,255,255,0.7)" class="overlay">\n' +
+                                        '              <i class="fa fa-refresh fa-spin"></i>\n' +
+                                        '            </th>')
+
+                                },
+                                success(res) {
+                                    //处理
+                                    addTableInfo(res.body.data);
+                                }
+                            });
+                        }
+                    };
+
+
+                    $('#pageLimit').bootstrapPaginator(options)
+
+                }
+            }
+        )
+
+
+        // 添加到tbody中
+        function addTableInfo(data) {
+            let problemDom = $('#table-problem');
+            problemDom.empty();
+
+            $.each(data.result, function (index, val) {
+                let problemTh = $('<tr></tr>');
+                let id = $('<td></td>').text((data.current - 1) * 10 + index + 1).attr('id', val.id);
+                let problemDes = $('<td></td>').text(val.problemName);
+                let problemType = $('<td></td>').text(val.answerContent);
+                let problemUser = $('<td></td>').text(val.time);
+                let problemToUser = $('<td></td>').text(val.type);
+
+                problemTh.append(id);
+                problemTh.append(problemDes);
+                problemTh.append(problemType);
+                problemTh.append(problemUser);
+                problemTh.append(problemToUser);
+
+                let operate = $('<td></td>');
+                //data-toggle="modal" data-target=".bd-example-modal-lg"
+                let deleteProblem = $("<a></a>")
+                    .attr('class', 'deleteProblem')
+                    .attr('href', 'javascript:void(0);').text('删除 ');
+                let updateProblem = $("<a></a>")
+                    .attr('class', 'updateProblem')
+                    .attr('href', 'javascript:void(0);').text('更新题目 ')
+                    .attr('data-toggle', 'modal')
+                    .attr('data-target', '#modal-default');
+                let answerProblem = $("<a></a>")
+                    .attr('class', 'answerProblem')
+                    .attr('href', 'javascript:void(0);').text('回答 ')
+                    .attr('data-toggle', 'modal')
+                    .attr('data-target', '#modal-answer');
+                let showReply = $("<a></a>")
+                    .attr('class', 'queryReply')
+                    .attr('href', 'javascript:void(0);').text('回复 ')
+                    .attr('data-toggle', 'modal')
+                    .attr('data-target', '#modal-comment');
+
+
+                operate.append(deleteProblem);
+                operate.append(updateProblem);
+                operate.append(answerProblem);
+                operate.append(showReply);
+                problemTh.append(operate);
+                problemDom.append(problemTh);
+            });
+        }
+    }
+
+</script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
