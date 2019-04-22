@@ -284,12 +284,11 @@ desired effect
                             </button>
                         </div>
 
-                        <label id="importProblem" for="file" class="btn btn-info"
+                        <label id="importProblem" class="btn btn-info"
                                style="width: 100px;float: right">
-                            导入题库
+                            导出题目
                         </label>
-                        <input type="file" id="file" name="file" value="" style="
-                            opacity: 0">
+
                     </div>
                     <div>
 
@@ -565,6 +564,10 @@ desired effect
     // 题目类型
     let catagoryArray = ['', '数据结构理论', '线性表', '栈和对列', '字符串', '树', '图', '算法'];
 
+    // 分页信息
+
+    let pageInfo = {};
+
     $(function () {
         $.ajax({
             url: url + '/problemManager/problemType',
@@ -587,22 +590,7 @@ desired effect
 
     });
 
-    $('input[type="file"]').on('change', function () {
-        let formdata = new FormData();
-        formdata.append('file', $('input[type="file"]')[0].files[0]);
-        $.ajax({
-            url: url + '/problem/import/template',
-            type: 'post',
-            data: formdata,
-            success(res) {
-                alert("导入成功")
-            },
-            error(err) {
-                alter("导入失败")
-            }
 
-        })
-    })
 
     function clickSearch() {
         let category = $('#categorys1').find('option:selected').attr('id');
@@ -659,8 +647,8 @@ desired effect
     function bestreply() {
 
         $.ajax({
-            url:url+'/commentInfo/bestComment',
-            type:'post',
+            url: url + '/commentInfo/bestComment',
+            type: 'post',
             data: {
                 commentId: $(this).parent().siblings().first().attr('id')
             },
@@ -706,6 +694,7 @@ desired effect
         let params = {
             problemId: problemId
         }
+        pageInfo = params;
         $.ajax({
             url: url + '/problemInfo/comments/page',
             type: 'get',
@@ -744,6 +733,7 @@ desired effect
                     onPageClicked: function (event, originalEvent, type, page) {
                         params['current'] = page;
                         console.log(params);
+                        pageInfo = params;
                         $.ajax({
                             url: url + '/problemManager/problemPage',
                             type: 'get',
@@ -948,8 +938,28 @@ desired effect
         return fmt;
     }
 
+    $('#importProblem').on('click', function () {
+        let index = 0;
+        let queryParam = '';
+        $.each(pageInfo, function (key, val) {
+            if (key === 'current') {
+                key = 'currentPage'
+            }
+            if(key === 'size'){
+                key='pageSize'
+            }
+            if (index === 0) {
+                queryParam = "?" + key + "=" + val;
+            } else {
+                queryParam = queryParam + '&' + key + '=' + val;
+            }
+        })
+        window.location.href = url + '/problem/export/problem' + queryParam;
+
+    })
 
     function searchInfo(params) {
+        pageInfo = params
         $.ajax({
                 url: url + '/problemManager/problemPage',
                 type: 'get',

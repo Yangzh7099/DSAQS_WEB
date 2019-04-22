@@ -267,21 +267,25 @@ desired effect
                         </label></div>
                         <div class="col-md-3" style="margin-left: 50px">题目名：
                             <label>
-                                <input type="text" class="form-control">
+                                <input type="text" id="problemTitle" class="form-control">
                             </label>
                         </div>
                         <div class="col-md-1" style="margin-left: 50px">
-                            <button type="button" class="btn btn-info pull-right">搜索</button>
+                            <button type="button" class="btn btn-info pull-right" id="clickSearch">
+                                搜索
+                            </button>
                         </div>
                         <button type="button" class="btn btn-info"
-                                style="width: 100px;float: right">导出数据
+                                style="width: 100px;float: right" id="exportData">导出数据
                         </button>
-                        <button type="button" class="btn btn-info"
+                        <button type="button" id="exportTempla" class="btn btn-info"
                                 style="width: 100px;float: right">导出模板
                         </button>
-                        <button type="button" class="btn btn-info"
+                        <label  class="btn btn-info" for="file"
                                 style="width: 100px;float: right">导入题库
-                        </button>
+                        </label>
+                        <input type="file" id="file" name="file" value="" style="
+                        opacity: 0">
                     </div>
                     <div>
 
@@ -360,7 +364,7 @@ desired effect
                     <div class="box-footer clearfix">
                         <ul class="pagination pagination-sm no-margin pull-right">
                             <div id="pagination" style="text-align: center">
-                                <ul id="pageLimit1"></ul>
+                                <ul id="pageLimit"></ul>
                             </div>
                         </ul>
                     </div>
@@ -502,10 +506,55 @@ desired effect
 
 
         searchInfo(param)
-        // $('#clickSearch').on('click', clickSearch)
+        $('#clickSearch').on('click', clickSearch)
 
     });
 
+    function clickSearch() {
+        let category = $('#categorys1').find('option:selected').text()
+        let title = $('#problemTitle').val();
+        if (category && category !== '') {
+            param['type'] = category
+        }
+        if (title && title !== '') {
+            param['problemName'] = title
+        }
+        searchInfo(param)
+
+    }
+
+    // 导出数据
+    $('#exportData').on('click',function () {
+        let i=0;
+        let m="";
+        $.each(param,function (key,val) {
+            console.log(i===0);
+            if(i===0)
+            {
+                m=m+"?"+key+"="+val;
+            }else {
+                m=m+"&"+key+"="+val;
+            }
+            i++;
+        });
+        window.location.href=url + '/problem/export/library'+m;
+    })
+    // 导出模板
+    $('#exportTempla').on('click',function () {
+        let i=0;
+        let m="";
+        $.each(param,function (key,val) {
+            console.log(i===0);
+            if(i===0)
+            {
+                m=m+"?"+key+"="+val;
+            }else {
+                m=m+"&"+key+"="+val;
+            }
+            i++;
+        });
+        window.location.href=url + '/problem/export/template'+m;
+    })
 
     function searchInfo(params) {
         $.ajax({
@@ -518,7 +567,6 @@ desired effect
                     $('#table-problem').html(' <th style="height: 400px;background: rgba(255,255,255,0.7)" class="overlay">\n' +
                         '              <i class="fa fa-refresh fa-spin"></i>\n' +
                         '            </th>')
-
                 },
                 success(res) {
                     let data = res.body.data;
@@ -545,7 +593,7 @@ desired effect
                             }
                         },
                         onPageClicked: function (event, originalEvent, type, page) {
-                            params['current'] = page;
+                            params['currentPage'] = page;
                             console.log(params);
                             $.ajax({
                                 url: url + '/problem/list/library',
@@ -573,7 +621,33 @@ desired effect
                 }
             }
         )
+        $('input[type="file"]').on('change', function () {
+            let formdata = new FormData();
+            formdata.append('file', $('input[type="file"]')[0].files[0]);
+            $.ajax({
+                url: url + '/problem/import/template',
+                type: 'post',
+                data: formdata,
+                success(res) {
+                    alert("导入成功")
+                },
+                error(err) {
+                    alert("导入失败")
+                }
+            })
+        })
+        $('#table-problem').on('click','.changeLibrary',changeLibrary)
+        $('#table-problem').on('click','.deleteLibarary',deleteLibarary)
+        // 修改题库
+        function changeLibrary() {
+            alert("修改题库")
 
+
+        }
+        // 删除题库
+        function deleteLibarary() {
+            alert("删除题库")
+        }
 
         // 添加到tbody中
         function addTableInfo(data) {
@@ -582,44 +656,33 @@ desired effect
 
             $.each(data.result, function (index, val) {
                 let problemTh = $('<tr></tr>');
-                let id = $('<td></td>').text((data.current - 1) * 10 + index + 1).attr('id', val.id);
+                let id = $('<td></td>').text((data.currentPage - 1) * 10 + index + 1).attr('id', val.problemId);
                 let problemDes = $('<td></td>').text(val.problemName);
                 let problemType = $('<td></td>').text(val.answerContent);
-                let problemUser = $('<td></td>').text(val.time);
+                let problemUser = $('<td></td>').text(val.date);
                 let problemToUser = $('<td></td>').text(val.type);
 
                 problemTh.append(id);
                 problemTh.append(problemDes);
                 problemTh.append(problemType);
-                problemTh.append(problemUser);
                 problemTh.append(problemToUser);
+                problemTh.append(problemUser);
 
                 let operate = $('<td></td>');
                 //data-toggle="modal" data-target=".bd-example-modal-lg"
                 let deleteProblem = $("<a></a>")
-                    .attr('class', 'deleteProblem')
-                    .attr('href', 'javascript:void(0);').text('删除 ');
-                let updateProblem = $("<a></a>")
-                    .attr('class', 'updateProblem')
-                    .attr('href', 'javascript:void(0);').text('更新题目 ')
+                    .attr('class', 'changeLibrary')
+                    .attr('href', 'javascript:void(0);').text('修改题库 ')
                     .attr('data-toggle', 'modal')
-                    .attr('data-target', '#modal-default');
-                let answerProblem = $("<a></a>")
-                    .attr('class', 'answerProblem')
-                    .attr('href', 'javascript:void(0);').text('回答 ')
+                    .attr('data-target', '#modal-default')
+                let updateProblem = $("<a></a>")
+                    .attr('class', 'deleteLibarary')
+                    .attr('href', 'javascript:void(0);').text('移除 ')
                     .attr('data-toggle', 'modal')
                     .attr('data-target', '#modal-answer');
-                let showReply = $("<a></a>")
-                    .attr('class', 'queryReply')
-                    .attr('href', 'javascript:void(0);').text('回复 ')
-                    .attr('data-toggle', 'modal')
-                    .attr('data-target', '#modal-comment');
-
 
                 operate.append(deleteProblem);
                 operate.append(updateProblem);
-                operate.append(answerProblem);
-                operate.append(showReply);
                 problemTh.append(operate);
                 problemDom.append(problemTh);
             });
