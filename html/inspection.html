@@ -284,7 +284,8 @@ desired effect
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                用户管理
+                Page Header
+                <small>Optional description</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
@@ -293,66 +294,50 @@ desired effect
         </section>
 
         <!-- Main content -->
-        <section class="content container-fluid">
-
-            <!--------------------------
-              | Your Page Content Here |
-              -------------------------->
-            <div class="box">
-                <div class="box-header with-border">
-                    <h3 class="box-title"></h3>
-                </div>
-                <div style="height: 60px;margin-top: 10px;margin-left: 100px">
-
-                    <div class="col-md-3" style="margin-left: 50px">用户名：
+        <section class="content container-fluid">            <div class="box">
+            <div class="box-body">
+                <div style="height: 60px;margin-top: 10px;margin-left: 80px">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-3" style="margin-left: 50px">题目名：
                         <label>
-                            <input type="text" class="form-control" id="username">
+                            <input type="text" class="form-control" id="name2">
                         </label>
                     </div>
-                    <div class="col-md-3" style="margin-left: 50px">电话：
-                        <label>
-                            <input type="tel" class="form-control" id="telephone">
-                        </label>
-                    </div>
-                    <div class="col-md-2">封禁状态： <label>
-                        <select class="form-control" id="report">
-                            <option value="" selected></option>
-                            <option  value="1" >封禁</option>
-                            <option  value="0" >未封禁</option>
-                        </select>
-                    </label>
+                    <div class="col-md-2">
                     </div>
                     <div class="col-md-1" style="margin-left: 50px">
-                        <button type="button" class="btn btn-info pull-right" id="search">搜索</button>
+                        <button type="button" class="btn btn-info pull-right" id="search2">搜索</button>
                     </div>
-                    <button type="button" class="btn btn-info" style="width: 120px;float: right" id="export">导出数据</button>
+                    <button type="button" class="btn btn-info" style="width: 100px;float: right" id="exportInspection">导出数据</button>
                 </div>
                 <div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        <table class="table table-bordered">
-                            <tr>
-                                <th style="width: 10px">#</th>
-                                <th>用户名</th>
-                                <th>电话号码</th>
-                                <th>被举报次数</th>
-                                <th>是否封禁</th>
-                                <th>操作</th>
-                            </tr>
-                            <tbody id="table-report">
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- /.box-body -->
-                    <div class="box-footer clearfix">
-                        <ul class="pagination pagination-sm no-margin pull-right">
-                            <div id="Paginator" style="text-align: center">
-                                <ul id="pageLimit"></ul>
-                            </div>
-                        </ul>
-                    </div>
+
                 </div>
+
+                <table class="table table-bordered">
+                    <tr>
+                        <th style="width: 10px">#</th>
+                        <th>题目名</th>
+                        <th>回答</th>
+                        <th>巡检时间</th>
+                        <th>认同率</th>
+                        <th>操作</th>
+                    </tr>
+                    <tbody id="table-report2">
+                    </tbody>
+
+                </table>
             </div>
+            <!-- /.modal -->
+            <!-- /.box-body -->
+            <div class="box-footer clearfix">
+                <ul class="pagination pagination-sm no-margin pull-right">
+                    <div id="Paginator2" style="text-align: center">
+                        <ul id="pageLimit2"></ul>
+                    </div>
+                </ul>
+            </div>
+        </div>
 
         </section>
         <!-- /.content -->
@@ -363,7 +348,7 @@ desired effect
     <footer class="main-footer">
         <!-- To the right -->
         <div class="pull-right hidden-xs">
-            <!-- /.box -->
+            Anything you want
         </div>
         <!-- Default to the left -->
         <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
@@ -460,21 +445,40 @@ desired effect
 
 <script>
     let url = 'http://localhost:8080';
-    function searchInfo(params) {
+    function exportInspection(params) {
+        var i=0;
+        var m="";
+        $.each(params,function (key,val) {
+            console.log(i===0);
+            if(i===0)
+            {
+                m=m+"?"+key+"="+val;
+            }else {
+                m=m+"&"+key+"="+val;
+            }
+            i++;
+        });
+        window.location.href=url + '/problem/export/nspection'+m;
+        console.log(url + '/problem/export/auto'+m);
+    }
+    var nowParams = {};
+
+    function searchInfoInspection(params) {
         nowParams = params;
         $.ajax({
-                url: url + '/userAccount/info/list',
+                url: url + '/problem/list/inspection',
                 type: 'get',
                 dataType: 'json',
                 data: params,
                 beforeSend() {
-                    $('#table-report').html(' <th style="height: 400px;background: rgba(255,255,255,0.7)" class="overlay">\n' +
+                    $('#table-report2').html(' <th style="height: 400px;background: rgba(255,255,255,0.7)" class="overlay">\n' +
                         '              <i class="fa fa-refresh fa-spin"></i>\n' +
                         '            </th>')
+
                 },
                 success(res) {
                     let data = res.body.data;
-                    addTableInfo(data);
+                    addTableInfo2(data);
                     let options = {
                         bootstrapMajorVersion: 3,  // 版本
                         currentPage: data.currentPage,
@@ -497,75 +501,45 @@ desired effect
                             }
                         },
                         onPageClicked: function (event, originalEvent, type, page) {
+                            nowParams = params;
                             params['currentPage'] = page;
                             console.log(params);
-                            nowParams = params;
                             $.ajax({
-                                url: url + '/userAccount/info/list' ,
+                                url: url + '/problem/list/inspection',
                                 type: 'get',
                                 dataType: 'json',
                                 data: params,
                                 beforeSend() {
-                                    $('#table-report').html(' <th style="height: 400px;background: rgba(255,255,255,0.7)" class="overlay">\n' +
+                                    $('#table-report2').html('');
+                                    $('#table-report2').html(' <th style="height: 400px;background: rgba(255,255,255,0.7)" class="overlay">\n' +
                                         '              <i class="fa fa-refresh fa-spin"></i>\n' +
                                         '            </th>')
 
                                 },
                                 success(res) {
                                     //处理
-                                    addTableInfo(res.body.data);
+                                    addTableInfo2(res.body.data);
                                 }
                             });
                         }
                     };
-                    $('#pageLimit').bootstrapPaginator(options)
+                    $('#pageLimit2').bootstrapPaginator(options);
 
                 }
             }
         )
     }
-    var nowParams = {};
 
-    function admit(id) {
-        $.ajax({
-            url: url + '/userAccount/admit',
-            type: 'post',
-            dataType: 'json',
-            data: {'id':id},
-            success(res) {
-                alert("解禁成功");
-                searchInfo(nowParams);
-                //处理
-            }
-        });
-
-    }
-
-    function prohibit(id) {
-        $.ajax({
-            url: url + '/userAccount/prohibit',
-            type: 'post',
-            dataType: 'json',
-            data: {'id':id},
-            success(res) {
-                alert("禁用成功");
-                searchInfo(nowParams);
-                //处理
-            }
-        });
-
-    }
-
-    function addTableInfo(data) {
-        let reportDom = $('#table-report');
+    function addTableInfo2(data) {
+        let reportDom = $('#table-report2');
         reportDom.empty();
         $.each(data.result, function (index, val) {
             let reportTh = $('<tr></tr>');
-            let id = $('<td></td>').text((data.currentPage - 1) * 10 + index + 1).attr('id', val["accountId"]);
-            let reportDes = $('<td></td>').text(val.username);
-            let reportReason = $('<td></td>').text(val.telephone);
-            let reportType = $('<td></td>').text(val.reportNums);
-            let reportUser = $('<td></td>').text(val.isProhibition);
+            let id = $('<td></td>').text((data.currentPage - 1) * 10 + index + 1).attr('id', val.id);
+            let reportDes = $('<td></td>').text(val.problemName);
+            let reportReason = $('<td></td>').text(val.answerContent);
+            let reportType = $('<td></td>').text(val.date);
+            let reportUser = $('<td></td>').text(val.likes);
 
             reportTh.append(id);
             reportTh.append(reportDes);
@@ -573,77 +547,56 @@ desired effect
             reportTh.append(reportType);
             reportTh.append(reportUser);
             // 处理 和 忽略
+            // <td><a href="#">处理</a> <a href="#">忽略</a>
             let operate = $('<td></td>');
-            let handle;
-            if(val["isProhibition"]===("已封禁")){
-                handle= $("<a id=url" + index + "></a>").attr('class', 'handle').attr("url", "#").text('解封');
-            }
-            if(val["isProhibition"]==="未封禁"){
-                handle= $("<a id=url" + index + "></a>").attr('class', 'handle').attr("url", "#").text('封禁');
-            }
+            let handle = $("<a id=cancel" + index + "></a>").attr('class', 'handle').attr('href', 'javascript:void(0);').text('取消');
             operate.append(handle);
             reportTh.append(operate);
             reportDom.append(reportTh);
-            console.log(val["accountId"])
-            if(val["isProhibition"]===("已封禁")){
-                $("#url" + index).click(function () {
-                    admit(val["accountId"])
-                })
-            }
-            if(val["isProhibition"]==="未封禁"){
-                $("#url" + index).click(function () {
-                    prohibit(val["accountId"])
-                })
-            }
-
+            $("#cancel" + index).click(function () {
+                cancelInspection(val.id);
+            })
 
         });
     }
-    function exportUser(params) {
-        var i=0;
-        var m="";
-        $.each(params,function (key,val) {
-            console.log(i===0);
-            if(i===0)
-            {
-                m=m+"?"+key+"="+val;
-            }else {
-                m=m+"&"+key+"="+val;
+    function cancelInspection(i) {
+        var param = {"id": i};
+        $.ajax({
+            url: url + '/problem/cancel/inspection',
+            type: 'post',
+            dataType: 'json',
+            data: param,
+            success(res) {
+                alert("取消成功");
+                addTableInfo2(nowParams);
+                //处理
             }
-            i++;
         });
-        window.location.href=url + '/problem/export/user'+m;
-        console.log(url + '/problem/export/user'+m);
+
     }
 
     $(function () {
-        $("#search").click(function () {
+        searchInfoInspection({});
+        $("#search2").click(function () {
+            var name = $("#name2").val();
             var param = {};
-            var telephone = $("#telephone").val().trim();
-            var username = $("#username").val().trim();
-            var report = $("#report option:selected").val();
-
-            if (report !== "") {
-                param["prohibition"] = report;
+            console.log(name);
+            if (name !== "") {
+                param["problemName"] = name;
             }
-            if (telephone !== "") {
-                param["telephone"] = name;
-            }
-            if (username !== "") {
-                param["username"] = username;
-            }
-            searchInfo(param);
+            console.log(param);
+            searchInfoInspection(param);
         })
-        searchInfo({});
-        $("#export").click(function () {
+        $("#exportInspection").click(function () {
             var pageSize=nowParams["pageSize"];
             nowParams["pageSize"]=-1;
             console.log(nowParams)
-            exportUser(nowParams);
+            exportInspection(nowParams);
             nowParams["pageSize"]=pageSize;
-
         })
+
     })
+
 
 </script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.

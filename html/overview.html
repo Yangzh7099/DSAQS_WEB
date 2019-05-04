@@ -201,33 +201,81 @@ desired effect
                 <div class="pull-left info">
                     <p>Alexander Pierce</p>
                     <!-- Status -->
-                    <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
                 </div>
             </div>
-
-            <!-- /.search form -->
-            <!-- Sidebar Menu -->
             <ul class="sidebar-menu" data-widget="tree">
-                <!-- Optionally, you can add icons to the links -->
-                <li><a href="overview.html"><i class="fa fa-link"></i> <span>概览</span>
+                <li><a href="overview.html"> <span>概览</span>
                 </a>
                 </li>
-                <li><a href="problem.html"><i class="fa fa-link"></i> <span>题目管理</span>
+                <!-- /.search form -->
+                <li class="treeview">
+                    <a href="#">
+                        <span>题目管理</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="problemOverview.html"><i class="fa fa-circle-o"></i> 题目概览</a></li>
+                        <li><a href="problem.html"><i class="fa fa-circle-o"></i> 用户题目管理</a></li>
+                        <li><a href="library.html"><i class="fa fa-circle-o"></i> 题库管理</a></li>
+                        <li><a href="problemCategory.html"><i class="fa fa-circle-o"></i> 题目类别管理</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <span>自动问答管理</span>
+                        <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="autoOverview.html"><i class="fa fa-circle-o"></i> 自动问答概览</a></li>
+                        <li><a href="auto.html"><i class="fa fa-circle-o"></i> 自动问答管理</a></li>
+                        <li><a href="inspection.html"><i class="fa fa-circle-o"></i> 巡检管理</a></li>
+                        <li><a href="setUp.html"><i class="fa fa-circle-o"></i> 系统设置</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <span>举报管理</span>
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="reportOverview.html"><i class="fa fa-circle-o"></i> 举报概览</a></li>
+                        <li><a href="report.html"><i class="fa fa-circle-o"></i> 举报情况管理</a></li>
+                        <li><a href="reportCategory.html"><i class="fa fa-circle-o"></i> 举报类别管理</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <span>用户管理</span>
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="userOverview.html"><i class="fa fa-circle-o"></i> 用户概览</a></li>
+                        <li><a href="users.html"><i class="fa fa-circle-o"></i> 用户管理</a></li>
+                    </ul>
+                </li>
+                <li><a href="overview.html"> <span>关于我们</span>
                 </a>
                 </li>
-                <li><a href="auto.html"><i class="fa fa-link"></i> <span>自动问答管理</span>
+                <li><a href="overview.html"> <span>修改密码</span>
                 </a>
                 </li>
-                <li><a href="library.html"><i class="fa fa-link"></i> <span>题库管理</span>
+                <li><a href="overview.html"> <span>注销</span>
                 </a>
                 </li>
-                <li><a href="report.html"><i class="fa fa-link"></i> <span>举报管理</span>
-                </a>
-                </li>
-                <li><a href="users.html"><i class="fa fa-link"></i> <span>用户管理</span>
-                </a>
-                </li>
+
             </ul>
+
+            <!-- Sidebar Menu -->
+            
+            <!-- /.sidebar-menu -->
         </section>
         <!-- /.sidebar -->
     </aside>
@@ -256,8 +304,6 @@ desired effect
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
                                         class="fa fa-minus"></i>
                                 </button>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
-                                        class="fa fa-times"></i></button>
                             </div>
                         </div>
                         <div class="box-body">
@@ -292,8 +338,6 @@ desired effect
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
                                         class="fa fa-minus"></i>
                                 </button>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
-                                        class="fa fa-times"></i></button>
                             </div>
                         </div>
                         <div>
@@ -323,8 +367,6 @@ desired effect
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
                                         class="fa fa-minus"></i>
                                 </button>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
-                                        class="fa fa-times"></i></button>
                             </div>
                         </div>
                         <div class="box-body">
@@ -354,8 +396,6 @@ desired effect
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
                                         class="fa fa-minus"></i>
                                 </button>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
-                                        class="fa fa-times"></i></button>
                             </div>
                         </div>
                         <div>
