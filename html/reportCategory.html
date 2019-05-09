@@ -143,7 +143,7 @@ desired effect
                             <!-- The user image in the navbar-->
                             <img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                            <span class="hidden-xs">Alexander Pierce</span>
+                            <span class="hidden-xs" id="username">Alexander Pierce</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
@@ -258,6 +258,8 @@ desired effect
                     <ul class="treeview-menu">
                         <li><a href="userOverview.html"><i class="fa fa-circle-o"></i> 用户概览</a></li>
                         <li><a href="users.html"><i class="fa fa-circle-o"></i> 用户管理</a></li>
+                        <li><a href="notification.html"><i class="fa fa-circle-o"></i> 通知管理</a></li>
+
                     </ul>
                 </li>
                 <li><a href="overview.html"> <span>关于我们</span>
@@ -284,11 +286,11 @@ desired effect
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                题目类别管理
+                举报类别管理
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> 题目管理</a></li>
-                <li class="active">题目类别管理</li>
+                <li><a href="#"><i class="fa fa-dashboard"></i> 举报管理</a></li>
+                <li class="active">举报类别管理</li>
             </ol>
         </section>
 
@@ -518,7 +520,7 @@ desired effect
         $.each(data, function (index, val) {
             let reportTh = $('<tr></tr>');
             let id = $('<td></td>').text(val.id).attr('id', val.id);
-            let reportDes = $('<td></td>').text(val.categoryName);
+            let reportDes = $('<td></td>').text(val.reportReasonContent);
             let reportType = $('<td></td>').text(new Date(val.gmtCreate).Format("yyyy-MM-dd HH:mm:ss"));
 
             reportTh.append(id);
@@ -540,11 +542,11 @@ desired effect
                 deleteCategory(val.id);
             })
             $("#update" + index).click(function () {
-                $("#name").val(val.categoryName);
+                $("#name").val(val.reportReasonContent);
                 $("#update").unbind("click");
                 $("#update").click(function () {
                     var par = {};
-                    par.categoryName = $("#name").val();
+                    par.reportReasonContent = $("#name").val();
                     par.id = val.id;
                     updateCategory(par);
                 })
@@ -554,13 +556,13 @@ desired effect
     }
     $("#add").click(function () {
         var par = {};
-        par.categoryName = $("#addName").val();
+        par.reportReasonContent = $("#addName").val();
         addCategory(par);
     })
 
     function addCategory(params) {
         $.ajax({
-            url: url + '/category/save',
+            url: url + '/reportReason/save',
             type: 'post',
             dataType: 'json',
             data: params,
@@ -575,7 +577,7 @@ desired effect
     }
     function updateCategory(params) {
         $.ajax({
-            url: url + '/category/update',
+            url: url + '/reportReason/update',
             type: 'post',
             dataType: 'json',
             data: params,
@@ -591,7 +593,7 @@ desired effect
 
     function deleteCategory(params) {
         $.ajax({
-            url: url + '/category/delete/' + params,
+            url: url + '/reportReason/delete/' + params,
             type: 'post',
             dataType: 'json',
             data: params,
@@ -607,7 +609,7 @@ desired effect
     function searchInfo(params) {
         mparam = params;
         $.ajax({
-                url: url + '/category/list',
+                url: url + '/reportReason/list',
                 type: 'get',
                 dataType: 'json',
                 data: params,
