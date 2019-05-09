@@ -85,6 +85,8 @@
     // 项目地址
     let url = 'http://localhost:8080';
 
+
+
     $('#login').on('click', function () {
 
         let username = $('#account').val();
@@ -111,7 +113,7 @@
                 },
                 success(res) {
                     if (res.body.data != null) {
-                        $.cookie('token', JSON.stringify(res.body.data), {expires: 7, path: '/'})
+                        $.cookie('token', JSON.stringify(res.body.data), {expires: 7, path: '/'});
                         alert("登录成功")
                         // 跳转界面
                         window.location.href = './report.html';
