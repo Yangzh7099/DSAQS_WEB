@@ -315,14 +315,7 @@ desired effect
                             </div>
                             <!-- /.col -->
                             <div class="col-md-4">
-                                <ul class="chart-legend clearfix">
-                                    <li><i class="fa fa-circle-o text-red"></i> 数据结构概述</li>
-                                    <li><i class="fa fa-circle-o text-green"></i> 线性表</li>
-                                    <li><i class="fa fa-circle-o text-yellow"></i> 栈和队列</li>
-                                    <li><i class="fa fa-circle-o text-aqua"></i> 字符串</li>
-                                    <li><i class="fa fa-circle-o text-light-blue"></i> 树</li>
-                                    <li><i class="fa fa-circle-o text-gray"></i> 图</li>
-                                    <li><i class="fa fa-circle-o text-gray"></i> 算法</li>
+                                <ul class="chart-legend clearfix" id="category">
                                 </ul>
                             </div>
                         </div>
@@ -539,48 +532,6 @@ desired effect
         var pieChartCanvas1 = $('#pieChart1').get(0).getContext('2d')
         var pieChart1 = new Chart(pieChartCanvas1)
         var pieData1 = [
-            {
-                value: 700,
-                color: '#f56954',
-                highlight: '#f56954',
-                label: '数据结构概述'
-            },
-            {
-                value: 500,
-                color: '#00a65a',
-                highlight: '#00a65a',
-                label: '线性表'
-            },
-            {
-                value: 400,
-                color: '#f39c12',
-                highlight: '#f39c12',
-                label: '栈和队列'
-            },
-            {
-                value: 600,
-                color: '#00c0ef',
-                highlight: '#00c0ef',
-                label: '字符串'
-            },
-            {
-                value: 300,
-                color: '#3c8dbc',
-                highlight: '#3c8dbc',
-                label: '树'
-            },
-            {
-                value: 100,
-                color: '#d2d6de',
-                highlight: '#d2d6de',
-                label: '图'
-            },
-            {
-                value: 100,
-                color: '#d2d6de',
-                highlight: '#d2d6de',
-                label: '算法'
-            }
         ]
         var pieOptions1 = {
             //Boolean - Whether we should show a stroke on each segment
@@ -606,6 +557,7 @@ desired effect
             //String - A legend template
             legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
         }
+        var color=["#f56954","#00a65a","#f39c12","#00c0ef","#3c8dbc","#d2d6de","#de0506","#d2d6de","#bbde0c","#DE0051","#4C0ADE","#00DED7"]
         //Create pie or douhnut chart
         // You can switch between pie and douhnut using the method below.
         $.ajax({
@@ -614,8 +566,19 @@ desired effect
                 dataType: 'json',
                 success(res) {
                     let data = res.body.data;
-                    $.each(pieData1, function (index, val) {
-                        val.value = data[index].count;
+                    $("#category").empty();
+                    $.each(data,function (index, val) {
+                        var pa={};
+                        pa.lable=val.name;
+                        pa.value=val.count;
+                        pa.highlight=color[index];
+                        pa.color=color[index];
+                        pieData1.push(pa)
+                        let op = $('<li/>').text(val.name);
+                        let i = $('<i/>').attr("class","fa fa-circle-o").css("color",color[index]);
+                        op.prepend(i);
+                        $("#category").append(op);
+                        console.log(val)
                     })
                     pieChart1.Doughnut(pieData1, pieOptions1)
                 }

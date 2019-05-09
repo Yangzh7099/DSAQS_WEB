@@ -163,7 +163,7 @@ desired effect
             </ul>
 
             <!-- Sidebar Menu -->
-            
+
             <!-- /.sidebar-menu -->
         </section>
         <!-- /.sidebar -->
@@ -207,14 +207,7 @@ desired effect
                             </div>
                             <!-- /.col -->
                             <div class="col-md-4">
-                                <ul class="chart-legend clearfix">
-                                    <li><i class="fa fa-circle-o text-red"></i> 数据结构概述</li>
-                                    <li><i class="fa fa-circle-o text-green"></i> 线性表</li>
-                                    <li><i class="fa fa-circle-o text-yellow"></i> 栈和队列</li>
-                                    <li><i class="fa fa-circle-o text-aqua"></i> 字符串</li>
-                                    <li><i class="fa fa-circle-o text-light-blue"></i> 树</li>
-                                    <li><i class="fa fa-circle-o text-gray"></i> 图</li>
-                                    <li><i class="fa fa-circle-o text-gray"></i> 算法</li>
+                                <ul class="chart-legend clearfix" id="category">
                                 </ul>
                             </div>
                         </div>
@@ -232,7 +225,7 @@ desired effect
                         </div>
                         <div class="box-body">
                             <div class="chart" id="chart1">
-                                <canvas id="lineChart1" style="height:250px"></canvas>
+                                <canvas id="notResolveChat" style="height:250px"></canvas>
                             </div>
                         </div>
                     </div>
@@ -254,15 +247,13 @@ desired effect
                         <div class="box-body">
                             <div class="col-md-8">
                                 <div class="chart-responsive">
-                                    <canvas id="pieChart2"></canvas>
+                                    <canvas id="libraryChart"></canvas>
                                 </div>
                                 <!-- ./chart-responsive -->
                             </div>
                             <!-- /.col -->
                             <div class="col-md-4">
-                                <ul class="chart-legend clearfix">
-                                    <li><i class="fa fa-circle-o text-red"></i> 已解答</li>
-                                    <li><i class="fa fa-circle-o text-green"></i> 未解答</li>
+                                <ul class="chart-legend clearfix" id="libraryCategory">
                                 </ul>
                             </div>
                         </div>
@@ -283,7 +274,7 @@ desired effect
                         <div class="box-body">
 
                             <div class="chart">
-                                <canvas id="lineChart2" style="height:250px"></canvas>
+                                <canvas id="resolveChart" style="height:250px"></canvas>
                             </div>
                         </div>
                     </div>
@@ -393,7 +384,287 @@ desired effect
 <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../dist/js/adminlte.min.js"></script>
+<script src="../bower_components/chart.js/Chart.js"></script>
+<script src="../bower_components/morris.js/morris.min.js"></script>
+<script src="../bower_components/raphael/raphael.min.js"></script>
+<script src="../bower_components/fastclick/lib/fastclick.js"></script>
 
+<!-- FastClick -->
+<!-- AdminLTE App -->
+<!-- AdminLTE for demo purposes -->
+<script src="../dist/js/demo.js"></script>
+
+<script>
+    $(document).ready(function () {
+        "use strict";
+        // 项目地址
+        let url = 'http://localhost:8080';
+        //-------------
+        //- PIE CHART -
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas1 = $('#pieChart1').get(0).getContext('2d')
+        var pieChart1 = new Chart(pieChartCanvas1)
+        var pieData1 = [
+        ]
+        var pieOptions1 = {
+            //Boolean - Whether we should show a stroke on each segment
+            segmentShowStroke: true,
+            //String - The colour of each segment stroke
+            segmentStrokeColor: '#fff',
+            //Number - The width of each segment stroke
+            segmentStrokeWidth: 2,
+            //Number - The percentage of the chart that we cut out of the middle
+            percentageInnerCutout: 50, // This is 0 for Pie charts
+            //Number - Amount of animation steps
+            animationSteps: 100,
+            //String - Animation easing effect
+            animationEasing: 'easeOutBounce',
+            //Boolean - Whether we animate the rotation of the Doughnut
+            animateRotate: true,
+            //Boolean - Whether we animate scaling the Doughnut from the centre
+            animateScale: false,
+            //Boolean - whether to make the chart responsive to window resizing
+            responsive: true,
+            // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+            maintainAspectRatio: true,
+            //String - A legend template
+            legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
+        }
+        var color=["#f56954","#00a65a","#f39c12","#00c0ef","#3c8dbc","#d2d6de","#de0506","#d2d6de","#bbde0c","#DE0051","#4C0ADE","#00DED7"]
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        $.ajax({
+                url: url + '/problem/count/category',
+                type: 'get',
+                dataType: 'json',
+                success(res) {
+                    let data = res.body.data;
+                    $("#category").empty();
+                    $.each(data,function (index, val) {
+                        var pa={};
+                        pa.lable=val.name;
+                        pa.value=val.count;
+                        pa.highlight=color[index];
+                        pa.color=color[index];
+                        pieData1.push(pa)
+                        let op = $('<li/>').text(val.name);
+                        let i = $('<i/>').attr("class","fa fa-circle-o").css("color",color[index]);
+                        op.prepend(i);
+                        $("#category").append(op);
+                    })
+                    pieChart1.Doughnut(pieData1, pieOptions1)
+                }
+            }
+        )
+
+        var pieChartCanvas2 = $('#libraryChart').get(0).getContext('2d')
+
+        var pieChart2 = new Chart(pieChartCanvas2)
+        var PieData2 = [
+        ]
+        var pieOptions2 = {
+            //Boolean - Whether we should show a stroke on each segment
+            segmentShowStroke: true,
+            //String - The colour of each segment stroke
+            segmentStrokeColor: '#fff',
+            //Number - The width of each segment stroke
+            segmentStrokeWidth: 2,
+            //Number - The percentage of the chart that we cut out of the middle
+            percentageInnerCutout: 50, // This is 0 for Pie charts
+            //Number - Amount of animation steps
+            animationSteps: 100,
+            //String - Animation easing effect
+            animationEasing: 'easeOutBounce',
+            //Boolean - Whether we animate the rotation of the Doughnut
+            animateRotate: true,
+            //Boolean - Whether we animate scaling the Doughnut from the centre
+            animateScale: false,
+            //Boolean - whether to make the chart responsive to window resizing
+            responsive: true,
+            // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+            maintainAspectRatio: true,
+            //String - A legend template
+            legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        $.ajax({
+                url: url + '/problem/count/library',
+                type: 'get',
+                dataType: 'json',
+                success(res) {
+                    let data = res.body.data;
+                    $("#libraryCategory").empty();
+                    $.each(data,function (index, val) {
+                        var pa={};
+                        pa.lable=val.name;
+                        pa.value=val.count;
+                        pa.highlight=color[index];
+                        pa.color=color[index];
+                        PieData2.push(pa)
+                        let op = $('<li/>').text(val.name);
+                        let i = $('<i/>').attr("class","fa fa-circle-o").css("color",color[index]);
+                        op.prepend(i);
+                        $("#libraryCategory").append(op);
+                    })
+                    pieChart2.Doughnut(PieData2, pieOptions2)
+                }
+            }
+        )
+        //--------------
+        //- AREA CHART -
+        //--------------
+
+        // Get context with jQuery - using jQuery's .get() method.
+        // This will get the first returned node in the jQuery collection.
+
+        //-------------
+        //- BAR CHART -
+        //-------------
+        var barChartCanvas                   = $('#resolveChart').get(0).getContext('2d')
+        var barChart                         = new Chart(barChartCanvas)
+        var barChartData                     = {
+            labels  : ['2019-3-1', '2019-3-2', '2019-3-3', '2019-3-4', '2019-3-5', '2019-3-6', '2019-3-7'],
+            datasets: [
+                {
+                    label               : 'Electronics',
+                    fillColor           : 'rgba(210, 214, 222, 1)',
+                    strokeColor         : 'rgba(210, 214, 222, 1)',
+                    pointColor          : 'rgba(210, 214, 222, 1)',
+                    pointStrokeColor    : '#c1c7d1',
+                    pointHighlightFill  : '#fff',
+                    pointHighlightStroke: 'rgba(220,220,220,1)',
+                    data                : [65, 59, 80, 81, 56, 55, 40]
+                }
+            ]
+        }
+        barChartData.datasets[0].fillColor   = '#00a65a'
+        barChartData.datasets[0].strokeColor = '#00a65a'
+        barChartData.datasets[0].pointColor  = '#00a65a'
+        var barChartOptions                  = {
+            //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+            scaleBeginAtZero        : true,
+            //Boolean - Whether grid lines are shown across the chart
+            scaleShowGridLines      : true,
+            //String - Colour of the grid lines
+            scaleGridLineColor      : 'rgba(0,0,0,.05)',
+            //Number - Width of the grid lines
+            scaleGridLineWidth      : 1,
+            //Boolean - Whether to show horizontal lines (except X axis)
+            scaleShowHorizontalLines: true,
+            //Boolean - Whether to show vertical lines (except Y axis)
+            scaleShowVerticalLines  : true,
+            //Boolean - If there is a stroke on each bar
+            barShowStroke           : true,
+            //Number - Pixel width of the bar stroke
+            barStrokeWidth          : 2,
+            //Number - Spacing between each of the X value sets
+            barValueSpacing         : 5,
+            //Number - Spacing between data sets within X values
+            barDatasetSpacing       : 1,
+            //String - A legend template
+            legendTemplate          : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].fillColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
+            //Boolean - whether to make the chart responsive
+            responsive              : true,
+            maintainAspectRatio     : true
+        }
+
+        barChartOptions.datasetFill = false
+        $.ajax({
+            url: url + '/problem/count/resolved/category',
+            type: 'get',
+            dataType: 'json',
+            success(res) {
+                var i = 0;
+                let data = res.body.data;
+                var data1 = [];
+                var data2 = [];
+                $.each(data, function (index, val) {
+                    data1[index] = val.name;
+                    data2[index] = val.count;
+                })
+                barChartData.labels = data1;
+                barChartData.datasets[0].data = data2;
+                console.log(barChartData);
+                barChart.Bar(barChartData, barChartOptions)
+            }
+        })
+        //-------------
+        //- BAR CHART -
+        //-------------
+        var barChartCanvas2                   = $('#notResolveChat').get(0).getContext('2d')
+        var barChart2                         = new Chart(barChartCanvas2)
+        var barChartData2                     = {
+            labels  : ['2019-3-1', '2019-3-2', '2019-3-3', '2019-3-4', '2019-3-5', '2019-3-6', '2019-3-7'],
+            datasets: [
+                {
+                    label               : 'Electronics',
+                    fillColor           : 'rgba(210, 214, 222, 1)',
+                    strokeColor         : 'rgba(210, 214, 222, 1)',
+                    pointColor          : 'rgba(210, 214, 222, 1)',
+                    pointStrokeColor    : '#c1c7d1',
+                    pointHighlightFill  : '#fff',
+                    pointHighlightStroke: 'rgba(220,220,220,1)',
+                    data                : [65, 59, 80, 81, 56, 55, 40]
+                }
+            ]
+        }
+        barChartData2.datasets[0].fillColor   = '#00a65a'
+        barChartData2.datasets[0].strokeColor = '#00a65a'
+        barChartData2.datasets[0].pointColor  = '#00a65a'
+        var barChartOptions2                  = {
+            //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+            scaleBeginAtZero        : true,
+            //Boolean - Whether grid lines are shown across the chart
+            scaleShowGridLines      : true,
+            //String - Colour of the grid lines
+            scaleGridLineColor      : 'rgba(0,0,0,.05)',
+            //Number - Width of the grid lines
+            scaleGridLineWidth      : 1,
+            //Boolean - Whether to show horizontal lines (except X axis)
+            scaleShowHorizontalLines: true,
+            //Boolean - Whether to show vertical lines (except Y axis)
+            scaleShowVerticalLines  : true,
+            //Boolean - If there is a stroke on each bar
+            barShowStroke           : true,
+            //Number - Pixel width of the bar stroke
+            barStrokeWidth          : 2,
+            //Number - Spacing between each of the X value sets
+            barValueSpacing         : 5,
+            //Number - Spacing between data sets within X values
+            barDatasetSpacing       : 1,
+            //String - A legend template
+            legendTemplate          : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].fillColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
+            //Boolean - whether to make the chart responsive
+            responsive              : true,
+            maintainAspectRatio     : true
+        }
+
+        barChartOptions2.datasetFill = false
+        $.ajax({
+            url: url + '/problem/count/notResolved/category',
+            type: 'get',
+            dataType: 'json',
+            success(res) {
+                var i = 0;
+                let data = res.body.data;
+                var data1 = [];
+                var data2 = [];
+                $.each(data, function (index, val) {
+                    data1[index] = val.name;
+                    data2[index] = val.count;
+                })
+                barChartData2.labels = data1;
+                barChartData2.datasets[0].data = data2;
+                console.log(barChartData2);
+                barChart2.Bar(barChartData2, barChartOptions2)
+            }
+        })
+
+    })
+
+</script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->

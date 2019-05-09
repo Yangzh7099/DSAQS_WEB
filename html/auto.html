@@ -302,14 +302,6 @@ desired effect
                     <div style="height: 60px;margin-top: 10px;margin-left: 80px">
                         <div class="col-md-2">题目类型： <label>
                             <select class="form-control" id="category">
-                                <option selected="selected" value=''></option>
-                                <option value="1">数据结构理论</option>
-                                <option value="2">线性表</option>
-                                <option value="3">栈和队列</option>
-                                <option value="4">字符串</option>
-                                <option value="5">树</option>
-                                <option value="6">图</option>
-                                <option value="7">算法</option>
                             </select>
                         </label></div>
                         <div class="col-md-3" style="margin-left: 50px">题目名：
@@ -633,6 +625,22 @@ desired effect
         return fmt;
     }
     $(function () {
+        $.ajax({
+            url: url + '/problemManager/problemType',
+            type: 'get',
+            dataType: 'json',
+            success(res) {
+                $('#category').empty();
+                $('#category').append($('<option/>'))
+                $.each(res.body.data, function (index, val) {
+                    console.log(index)
+                    let op = $('<option/>').attr('value', val.id).text(val.categoryName);
+                    $('#category').append(op);
+                })
+                $('#category').append(op);
+            }
+        });
+
         searchInfo({});
         $("#autoSearch").click(function () {
             var param = {};

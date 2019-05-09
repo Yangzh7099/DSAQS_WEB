@@ -284,12 +284,11 @@ desired effect
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Page Header
-                <small>Optional description</small>
+                系统设置
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-                <li class="active">Here</li>
+                <li><a href="#"><i class="fa fa-dashboard"></i> 自动问答管理</a></li>
+                <li class="active">系统设置</li>
             </ol>
         </section>
 
@@ -298,17 +297,18 @@ desired effect
             <div class="box">
                 <div class="box-body">
                     <div style="height: 60px;margin-top: 10px;margin-left: 80px">
-                        <div class="col-md-6">当前自动问答准确率阈值(0-100%)： <label>
+                        <div class="col-md-6">当前自动问答准确率阈值(0-100%)： <label id="x">
+
                         </label></div>
-                        <div class="col-md-6">当前自动问答的精准率：(越精准回答速度越慢，但是准确率会提高) ：<label>
+                        <div class="col-md-6">当前自动问答的精准率：(越精准回答速度越慢，但是准确率会提高) ：<label id="y">
                         </label></div>
-                        <div class="col-md-6"> 当前自动问答巡检时间： <label>
+                        <div class="col-md-6"> 当前自动问答巡检时间： <label id="times">
                         </label>
                         </div>
-                        <div class="col-md-6">当前巡检问题认同率： <label>
+                        <div class="col-md-6">当前巡检问题认同率： <label id="likes">
                         </label>
                         </div>
-                        <div class="col-md-6">当前巡检间隔时间(小时)： <label>
+                        <div class="col-md-6">当前巡检间隔时间(小时)： <label id="hours">
                         </label>
                         </div>
 
@@ -496,6 +496,8 @@ desired effect
 <!-- AdminLTE App -->
 <script src="../dist/js/adminlte.min.js"></script>
 <script>
+    let url = 'http://localhost:8080';
+
     Date.prototype.Format = function (fmt) {
         var o = {
             "M+": this.getMonth() + 1, //月份
@@ -545,11 +547,40 @@ desired effect
                 data: param,
                 success(res) {
                     alert("设置成功");
+                    getSetUp();
                     //处理
                 }
             });
 
         });
+        function getSetUp(){
+            $.ajax({
+                url: url + '/problem/get/setUp',
+                type: 'get',
+                dataType: 'json',
+                success(res) {
+                    let data = res.body.data;
+                    $("#x").text(data.x);
+                    var m;
+                    if (data.y ===1) {
+                        m = "普通"
+                    }
+                    if (data.y ===2) {
+                        m = "准确"
+                    }
+                    if (data.y ===3) {
+                        m = "十分准确"
+                    }
+                    $("#y").text(m);
+                    $("#times").text(new Date(data.times).Format("HH:mm:ss"));
+                    $("#hours").text(data.hours);
+                    $("#likes").text(data.likes);
+                    console.log(data)
+                    //处理
+                }
+            });
+        }
+        getSetUp();
 
     })
 </script>
