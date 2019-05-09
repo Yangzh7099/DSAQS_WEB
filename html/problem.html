@@ -689,7 +689,7 @@ desired effect
 
     // answerVal
     function queryReply() {
-        problemId = $(this).parent().siblings().first().attr('id')
+        problemId = $(this).parent().siblings().first().attr('id');
         // 通过id 请求评论数据
         let params = {
             problemId: problemId
@@ -841,7 +841,7 @@ desired effect
             alter('更新失败');
             return;
         }
-        newProblem['id'] = problemId
+        newProblem['id'] = problemId;
         if ($('#categorys2').find('option:selected').attr('id')) {
             newProblem['category'] = $('#categorys2').find('option:selected').attr('id')
         }
@@ -851,7 +851,9 @@ desired effect
             type: 'post',
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
             data: {
-                problem: JSON.stringify(newProblem)
+                id:newProblem.id,
+                category:newProblem.category,
+                title:newProblem.title
             },
             dataType: 'json',
             success(res) {
