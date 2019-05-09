@@ -258,7 +258,7 @@ desired effect
                     <ul class="treeview-menu">
                         <li><a href="userOverview.html"><i class="fa fa-circle-o"></i> 用户概览</a></li>
                         <li><a href="users.html"><i class="fa fa-circle-o"></i> 用户管理</a></li>
-                        <li><a href="users.html"><i class="fa fa-circle-o"></i> 通知管理</a></li>
+                        <li><a href="notification.html"><i class="fa fa-circle-o"></i> 通知管理</a></li>
 
                     </ul>
                 </li>
@@ -275,7 +275,7 @@ desired effect
             </ul>
 
             <!-- Sidebar Menu -->
-            
+
             <!-- /.sidebar-menu -->
         </section>
         <!-- /.sidebar -->
@@ -286,21 +286,114 @@ desired effect
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Page Header
-                <small>Optional description</small>
+                系统设置
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-                <li class="active">Here</li>
+                <li><a href="#"><i class="fa fa-dashboard"></i> 自动问答管理</a></li>
+                <li class="active">系统设置</li>
             </ol>
         </section>
 
         <!-- Main content -->
         <section class="content container-fluid">
+            <div class="box">
+                <div class="box-body">
+                    <div style="height: 60px;margin-top: 10px;margin-left: 80px">
+                        <div class="col-md-6">当前自动问答准确率阈值(0-100%)： <label id="x">
 
-            <!--------------------------
-              | Your Page Content Here |
-              -------------------------->
+                        </label></div>
+                        <div class="col-md-6">当前自动问答的精准率：(越精准回答速度越慢，但是准确率会提高) ：<label id="y">
+                        </label></div>
+                        <div class="col-md-6"> 当前自动问答巡检时间： <label id="times">
+                        </label>
+                        </div>
+                        <div class="col-md-6">当前巡检问题认同率： <label id="likes">
+                        </label>
+                        </div>
+                        <div class="col-md-6">当前巡检间隔时间(小时)： <label id="hours">
+                        </label>
+                        </div>
+
+                    </div>
+                    <div>
+
+                    </div>
+
+                </div>
+                <!-- /.modal -->
+
+            </div>
+
+            <div class="box">
+                <div class="box-body">
+                    <div style="height: 60px;margin-top: 10px;margin-left: 80px">
+                        <div class="col-md-6">设置自动问答准确率阈值(0-100%)： <label>
+                            <select class="form-control" id="xx">
+                                <option value="" selected></option>
+                                <option>0</option>
+                                <option>10</option>
+                                <option>20</option>
+                                <option>30</option>
+                                <option>40</option>
+                                <option>50</option>
+                                <option>60</option>
+                                <option>70</option>
+                                <option>80</option>
+                                <option>90</option>
+                                <option>100</option>
+                            </select>
+                        </label></div>
+                        <div class="col-md-6">设置自动问答的精准率：(越精准回答速度越慢，但是准确率会提高) ：<label> <select
+                                class="form-control" id="acc">
+                            <option value="" selected></option>
+                            <option value="1">普通</option>
+                            <option value="2">较为准确</option>
+                            <option value="3">十分准确</option>
+                        </select>
+                        </label></div>
+                        <div class="col-md-6"> 设置自动问答巡检时间： <label>
+                            <input type="time" class="form-control" id="time">
+                        </label>
+                        </div>
+                        <div class="col-md-6">设置巡检问题认同率： <label>
+                            <select class="form-control" id="like">
+                                <option value="" selected></option>
+                                <option>10</option>
+                                <option>20</option>
+                                <option>30</option>
+                                <option>40</option>
+                                <option>50</option>
+                                <option>60</option>
+                                <option>70</option>
+                                <option>80</option>
+                                <option>90</option>
+                                <option>100</option>
+                            </select> </label>
+                        </div>
+                        <div class="col-md-6">设置巡检间隔时间(小时)： <label>
+                            <select class="form-control" id="hour">
+                                <option value="" selected></option>
+                                <option>4</option>
+                                <option>8</option>
+                                <option>16</option>
+                                <option>24</option>
+                                <option>48</option>
+                            </select>
+                        </label>
+                        </div>
+
+                        <button type="button" class="btn btn-info" style="width: 100px;float: right" id="confirm">确定
+                        </button>
+                    </div>
+                    <div>
+
+                    </div>
+
+                </div>
+                <!-- /.modal -->
+
+            </div>
+            <!-- /.box -->
 
         </section>
         <!-- /.content -->
@@ -404,7 +497,95 @@ desired effect
 <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../dist/js/adminlte.min.js"></script>
+<script>
+    let url = 'http://localhost:8080';
 
+    Date.prototype.Format = function (fmt) {
+        var o = {
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "H+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }
+    $(function () {
+        $("#confirm").click(function () {
+            var xx = $("#xx option:selected").text();
+            var acc = $("#acc option:selected").val();
+            var like = $("#like option:selected").text();
+            var time = $("#time").val();
+            var myDate = new Date();
+
+            var hour = $("#hour option:selected").text();
+            console.log(time)
+            var param = {};
+            if (xx !== "") {
+                param["x"] = xx;
+            }
+            if (acc !== "") {
+                param["accurate"] = acc;
+            }
+            if (like !== "") {
+                param["likes"] = like;
+            }
+            if (time !== "") {
+                param["time"] = myDate.getFullYear() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getDate() + " " + time + ":00";
+                console.log(param);
+            }
+            if (hour !== "") {
+                param["hour"] = hour;
+            }
+            $.ajax({
+                url: url + '/problem/setUp',
+                type: 'post',
+                dataType: 'json',
+                data: param,
+                success(res) {
+                    alert("设置成功");
+                    getSetUp();
+                    //处理
+                }
+            });
+
+        });
+        function getSetUp(){
+            $.ajax({
+                url: url + '/problem/get/setUp',
+                type: 'get',
+                dataType: 'json',
+                success(res) {
+                    let data = res.body.data;
+                    $("#x").text(data.x);
+                    var m;
+                    if (data.y ===1) {
+                        m = "普通"
+                    }
+                    if (data.y ===2) {
+                        m = "准确"
+                    }
+                    if (data.y ===3) {
+                        m = "十分准确"
+                    }
+                    $("#y").text(m);
+                    $("#times").text(new Date(data.times).Format("HH:mm:ss"));
+                    $("#hours").text(data.hours);
+                    $("#likes").text(data.likes);
+                    console.log(data)
+                    //处理
+                }
+            });
+        }
+        getSetUp();
+
+    })
+</script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
