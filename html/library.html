@@ -222,10 +222,12 @@ desired effect
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="problemOverview.html"><i class="fa fa-circle-o"></i> 题目概览</a></li>
+                        <li><a href="problemOverview.html"><i class="fa fa-circle-o"></i> 题目概览</a>
+                        </li>
                         <li><a href="problem.html"><i class="fa fa-circle-o"></i> 用户题目管理</a></li>
                         <li><a href="library.html"><i class="fa fa-circle-o"></i> 题库管理</a></li>
-                        <li><a href="problemCategory.html"><i class="fa fa-circle-o"></i> 题目类别管理</a></li>
+                        <li><a href="problemCategory.html"><i class="fa fa-circle-o"></i> 题目类别管理</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -236,7 +238,8 @@ desired effect
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="autoOverview.html"><i class="fa fa-circle-o"></i> 自动问答概览</a></li>
+                        <li><a href="autoOverview.html"><i class="fa fa-circle-o"></i> 自动问答概览</a>
+                        </li>
                         <li><a href="auto.html"><i class="fa fa-circle-o"></i> 自动问答管理</a></li>
                         <li><a href="inspection.html"><i class="fa fa-circle-o"></i> 巡检管理</a></li>
                         <li><a href="setUp.html"><i class="fa fa-circle-o"></i> 系统设置</a></li>
@@ -250,9 +253,11 @@ desired effect
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="reportOverview.html"><i class="fa fa-circle-o"></i> 举报概览</a></li>
+                        <li><a href="reportOverview.html"><i class="fa fa-circle-o"></i> 举报概览</a>
+                        </li>
                         <li><a href="report.html"><i class="fa fa-circle-o"></i> 举报情况管理</a></li>
-                        <li><a href="reportCategory.html"><i class="fa fa-circle-o"></i> 举报类别管理</a></li>
+                        <li><a href="reportCategory.html"><i class="fa fa-circle-o"></i> 举报类别管理</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -281,7 +286,7 @@ desired effect
             </ul>
 
             <!-- Sidebar Menu -->
-            
+
             <!-- /.sidebar-menu -->
         </section>
         <!-- /.sidebar -->
@@ -328,8 +333,8 @@ desired effect
                         <button type="button" id="exportTempla" class="btn btn-info"
                                 style="width: 100px;float: right">导出模板
                         </button>
-                        <label  class="btn btn-info" for="file"
-                                style="width: 100px;float: right">导入题库
+                        <label class="btn btn-info" for="file"
+                               style="width: 100px;float: right">导入题库
                         </label>
                         <input type="file" id="file" name="file" value="" style="
                         opacity: 0">
@@ -367,7 +372,7 @@ desired effect
                             <div class="modal-body" style="height: 100px">
                                 <div class="col-md-2" style="text-align: right">题目名:</div>
                                 <div class="col-md-5" style="text-align: left">
-                                    <textarea class="form-control" rows="4"
+                                    <textarea class="form-control" id="store-name" rows="4"
                                               placeholder="Enter ..."></textarea>
                                 </div>
                                 <div class="col-md-2" style="text-align: right">
@@ -375,12 +380,8 @@ desired effect
                                 </div>
                                 <div class="col-md-2">
                                     <label style="text-align: left">
-                                        <select class="form-control">
-                                            <option>option 1</option>
-                                            <option>option 2</option>
-                                            <option>option 3</option>
-                                            <option>option 4</option>
-                                            <option>option 5</option>
+                                        <select class="form-control" id="store-category">
+
                                         </select>
                                     </label>
                                 </div>
@@ -389,7 +390,7 @@ desired effect
                             <div class="modal-body" style="height: 120px">
                                 <div class="col-md-2" style="text-align: right">答案:</div>
                                 <div class="col-md-5" style="text-align: left">
-                                    <textarea class="form-control" rows="4"
+                                    <textarea class="form-control" rows="4" id="store-anwser"
                                               placeholder="Enter ..."></textarea>
                                 </div>
                             </div>
@@ -397,7 +398,8 @@ desired effect
                                 <button type="button" class="btn btn-default pull-left"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <button type="button" class="btn btn-primary">保存</button>
+                                <button type="button" class="btn btn-primary" id="store-save">保存
+                                </button>
                             </div>
                         </div>
                         <!-- /.modal-content -->
@@ -571,37 +573,36 @@ desired effect
     }
 
     // 导出数据
-    $('#exportData').on('click',function () {
-        let i=0;
-        let m="";
-        $.each(param,function (key,val) {
-            console.log(i===0);
-            if(i===0)
-            {
-                m=m+"?"+key+"="+val;
-            }else {
-                m=m+"&"+key+"="+val;
+    $('#exportData').on('click', function () {
+        let i = 0;
+        let m = "";
+        $.each(param, function (key, val) {
+            console.log(i === 0);
+            if (i === 0) {
+                m = m + "?" + key + "=" + val;
+            } else {
+                m = m + "&" + key + "=" + val;
             }
             i++;
         });
-        window.location.href=url + '/problem/export/library'+m;
+        window.location.href = url + '/problem/export/library' + m;
     })
     // 导出模板
-    $('#exportTempla').on('click',function () {
-        let i=0;
-        let m="";
-        $.each(param,function (key,val) {
-            console.log(i===0);
-            if(i===0)
-            {
-                m=m+"?"+key+"="+val;
-            }else {
-                m=m+"&"+key+"="+val;
+    $('#exportTempla').on('click', function () {
+        let i = 0;
+        let m = "";
+        $.each(param, function (key, val) {
+            console.log(i === 0);
+            if (i === 0) {
+                m = m + "?" + key + "=" + val;
+            } else {
+                m = m + "&" + key + "=" + val;
             }
             i++;
         });
-        window.location.href=url + '/problem/export/template'+m;
+        window.location.href = url + '/problem/export/template' + m;
     })
+
 
     function searchInfo(params) {
         $.ajax({
@@ -683,17 +684,84 @@ desired effect
                 }
             })
         })
-        $('#table-problem').on('click','.changeLibrary',changeLibrary)
-        $('#table-problem').on('click','.deleteLibarary',deleteLibarary)
+        $('#table-problem').on('click', '.changeLibrary', changeLibrary)
+        $('#table-problem').on('click', '.deleteLibarary', deleteLibarary)
+
+        let changeStoreId = null;
+
         // 修改题库
         function changeLibrary() {
-            alert("修改题库")
+            changeStoreId = $(this).parent().attr('id');
+            // 获取题库信息
+            $.ajax({
+                url: url + '/problemStore/' + changeStoreId,
+                type: 'get',
+                dataType: 'json',
+                success(res) {
+                    console.log(res)
+                    $('#store-name').val(res.title);
+                    $('#store-anwser').val(res.answerContent);
+                },
+                error(err) {
 
+                }
+            })
 
         }
+
+        // 保存修改题库
+        $('#store-save').on('click', function () {
+            let category = $('#store-category').find('option:selected').attr('categoryId');
+            let title = $('#store-name').val();
+            let answer = $('#store-anwser').val();
+            $.ajax({
+                url: url + '/problemStore/update',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    id: changeStoreId,
+                    answerContent:answer,
+                    category:category,
+                    title:title
+                },
+                success(res) {
+                    alert('修改成功')
+                },
+                error(res){
+                    alert('修改失败')
+                }
+            })
+        })
+
+
+        $.ajax({
+            url: url + '/problemManager/problemType',
+            type: 'get',
+            dataType: 'json',
+            success(res) {
+                $('#store-category').empty();
+                $('#store-category').append($('<option/>'))
+                $.each(res.body.data, function (index, val) {
+                    console.log(index)
+                    let op = $('<option/>').attr('categoryId', val.id).text(val.categoryName);
+                    $('#store-category').append(op);
+                })
+            }
+        });
+
         // 删除题库
         function deleteLibarary() {
-            alert("删除题库")
+            $.ajax({
+                url: url + '/problem/list/library/' + $(this).parent().attr('id'),
+                type: 'post',
+                dataType: 'json',
+                success(res) {
+                    alert('删除成功')
+                },
+                error(err) {
+                    alert("删除失败")
+                }
+            })
         }
 
         // 添加到tbody中
@@ -703,7 +771,7 @@ desired effect
 
             $.each(data.result, function (index, val) {
                 let problemTh = $('<tr></tr>');
-                let id = $('<td></td>').text((data.currentPage - 1) * 10 + index + 1).attr('id', val.problemId);
+                let id = $('<td></td>').text((data.currentPage - 1) * 10 + index + 1);
                 let problemDes = $('<td></td>').text(val.problemName);
                 let problemType = $('<td></td>').text(val.answerContent);
                 let problemUser = $('<td></td>').text(val.date);
@@ -715,13 +783,13 @@ desired effect
                 problemTh.append(problemToUser);
                 problemTh.append(problemUser);
 
-                let operate = $('<td></td>');
+                let operate = $('<td></td>').attr('id', val.problemId);
                 //data-toggle="modal" data-target=".bd-example-modal-lg"
                 let deleteProblem = $("<a></a>")
                     .attr('class', 'changeLibrary')
                     .attr('href', 'javascript:void(0);').text('修改题库 ')
                     .attr('data-toggle', 'modal')
-                    .attr('data-target', '#modal-default')
+                    .attr('data-target', '#modal-default');
                 let updateProblem = $("<a></a>")
                     .attr('class', 'deleteLibarary')
                     .attr('href', 'javascript:void(0);').text('移除 ')
