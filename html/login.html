@@ -114,7 +114,9 @@
                 success(res) {
                     if (res.body.data != null) {
                         $.cookie('token', JSON.stringify(res.body.data), {expires: 7, path: '/'});
+                        console.log(JSON.parse($.cookie('token')));
                         alert("登录成功")
+
                         // 跳转界面
                         window.location.href = './report.html';
                     } else {

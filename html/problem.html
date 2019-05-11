@@ -417,14 +417,15 @@ desired effect
                                 </table>
 
                             </div>
-                            <div class="box-footer clearfix">
+<!--                            <div class="box-footer clearfix">-->
+
+<!--                            </div>-->
+                            <div class="modal-footer">
                                 <ul class="pagination pagination-sm no-margin pull-right">
                                     <div id="pagination" style="text-align: center">
-                                        <ul id="pageLimit1"></ul>
+                                        <ul id="pageLimit1Reply"></ul>
                                     </div>
                                 </ul>
-                            </div>
-                            <div class="modal-footer">
                                 <button type="button" class="btn btn-default pull-left"
                                         data-dismiss="modal">关闭
                                 </button>
@@ -564,16 +565,36 @@ desired effect
     // 题目类型
     let catagoryArray = ['', '数据结构理论', '线性表', '栈和对列', '字符串', '树', '图', '算法'];
 
+
     // 分页信息
 
     let pageInfo = {};
+    let pageInfo1 = {};
 
     $(function () {
 
 
+        $.ajax({
+            url: url + '/problemManager/problemType',
+            type: 'get',
+            dataType: 'json',
+            success(res) {
+                $('#categorys2').empty();
+                $('#categorys2').append($('<option/>'))
+
+                $.each(res.body.data, function (index, val) {
+                    console.log(index)
+                    let op = $('<option/>').attr('categoryId', val.id).text(val.categoryName);
+                    $('#categorys2').append(op);
+                })
+                console.log( $('#categorys2'))
+            }
+        });
+
         searchInfo({})
         $('#clickSearch').on('click', clickSearch)
     });
+
 
 
 
@@ -618,6 +639,11 @@ desired effect
                     commentId: $(this).parent().siblings().first().attr('id')
                 },
                 success(res) {
+                    let params = {
+                        problemId: problemId,
+                        size:3
+                    }
+                    replySet(params)
                     alert("删除成功");
                 },
                 error(res) {
@@ -669,19 +695,12 @@ desired effect
 
     }
 
-    console.log(JSON.parse($.cookie('token')));
 
     $('#answer-btn').on('click', saveAnswer);
     $('#saveNewTitle').on('click', updateTile)
 
     // answerVal
-    function queryReply() {
-        problemId = $(this).parent().siblings().first().attr('id');
-        // 通过id 请求评论数据
-        let params = {
-            problemId: problemId
-        }
-        pageInfo = params;
+    function replySet(params) {
         $.ajax({
             url: url + '/problemInfo/comments/page',
             type: 'get',
@@ -720,9 +739,8 @@ desired effect
                     onPageClicked: function (event, originalEvent, type, page) {
                         params['current'] = page;
                         console.log(params);
-                        pageInfo = params;
                         $.ajax({
-                            url: url + '/problemManager/problemPage',
+                            url: url + '/problemInfo/comments/page',
                             type: 'get',
                             dataType: 'json',
                             data: params,
@@ -735,15 +753,24 @@ desired effect
                             },
                             success(res) {
                                 //处理
-                                addTableInfo(res.body.data);
+                                addReplyInfo(res.body.data);
                             }
                         });
                     }
                 };
-                $('#pageLimit1').bootstrapPaginator(options)
+                $('#pageLimit1Reply').bootstrapPaginator(options)
             }
         })
-
+    }
+    function queryReply() {
+        problemId = $(this).parent().siblings().first().attr('id');
+        // 通过id 请求评论数据
+        let params = {
+            problemId: problemId,
+            size:3
+        }
+        pageInfo = params;
+        replySet(params)
     }
 
     // 回复的分页
@@ -809,12 +836,12 @@ desired effect
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
             data: {
                 id:newProblem.id,
-                category:newProblem.category,
-                title:newProblem.title
+                answerContent:newProblem.answerContent
             },
             dataType: 'json',
             success(res) {
                 alert("修改成功!")
+                searchInfo({});
             },
             error(res) {
                 alert("修改失败")
@@ -831,8 +858,8 @@ desired effect
             return;
         }
         newProblem['id'] = problemId;
-        if ($('#categorys2').find('option:selected').attr('id')) {
-            newProblem['category'] = $('#categorys2').find('option:selected').attr('id')
+        if ($('#categorys2').find('option:selected').attr('categoryId')) {
+            newProblem['category'] = $('#categorys2').find('option:selected').attr('categoryId')
         }
         newProblem['title'] = $('#newTitle').val();
         $.ajax({
@@ -846,7 +873,8 @@ desired effect
             },
             dataType: 'json',
             success(res) {
-                alert("更新成功")
+                alert("更新成功");
+                searchInfo({});
             },
             error(res) {
                 alert("更新失败")
@@ -911,6 +939,7 @@ desired effect
         }
         return '未解决'
     }
+
 
     //时间格式化函数
     Date.prototype.Format = function (fmt) {
