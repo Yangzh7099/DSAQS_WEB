@@ -569,24 +569,10 @@ desired effect
     let pageInfo = {};
 
     $(function () {
-        $.ajax({
-            url: url + '/problemManager/problemType',
-            type: 'get',
-            dataType: 'json',
-            success(res) {
-                $('.categorys').empty();
-                $('.categorys').append($('<option/>'))
-                $.each(res.body.data, function (index, val) {
-                    console.log(index)
-                    let op = $('<option/>').attr('id', val.id).text(val.categoryName);
-                    $('.categorys').append(op);
-                })
-            }
-        });
+
 
         searchInfo({})
         $('#clickSearch').on('click', clickSearch)
-
     });
 
 
@@ -879,7 +865,7 @@ desired effect
             let problemDes = $('<td></td>').text(val.title);
             let problemType = $('<td></td>').text(catagoryArray[val.category]);
             let problemUser = $('<td></td>').text(new Date(val.time).Format("yyyy-MM-dd HH:mm:ss"))
-            let problemToUser = $('<td></td>').text(hasSovle(val.resolveTime));
+            let problemToUser = $('<td></td>').text(hasSovle(val.answerContent));
 
             problemTh.append(id);
             problemTh.append(problemDes);
@@ -919,8 +905,8 @@ desired effect
     }
 
     // 判断是否解决
-    function hasSovle(data) {
-        if (data) {
+    function hasSovle(answerContent) {
+        if (answerContent) {
             return '已解决'
         }
         return '未解决'
