@@ -684,6 +684,7 @@ desired effect
                     id: $(this).parent().siblings().first().attr('id')
                 },
                 success(res) {
+                    searchInfo({});
                     alert("删除成功");
                 },
                 error(res) {
