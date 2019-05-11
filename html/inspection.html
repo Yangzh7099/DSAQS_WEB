@@ -108,7 +108,7 @@ desired effect
                             <!-- The user image in the navbar-->
                             <img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image" id="portrait1">
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                            <span class="hidden-xs" id="username1" >Alexander Pierce</span>
+                            <span class="hidden-xs" id="username1">Alexander Pierce</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
@@ -127,7 +127,8 @@ desired effect
                                     <a href="changePassword.html" class="btn btn-default btn-flat">修改密码</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="login.html" class="btn btn-default btn-flat" id="logout"  class="logout">登出</a>
+                                    <a href="login.html" class="btn btn-default btn-flat" id="logout"
+                                       class="logout">登出</a>
                                 </div>
                             </li>
                         </ul>
@@ -220,7 +221,7 @@ desired effect
                 <li><a href="overview.html"> <span>修改密码</span>
                 </a>
                 </li>
-                <li><a href="login.html"  class="logout"> <span>注销</span>
+                <li><a href="login.html" class="logout"> <span>注销</span>
                 </a>
                 </li>
 
@@ -248,50 +249,53 @@ desired effect
         </section>
 
         <!-- Main content -->
-        <section class="content container-fluid">            <div class="box">
-            <div class="box-body">
-                <div style="height: 60px;margin-top: 10px;margin-left: 80px">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-3" style="margin-left: 50px">题目名：
-                        <label>
-                            <input type="text" class="form-control" id="name2">
-                        </label>
+        <section class="content container-fluid">
+            <div class="box">
+                <div class="box-body">
+                    <div style="height: 60px;margin-top: 10px;margin-left: 80px">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-3" style="margin-left: 50px">题目名：
+                            <label>
+                                <input type="text" class="form-control" id="name2">
+                            </label>
+                        </div>
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-md-1" style="margin-left: 50px">
+                            <button type="button" class="btn btn-info pull-right" id="search2">搜索</button>
+                        </div>
+                        <button type="button" class="btn btn-info" style="width: 100px;float: right"
+                                id="exportInspection">导出数据
+                        </button>
                     </div>
-                    <div class="col-md-2">
+                    <div>
+
                     </div>
-                    <div class="col-md-1" style="margin-left: 50px">
-                        <button type="button" class="btn btn-info pull-right" id="search2">搜索</button>
-                    </div>
-                    <button type="button" class="btn btn-info" style="width: 100px;float: right" id="exportInspection">导出数据</button>
+
+                    <table class="table table-bordered">
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>题目名</th>
+                            <th>回答</th>
+                            <th>巡检时间</th>
+                            <th>认同率</th>
+                            <th>操作</th>
+                        </tr>
+                        <tbody id="table-report2">
+                        </tbody>
+
+                    </table>
                 </div>
-                <div>
-
+                <!-- /.modal -->
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        <div id="Paginator2" style="text-align: center">
+                            <ul id="pageLimit2"></ul>
+                        </div>
+                    </ul>
                 </div>
-
-                <table class="table table-bordered">
-                    <tr>
-                        <th style="width: 10px">#</th>
-                        <th>题目名</th>
-                        <th>回答</th>
-                        <th>巡检时间</th>
-                        <th>认同率</th>
-                        <th>操作</th>
-                    </tr>
-                    <tbody id="table-report2">
-                    </tbody>
-
-                </table>
             </div>
-            <!-- /.modal -->
-            <!-- /.box-body -->
-            <div class="box-footer clearfix">
-                <ul class="pagination pagination-sm no-margin pull-right">
-                    <div id="Paginator2" style="text-align: center">
-                        <ul id="pageLimit2"></ul>
-                    </div>
-                </ul>
-            </div>
-        </div>
 
         </section>
         <!-- /.content -->
@@ -400,22 +404,23 @@ desired effect
 
 <script>
     let url = 'http://localhost:8080';
+
     function exportInspection(params) {
-        var i=0;
-        var m="";
-        $.each(params,function (key,val) {
-            console.log(i===0);
-            if(i===0)
-            {
-                m=m+"?"+key+"="+val;
-            }else {
-                m=m+"&"+key+"="+val;
+        var i = 0;
+        var m = "";
+        $.each(params, function (key, val) {
+            console.log(i === 0);
+            if (i === 0) {
+                m = m + "?" + key + "=" + val;
+            } else {
+                m = m + "&" + key + "=" + val;
             }
             i++;
         });
-        window.location.href=url + '/problem/export/nspection'+m;
-        console.log(url + '/problem/export/auto'+m);
+        window.location.href = url + '/problem/export/nspection' + m;
+        console.log(url + '/problem/export/auto' + m);
     }
+
     var nowParams = {};
 
     function searchInfoInspection(params) {
@@ -505,19 +510,44 @@ desired effect
             // <td><a href="#">处理</a> <a href="#">忽略</a>
             let operate = $('<td></td>');
             let handle = $("<a id=cancel" + index + "></a>").attr('class', 'handle').attr('href', 'javascript:void(0);').text('取消');
+            let handle2 = $("<a id=confirm" + index + "></a>").attr('class', 'handle').attr('href', 'javascript:void(0);').text('确认');
+
             operate.append(handle);
+            operate.append(" ");
+            operate.append(handle2);
+
             reportTh.append(operate);
             reportDom.append(reportTh);
             $("#cancel" + index).click(function () {
                 cancelInspection(val.id);
             })
+            $("#confirm" + index).click(function () {
+                confirmInspection(val.id);
+            })
 
         });
     }
-    function cancelInspection(i) {
+
+    function confirmInspection(i) {
         var param = {"id": i};
         $.ajax({
             url: url + '/problem/cancel/inspection',
+            type: 'post',
+            dataType: 'json',
+            data: param,
+            success(res) {
+                alert("确认成功");
+                addTableInfo2(nowParams);
+                //处理
+            }
+        });
+
+    }
+
+    function cancelInspection(i) {
+        var param = {"id": i};
+        $.ajax({
+            url: url + '/problem/confirm/inspection',
             type: 'post',
             dataType: 'json',
             data: param,
@@ -543,11 +573,11 @@ desired effect
             searchInfoInspection(param);
         })
         $("#exportInspection").click(function () {
-            var pageSize=nowParams["pageSize"];
-            nowParams["pageSize"]=-1;
+            var pageSize = nowParams["pageSize"];
+            nowParams["pageSize"] = -1;
             console.log(nowParams)
             exportInspection(nowParams);
-            nowParams["pageSize"]=pageSize;
+            nowParams["pageSize"] = pageSize;
         })
 
     })

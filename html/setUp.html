@@ -56,6 +56,7 @@ desired effect
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
+
     <!-- Main Header -->
     <header class="main-header">
 
@@ -108,7 +109,7 @@ desired effect
                             <!-- The user image in the navbar-->
                             <img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image" id="portrait1">
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                            <span class="hidden-xs" id="username1" >Alexander Pierce</span>
+                            <span class="hidden-xs" id="username1">Alexander Pierce</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
@@ -127,7 +128,8 @@ desired effect
                                     <a href="changePassword.html" class="btn btn-default btn-flat">修改密码</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="login.html" class="btn btn-default btn-flat" id="logout"  class="logout">登出</a>
+                                    <a href="login.html" class="btn btn-default btn-flat" id="logout"
+                                       class="logout">登出</a>
                                 </div>
                             </li>
                         </ul>
@@ -220,100 +222,7 @@ desired effect
                 <li><a href="overview.html"> <span>修改密码</span>
                 </a>
                 </li>
-                <li><a href="login.html"  class="logout"> <span>注销</span>
-                </a>
-                </li>
-
-            </ul>
-
-            <!-- Sidebar Menu -->
-
-            <!-- /.sidebar-menu -->
-        </section>
-        <!-- /.sidebar -->
-    </aside>
-
-        <!-- sidebar: style can be found in sidebar.less -->
-        <section class="sidebar">
-
-            <!-- Sidebar user panel (optional) -->
-            <div class="user-panel">
-                <div class="pull-left image">
-                    <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                </div>
-                <div class="pull-left info">
-                    <p>Alexander Pierce</p>
-                    <!-- Status -->
-                </div>
-            </div>
-            <ul class="sidebar-menu" data-widget="tree">
-                <li><a href="overview.html"> <span>概览</span>
-                </a>
-                </li>
-                <!-- /.search form -->
-                <li class="treeview">
-                    <a href="#">
-                        <span>题目管理</span>
-                        <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="problemOverview.html"><i class="fa fa-circle-o"></i> 题目概览</a></li>
-                        <li><a href="problem.html"><i class="fa fa-circle-o"></i> 用户题目管理</a></li>
-                        <li><a href="library.html"><i class="fa fa-circle-o"></i> 题库管理</a></li>
-                        <li><a href="problemCategory.html"><i class="fa fa-circle-o"></i> 题目类别管理</a></li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#">
-                        <span>自动问答管理</span>
-                        <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="autoOverview.html"><i class="fa fa-circle-o"></i> 自动问答概览</a></li>
-                        <li><a href="auto.html"><i class="fa fa-circle-o"></i> 自动问答管理</a></li>
-                        <li><a href="inspection.html"><i class="fa fa-circle-o"></i> 巡检管理</a></li>
-                        <li><a href="setUp.html"><i class="fa fa-circle-o"></i> 系统设置</a></li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#">
-                        <span>举报管理</span>
-                        <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="reportOverview.html"><i class="fa fa-circle-o"></i> 举报概览</a></li>
-                        <li><a href="report.html"><i class="fa fa-circle-o"></i> 举报情况管理</a></li>
-                        <li><a href="reportCategory.html"><i class="fa fa-circle-o"></i> 举报类别管理</a></li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#">
-                        <span>用户管理</span>
-                        <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="userOverview.html"><i class="fa fa-circle-o"></i> 用户概览</a></li>
-                        <li><a href="users.html"><i class="fa fa-circle-o"></i> 用户管理</a></li>
-                        <li><a href="notification.html"><i class="fa fa-circle-o"></i> 通知管理</a></li>
-                        <li><a href="notificationCategory.html"><i class="fa fa-circle-o"></i> 通知类别管理</a></li>
-
-                    </ul>
-                </li>
-                <li><a href="aboutUs.html"> <span>关于我们</span>
-                </a>
-                </li>
-                <li><a href="overview.html"> <span>修改密码</span>
-                </a>
-                </li>
-                <li><a href="overview.html"> <span>注销</span>
+                <li><a href="login.html" class="logout"> <span>注销</span>
                 </a>
                 </li>
 
@@ -358,88 +267,93 @@ desired effect
                         <div class="col-md-6">当前巡检间隔时间(小时)： <label id="hours">
                         </label>
                         </div>
-
-                    </div>
-                    <div>
-
-                    </div>
-
-                </div>
-                <!-- /.modal -->
-
-            </div>
-
-            <div class="box">
-                <div class="box-body">
-                    <div style="height: 60px;margin-top: 10px;margin-left: 80px">
-                        <div class="col-md-6">设置自动问答准确率阈值(0-100%)： <label>
-                            <select class="form-control" id="xx">
-                                <option value="" selected></option>
-                                <option>0</option>
-                                <option>10</option>
-                                <option>20</option>
-                                <option>30</option>
-                                <option>40</option>
-                                <option>50</option>
-                                <option>60</option>
-                                <option>70</option>
-                                <option>80</option>
-                                <option>90</option>
-                                <option>100</option>
-                            </select>
-                        </label></div>
-                        <div class="col-md-6">设置自动问答的精准率：(越精准回答速度越慢，但是准确率会提高) ：<label> <select
-                                class="form-control" id="acc">
-                            <option value="" selected></option>
-                            <option value="1">普通</option>
-                            <option value="2">较为准确</option>
-                            <option value="3">十分准确</option>
-                        </select>
-                        </label></div>
-                        <div class="col-md-6"> 设置自动问答巡检时间： <label>
-                            <input type="time" class="form-control" id="time">
-                        </label>
-                        </div>
-                        <div class="col-md-6">设置巡检问题认同率： <label>
-                            <select class="form-control" id="like">
-                                <option value="" selected></option>
-                                <option>10</option>
-                                <option>20</option>
-                                <option>30</option>
-                                <option>40</option>
-                                <option>50</option>
-                                <option>60</option>
-                                <option>70</option>
-                                <option>80</option>
-                                <option>90</option>
-                                <option>100</option>
-                            </select> </label>
-                        </div>
-                        <div class="col-md-6">设置巡检间隔时间(小时)： <label>
-                            <select class="form-control" id="hour">
-                                <option value="" selected></option>
-                                <option>4</option>
-                                <option>8</option>
-                                <option>16</option>
-                                <option>24</option>
-                                <option>48</option>
-                            </select>
+                        <div class="col-md-6">当前巡检基础点赞数： <label id="lk">
                         </label>
                         </div>
 
-                        <button type="button" class="btn btn-info" style="width: 100px;float: right" id="confirm">确定
-                        </button>
-                    </div>
-                    <div>
+                        <div>
+
+                        </div>
 
                     </div>
+                    <!-- /.modal -->
 
                 </div>
-                <!-- /.modal -->
 
+                <div class="box">
+                    <div class="box-body">
+                        <div style="height: 60px;margin-top: 10px;margin-left: 80px">
+                            <div class="col-md-6">设置自动问答准确率阈值(0-100%)： <label>
+                                <select class="form-control" id="xx">
+                                    <option value="" selected></option>
+                                    <option>0</option>
+                                    <option>10</option>
+                                    <option>20</option>
+                                    <option>30</option>
+                                    <option>40</option>
+                                    <option>50</option>
+                                    <option>60</option>
+                                    <option>70</option>
+                                    <option>80</option>
+                                    <option>90</option>
+                                    <option>100</option>
+                                </select>
+                            </label></div>
+                            <div class="col-md-6">设置自动问答的精准率：(越精准回答速度越慢，但是准确率会提高) ：<label> <select
+                                    class="form-control" id="acc">
+                                <option value="" selected></option>
+                                <option value="1">普通</option>
+                                <option value="2">较为准确</option>
+                                <option value="3">十分准确</option>
+                            </select>
+                            </label></div>
+                            <div class="col-md-6"> 设置自动问答巡检时间： <label>
+                                <input type="time" class="form-control" id="time">
+                            </label>
+                            </div>
+                            <div class="col-md-6">设置巡检问题认同率： <label>
+                                <select class="form-control" id="like">
+                                    <option value="" selected></option>
+                                    <option>10</option>
+                                    <option>20</option>
+                                    <option>30</option>
+                                    <option>40</option>
+                                    <option>50</option>
+                                    <option>60</option>
+                                    <option>70</option>
+                                    <option>80</option>
+                                    <option>90</option>
+                                    <option>100</option>
+                                </select> </label>
+                            </div>
+                            <div class="col-md-6">设置巡检间隔时间(小时)： <label>
+                                <select class="form-control" id="hour">
+                                    <option value="" selected></option>
+                                    <option>4</option>
+                                    <option>8</option>
+                                    <option>16</option>
+                                    <option>24</option>
+                                    <option>48</option>
+                                </select>
+                            </label>
+                            </div>
+                            <div class="col-md-6">当前巡检基础点赞数： <label>
+                                <input class="form-control" type="number" id="lkk" style="width: 200px"> </label>
+                            </div>
+
+                            <button type="button" class="btn btn-info" style="width: 100px;float: right" id="confirm">确定
+                            </button>
+                        </div>
+                        <div>
+
+                        </div>
+
+                    </div>
+                    <!-- /.modal -->
+
+                </div>
+                <!-- /.box -->
             </div>
-            <!-- /.box -->
-
         </section>
         <!-- /.content -->
     </div>
@@ -567,6 +481,8 @@ desired effect
         $("#confirm").click(function () {
             var xx = $("#xx option:selected").text();
             var acc = $("#acc option:selected").val();
+            var lkk = $("#lkk").val();
+
             var like = $("#like option:selected").text();
             var time = $("#time").val();
             var myDate = new Date();
@@ -590,6 +506,10 @@ desired effect
             if (hour !== "") {
                 param["hour"] = hour;
             }
+            if (lkk !== "") {
+                param["lkk"] = lkk;
+            }
+
             $.ajax({
                 url: url + '/problem/setUp',
                 type: 'post',
@@ -603,7 +523,8 @@ desired effect
             });
 
         });
-        function getSetUp(){
+
+        function getSetUp() {
             $.ajax({
                 url: url + '/problem/get/setUp',
                 type: 'get',
@@ -612,24 +533,27 @@ desired effect
                     let data = res.body.data;
                     $("#x").text(data.x);
                     var m;
-                    if (data.y ===1) {
+                    if (data.y === 1) {
                         m = "普通"
                     }
-                    if (data.y ===2) {
+                    if (data.y === 2) {
                         m = "准确"
                     }
-                    if (data.y ===3) {
+                    if (data.y === 3) {
                         m = "十分准确"
                     }
                     $("#y").text(m);
                     $("#times").text(new Date(data.times).Format("HH:mm:ss"));
                     $("#hours").text(data.hours);
                     $("#likes").text(data.likes);
+                    $("#lk").text(data.lkk);
+
                     console.log(data)
                     //处理
                 }
             });
         }
+
         getSetUp();
 
     })
