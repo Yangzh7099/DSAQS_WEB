@@ -572,8 +572,6 @@ desired effect
     let pageInfo1 = {};
 
     $(function () {
-
-
         $.ajax({
             url: url + '/problemManager/problemType',
             type: 'get',
@@ -710,12 +708,16 @@ desired effect
                 // 加载状态
                 $('#table-reply').html(' <th style="height: 200px;background: rgba(255,255,255,0.7)" class="overlay">\n' +
                     '              <i class="fa fa-refresh fa-spin"></i>\n' +
-                    '            </th>')
+                    '            </th>');
+                $('#pageLimit1Reply').empty();
 
             },
             success(res) {
                 let data = res.body.data;
                 addReplyInfo(data);
+                if (data.records.length <= 0) {
+                    return;
+                }
                 let options = {
                     bootstrapMajorVersion: 3,  // 版本
                     currentPage: data.current,
