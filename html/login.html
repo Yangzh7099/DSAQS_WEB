@@ -32,7 +32,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <b>DSQAS</b>管理端
+        <b>达达问答</b>管理端
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
@@ -51,7 +51,7 @@
                 <div class="col-xs-8">
                     <div class="checkbox icheck">
                         <label>
-                            <input type="checkbox" checked id="remeber"> Remember Me
+                            <a href="register.html">忘记密码</a><br>
                         </label>
                     </div>
                 </div>
@@ -67,11 +67,10 @@
 
         <!-- /.social-auth-links -->
 
-        <a href="register.html">忘记密码</a><br>
 
     </div>
     <!-- /.login-box-body -->
-</div>
+</div>d
 <!-- /.login-box -->
 
 <!-- jQuery 3 -->
@@ -116,9 +115,8 @@
                         $.cookie('token', JSON.stringify(res.body.data), {expires: 7, path: '/'});
                         console.log(JSON.parse($.cookie('token')));
                         alert("登录成功")
-
                         // 跳转界面
-                        window.location.href = './report.html';
+                        window.location.href = './overview.html';
                     } else {
                         alert("用户名或密码错误!")
                     }

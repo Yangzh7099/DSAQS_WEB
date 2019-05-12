@@ -249,8 +249,8 @@ desired effect
                 题库管理
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-                <li class="active">Here</li>
+                <li><a href="#"><i class="fa fa-dashboard"></i> 题目管理</a></li>
+                <li class="active">题库管理</li>
             </ol>
 
         </section>
@@ -262,7 +262,7 @@ desired effect
                 <div class="box-body">
                     <div style="height: 60px;margin-top: 10px;margin-left: 80px">
                         <div class="col-md-2">题目类型： <label>
-                            <select class="form-control categorys" id="categorys1">
+                            <select class="form-control categorys" id="categorys1" style="width: 100px">
 
                             </select>
                         </label></div>
@@ -348,6 +348,34 @@ desired effect
                                         data-dismiss="modal">关闭
                                 </button>
                                 <button type="button" class="btn btn-primary" id="store-save">保存
+                                </button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <div class="modal fade" id="modal">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="width: 800px">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">查看详情</h4>
+                            </div>
+                            <div class="modal-body" style="height: 100px">
+                                <div class="col-md-2" style="text-align: right">题目名:</div>
+                                <div class="col-md-10" style="text-align: left" id="title">
+                                </div>
+                                <br>
+                                <div class="col-md-2" style="text-align: right">
+                                    回答答案：
+                                </div>
+                                <div class="col-md-2" id="answer">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭
                                 </button>
                             </div>
                         </div>
@@ -687,7 +715,29 @@ desired effect
             })
         })
 
-
+        function cutString(str, len) {
+            //length属性读出来的汉字长度为1
+            if(str.length*2 <= len) {
+                return str;
+            }
+            var strlen = 0;
+            var s = "";
+            for(var i = 0;i < str.length; i++) {
+                s = s + str.charAt(i);
+                if (str.charCodeAt(i) > 128) {
+                    strlen = strlen + 2;
+                    if(strlen >= len){
+                        return s.substring(0,s.length-1) + "...";
+                    }
+                } else {
+                    strlen = strlen + 1;
+                    if(strlen >= len){
+                        return s.substring(0,s.length-2) + "...";
+                    }
+                }
+            }
+            return s;
+        }
         $.ajax({
             url: url + '/problemManager/problemType',
             type: 'get',
@@ -727,8 +777,8 @@ desired effect
             $.each(data.result, function (index, val) {
                 let problemTh = $('<tr></tr>');
                 let id = $('<td></td>').text((data.currentPage - 1) * 10 + index + 1);
-                let problemDes = $('<td></td>').text(val.problemName);
-                let problemType = $('<td></td>').text(val.answerContent);
+                let problemDes = $('<td></td>').text(cutString(val.problemName,40));
+                let problemType = $('<td></td>').text(cutString(val.answerContent,20));
                 let problemUser = $('<td></td>').text(val.date);
                 let problemToUser = $('<td></td>').text(val.type);
 
@@ -750,11 +800,23 @@ desired effect
                     .attr('href', 'javascript:void(0);').text('移除 ')
                     .attr('data-toggle', 'modal')
                     .attr('data-target', '#modal-answer');
+                let mm = $("<a></a>")
+                    .attr('class', 'searchLibrary')
+                    .attr('id', 'searchLibrary'+val.problemId)
+                    .attr('href', 'javascript:void(0);').text('查看详情 ')
+                    .attr('data-toggle', 'modal')
+                    .attr('data-target', '#modal');
 
                 operate.append(deleteProblem);
                 operate.append(updateProblem);
+                operate.append(mm);
                 problemTh.append(operate);
                 problemDom.append(problemTh);
+                $("#searchLibrary"+val.problemId+"").click(function () {
+                    $("#title").text(val.problemName)
+                    $("#answer").text(val.answerContent)
+
+                })
             });
         }
     }

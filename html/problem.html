@@ -244,8 +244,8 @@ desired effect
                 题目管理
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-                <li class="active">Here</li>
+                <li><a href="#"><i class="fa fa-dashboard"></i> 题目管理</a></li>
+                <li class="active">题目管理</li>
             </ol>
 
         </section>
@@ -579,13 +579,19 @@ desired effect
             success(res) {
                 $('#categorys2').empty();
                 $('#categorys2').append($('<option/>'))
+                $('#categorys1').empty();
+                $('#categorys1').append($('<option/>'))
 
                 $.each(res.body.data, function (index, val) {
                     console.log(index)
                     let op = $('<option/>').attr('categoryId', val.id).text(val.categoryName);
+                    let op2 = $('<option/>').attr('categoryId', val.id).text(val.categoryName);
+
                     $('#categorys2').append(op);
+                    $('#categorys1').append(op2);
+
                 })
-                console.log( $('#categorys2'))
+                console.log( $('#categorys1'))
             }
         });
 
