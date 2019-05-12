@@ -626,7 +626,9 @@ desired effect
             $.ajax({
                 url: url + '/problem/import/template',
                 type: 'post',
+                contentType:false,
                 data: formdata,
+                processData:false,
                 success(res) {
                     alert("导入成功")
                 },
@@ -676,6 +678,7 @@ desired effect
                     title:title
                 },
                 success(res) {
+                    searchInfo(param)
                     alert('修改成功')
                 },
                 error(res){
@@ -703,11 +706,11 @@ desired effect
         // 删除题库
         function deleteLibarary() {
             $.ajax({
-                url: url + '/problem/list/library/' + $(this).parent().attr('id'),
+                url: url + '/problemStore/delete/' + $(this).parent().attr('id'),
                 type: 'post',
                 dataType: 'json',
                 success(res) {
-
+                    searchInfo(param);
                     alert('删除成功')
                 },
                 error(err) {
