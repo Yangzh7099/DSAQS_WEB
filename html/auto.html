@@ -110,7 +110,7 @@ desired effect
                             <!-- The user image in the navbar-->
                             <img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image" id="portrait1">
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                            <span class="hidden-xs" id="username1" >Alexander Pierce</span>
+                            <span class="hidden-xs" id="username1">Alexander Pierce</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
@@ -129,7 +129,8 @@ desired effect
                                     <a href="changePassword.html" class="btn btn-default btn-flat">修改密码</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="login.html" class="btn btn-default btn-flat" id="logout"  class="logout">登出</a>
+                                    <a href="login.html" class="btn btn-default btn-flat" id="logout"
+                                       class="logout">登出</a>
                                 </div>
                             </li>
                         </ul>
@@ -222,7 +223,7 @@ desired effect
                 <li><a href="overview.html"> <span>修改密码</span>
                 </a>
                 </li>
-                <li><a href="login.html"  class="logout"> <span>注销</span>
+                <li><a href="login.html" class="logout"> <span>注销</span>
                 </a>
                 </li>
 
@@ -243,8 +244,8 @@ desired effect
                 自动问答管理
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-                <li class="active">Here</li>
+                <li><a href="#"><i class="fa fa-dashboard"></i> 自动问答管理</a></li>
+                <li class="active">自动问答管理</li>
             </ol>
 
         </section>
@@ -255,7 +256,7 @@ desired effect
                 <div class="box-body">
                     <div style="height: 60px;margin-top: 10px;margin-left: 80px">
                         <div class="col-md-2">题目类型： <label>
-                            <select class="form-control" id="category">
+                            <select class="form-control" id="category" style="width: 100px">
                             </select>
                         </label></div>
                         <div class="col-md-3" style="margin-left: 50px">题目名：
@@ -274,7 +275,9 @@ desired effect
                         <div class="col-md-1" style="margin-left: 50px">
                             <button type="button" class="btn btn-info pull-right" id="autoSearch">搜索</button>
                         </div>
-                        <button type="button" class="btn btn-info" style="width: 100px;float: right" id="exportAuto">导出数据</button>
+                        <button type="button" class="btn btn-info" style="width: 100px;float: right" id="exportAuto">
+                            导出数据
+                        </button>
                     </div>
                     <div>
 
@@ -445,25 +448,25 @@ desired effect
 
 <script>
     let url = 'http://localhost:8080';
+
     function exportAuto(params) {
-        var i=0;
-        var m="";
-        $.each(params,function (key,val) {
-            console.log(i===0);
-            if(i===0)
-            {
-                m=m+"?"+key+"="+val;
-            }else {
-                m=m+"&"+key+"="+val;
+        var i = 0;
+        var m = "";
+        $.each(params, function (key, val) {
+            console.log(i === 0);
+            if (i === 0) {
+                m = m + "?" + key + "=" + val;
+            } else {
+                m = m + "&" + key + "=" + val;
             }
             i++;
         });
-        window.location.href=url + '/problem/export/auto'+m;
-        console.log(url + '/problem/export/auto'+m);
+        window.location.href = url + '/problem/export/auto' + m;
+        console.log(url + '/problem/export/auto' + m);
     }
 
     function searchInfo(params) {
-        mparam=params;
+        mparam = params;
         $.ajax({
                 url: url + '/problem/list/auto',
                 type: 'get',
@@ -500,7 +503,7 @@ desired effect
                             }
                         },
                         onPageClicked: function (event, originalEvent, type, page) {
-                            mparam=params;
+                            mparam = params;
                             params['currentPage'] = page;
                             console.log(params);
                             $.ajax({
@@ -528,29 +531,49 @@ desired effect
             }
         )
     }
-    var mparam={};
+
+    var mparam = {};
+
     function cutString(str, len) {
         //length属性读出来的汉字长度为1
-        if(str.length*2 <= len) {
+        if (str.length * 2 <= len) {
             return str;
         }
         var strlen = 0;
         var s = "";
-        for(var i = 0;i < str.length; i++) {
+        for (var i = 0; i < str.length; i++) {
             s = s + str.charAt(i);
             if (str.charCodeAt(i) > 128) {
                 strlen = strlen + 2;
-                if(strlen >= len){
-                    return s.substring(0,s.length-1) + "...";
+                if (strlen >= len) {
+                    return s.substring(0, s.length - 1) + "...";
                 }
             } else {
                 strlen = strlen + 1;
-                if(strlen >= len){
-                    return s.substring(0,s.length-2) + "...";
+                if (strlen >= len) {
+                    return s.substring(0, s.length - 2) + "...";
                 }
             }
         }
         return s;
+    }
+
+    function deleteRecord(id) {
+
+        var par = {};
+        par['id'] = id;
+        $.ajax({
+            url: url + '/problem/delete/auto/record',
+            type: 'post',
+            dataType: 'json',
+            data:par,
+            success() {
+                searchInfo(mparam);
+                alert("确认成功")
+
+            }
+
+        })
     }
 
     function addTableInfo(data) {
@@ -559,8 +582,8 @@ desired effect
         $.each(data.result, function (index, val) {
             let reportTh = $('<tr></tr>');
             let id = $('<td></td>').text((data.currentPage - 1) * 10 + index + 1).attr('id', val.id);
-            let reportDes = $('<td></td>').text(cutString(val.problemName,30));
-            let reportReason = $('<td></td>').text(cutString(val.answerContent,30));
+            let reportDes = $('<td></td>').text(cutString(val.problemName, 30));
+            let reportReason = $('<td></td>').text(cutString(val.answerContent, 30));
             let reportType = $('<td></td>').text(val.date);
             let reportUser = $('<td></td>').text(val.resolve);
 
@@ -574,11 +597,18 @@ desired effect
             let operate = $('<td></td>');
             //data-toggle="modal" data-target="#modal-answer "
             let handle = $("<a id=url" + index + "></a>").attr('class', 'handle').attr("url", "#").attr("data-toggle", "modal").attr("data-target", "#modal-default").text('查看详情');
+
+            let handle2 = $("<a id=delete" + index + "></a>").attr('class', 'handle').attr("url", "#").text('确认');
             operate.append(handle);
+            operate.append(" ");
+            operate.append(handle2);
             reportTh.append(operate);
             reportDom.append(reportTh);
             $("#url" + index).click(function () {
                 setValue(val.problemName, val.answerContent);
+            })
+            $("#delete" + index).click(function () {
+                deleteRecord(val.problemId)
             })
         });
     }
@@ -640,11 +670,11 @@ desired effect
         })
 
         $("#exportAuto").click(function () {
-            var pageSize=mparam["pageSize"];
-            mparam["pageSize"]=-1;
+            var pageSize = mparam["pageSize"];
+            mparam["pageSize"] = -1;
             console.log(mparam)
             exportAuto(mparam);
-            mparam["pageSize"]=pageSize;
+            mparam["pageSize"] = pageSize;
         })
 
     })

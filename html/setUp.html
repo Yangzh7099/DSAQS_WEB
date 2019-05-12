@@ -258,6 +258,9 @@ desired effect
                         </label></div>
                         <div class="col-md-6">当前自动问答的精准率：(越精准回答速度越慢，但是准确率会提高) ：<label id="y">
                         </label></div>
+                        <div class="col-md-6">当前巡检是否开启： <label id="ope">
+                        </label></div>
+
                         <div class="col-md-6"> 当前自动问答巡检时间： <label id="times">
                         </label>
                         </div>
@@ -307,7 +310,15 @@ desired effect
                                 <option value="3">十分准确</option>
                             </select>
                             </label></div>
-                            <div class="col-md-6"> 设置自动问答巡检时间： <label>
+                            <div class="col-md-6">设置巡检是否开启： <label>
+                                <select class="form-control" id="open">
+                                    <option value="" selected></option>
+                                    <option value="1">开启</option>
+                                    <option value="0">关闭</option>
+                                </select> </label>
+                            </div>
+
+                            <div class="col-md-6"> 设置巡检时间： <label>
                                 <input type="time" class="form-control" id="time">
                             </label>
                             </div>
@@ -484,6 +495,8 @@ desired effect
             var lkk = $("#lkk").val();
 
             var like = $("#like option:selected").text();
+            var open = $("#open option:selected").val();
+
             var time = $("#time").val();
             var myDate = new Date();
 
@@ -508,6 +521,9 @@ desired effect
             }
             if (lkk !== "") {
                 param["lkk"] = lkk;
+            }
+            if (open !== "") {
+                param["open"] = open;
             }
 
             $.ajax({
@@ -542,11 +558,20 @@ desired effect
                     if (data.y === 3) {
                         m = "十分准确"
                     }
+                    var r;
+                    if (data.open === 1) {
+                        r = "开启中"
+                    }
+                    if (data.open === 0) {
+                        r = "已关闭"
+                    }
+                    console.log(r)
                     $("#y").text(m);
                     $("#times").text(new Date(data.times).Format("HH:mm:ss"));
                     $("#hours").text(data.hours);
                     $("#likes").text(data.likes);
                     $("#lk").text(data.lkk);
+                    $("#ope").text(r);
 
                     console.log(data)
                     //处理
