@@ -658,6 +658,7 @@ desired effect
                 data: formdata,
                 processData:false,
                 success(res) {
+                    searchInfo(param);
                     alert("导入成功")
                 },
                 error(err) {
