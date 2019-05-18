@@ -521,12 +521,10 @@ desired effect
         let reportDom = $('#table-report');
         reportDom.empty();
         $.each(data.result, function (index, val) {
-
             let reportTh = $('<tr></tr>');
             let id = $('<td></td>').html("<input type=\"checkbox\" name=\"category\" value=" + val.accountId + " /> ");
             let reportDes = $('<td></td>').text(val.username);
             let reportReason = $('<td></td>').text(new Date(val.loginTime).Format("yyyy-MM-dd HH:mm:ss"));
-
             reportTh.append(id);
             reportTh.append(reportDes);
             reportTh.append(reportReason);
