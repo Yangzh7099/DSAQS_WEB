@@ -21,6 +21,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect. -->
     <link rel="stylesheet" href="../dist/css/skins/skin-blue.min.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap-daterangepicker/daterangepicker.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -108,7 +109,7 @@ desired effect
                             <!-- The user image in the navbar-->
                             <img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image" id="portrait1">
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                            <span class="hidden-xs" id="username1" >Alexander Pierce</span>
+                            <span class="hidden-xs" id="username1">Alexander Pierce</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
@@ -127,7 +128,8 @@ desired effect
                                     <a href="changePassword.html" class="btn btn-default btn-flat">修改密码</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="login.html" class="btn btn-default btn-flat" id="logout"  class="logout">登出</a>
+                                    <a href="login.html" class="btn btn-default btn-flat" id="logout"
+                                       class="logout">登出</a>
                                 </div>
                             </li>
                         </ul>
@@ -221,7 +223,7 @@ desired effect
                 <li><a href="overview.html"> <span>修改密码</span>
                 </a>
                 </li>
-                <li><a href="login.html"  class="logout"> <span>注销</span>
+                <li><a href="login.html" class="logout"> <span>注销</span>
                 </a>
                 </li>
 
@@ -253,7 +255,7 @@ desired effect
                 <!-- DONUT CHART -->
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">本周自动问答次数</h3>
+                        <h3 class="box-title"><span id="groupName1"></span><span id="time1"></span> 自动问答次数</h3>
                         <!-- LINE CHART -->
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
@@ -263,11 +265,17 @@ desired effect
                     </div>
                     <div class="box-body">
                         <div>
-                            <div class="btn-group" style="margin-left: 200px">
+                            <div class="btn-group" style="margin-left: 150px">
                                 <button type="button" class="btn btn-info" id="addTimeWeek">本周</button>
                                 <button type="button" class="btn btn-info" id="addTimeMonth">本月</button>
                                 <button type="button" class="btn btn-info" id="addTimeYear">本年</button>
-                                <button type="button" class="btn btn-info" id="s1">指定时间</button>
+                                <button type="button" class="btn btn-info" id="s1" data-toggle="modal"
+                                        data-target="#modal-default">指定时间
+                                </button>
+                                <button type="button" class="btn btn-info" id="group1" data-toggle="modal"
+                                        data-target="#modal-user">指定用户组
+                                </button>
+
                             </div>
                         </div>
 
@@ -279,7 +287,7 @@ desired effect
 
                 <div class="box box-danger">
                     <div class="box-header with-border">
-                        <h3 class="box-title">自动问答未解决分类统计</h3>
+                        <h3 class="box-title"><span id="groupName3"></span>自动问答未解决分类统计</h3>
 
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
@@ -289,14 +297,19 @@ desired effect
                     </div>
                     <div class="box-body">
                         <div class="col-md-8">
-                            <div class="chart-responsive">
+                            <div class="chart-responsive" id="pie1">
                                 <canvas id="pieChart1"></canvas>
                             </div>
                             <!-- ./chart-responsive -->
                         </div>
                         <!-- /.col -->
                         <div class="col-md-4">
-                            <ul class="chart-legend clearfix"  id="category1">
+                            <button type="button" class="btn btn-info" id="group3" style="float: left"
+                                    data-toggle="modal"
+                                    data-target="#modal-user">指定用户组
+                            </button>
+
+                            <ul class="chart-legend clearfix" id="category1" style="margin-top: 100px">
                             </ul>
                         </div>
                     </div>
@@ -305,7 +318,7 @@ desired effect
 
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">本周巡检添加次数</h3>
+                        <h3 class="box-title"><span id="time3"></span>巡检添加次数</h3>
                         <!-- LINE CHART -->
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
@@ -319,7 +332,10 @@ desired effect
                                 <button type="button" class="btn btn-info" id="addTimeWeek3">本周</button>
                                 <button type="button" class="btn btn-info" id="addTimeMonth3">本月</button>
                                 <button type="button" class="btn btn-info" id="addTimeYear3">本年</button>
-                                <button type="button" class="btn btn-info" id="s3">指定时间</button>
+                                <button type="button" class="btn btn-info" id="s3" data-toggle="modal"
+                                        data-target="#modal-default">指定时间
+                                </button>
+
                             </div>
                         </div>
 
@@ -335,7 +351,7 @@ desired effect
             <div class="col-md-6">
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">本周自动问答解答数</h3>
+                        <h3 class="box-title"><span id="groupName2"></span><span id="time2"></span>自动问答解答数</h3>
                         <!-- LINE CHART -->
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
@@ -345,16 +361,21 @@ desired effect
                     </div>
                     <div class="box-body">
                         <div>
-                            <div class="btn-group" style="margin-left: 200px">
+                            <div class="btn-group" style="margin-left: 150px">
                                 <button type="button" class="btn btn-info" id="addTimeWeek2">本周</button>
                                 <button type="button" class="btn btn-info" id="addTimeMonth2">本月</button>
                                 <button type="button" class="btn btn-info" id="addTimeYear2">本年</button>
-                                <button type="button" class="btn btn-info" id="s2">指定时间</button>
+                                <button type="button" class="btn btn-info" id="s2" data-toggle="modal"
+                                        data-target="#modal-default">指定时间
+                                </button>
+                                <button type="button" class="btn btn-info" id="group2" data-toggle="modal"
+                                        data-target="#modal-user">指定用户组
+                                </button>
 
                             </div>
                         </div>
 
-                        <div class="chart">
+                        <div class="chart" id="chart2">
                             <canvas id="lineChart2" style="height:250px"></canvas>
                         </div>
                     </div>
@@ -363,7 +384,7 @@ desired effect
                 <!-- DONUT CHART -->
                 <div class="box box-danger">
                     <div class="box-header with-border">
-                        <h3 class="box-title">自动问答已解决分类统计</h3>
+                        <h3 class="box-title"><span id="groupName4"></span>自动问答已解决分类统计</h3>
 
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
@@ -373,14 +394,18 @@ desired effect
                     </div>
                     <div class="box-body">
                         <div class="col-md-8">
-                            <div class="chart-responsive">
+                            <div class="chart-responsive" id="pie2">
                                 <canvas id="pieChart2"></canvas>
                             </div>
                             <!-- ./chart-responsive -->
                         </div>
                         <!-- /.col -->
                         <div class="col-md-4">
-                            <ul class="chart-legend clearfix"  id="category2">
+                            <button type="button" class="btn btn-info" id="group4" style="float: left"
+                                    data-toggle="modal"
+                                    data-target="#modal-user">指定用户组
+                            </button>
+                            <ul class="chart-legend clearfix" id="category2" style="margin-top: 100px">
                             </ul>
                         </div>
                     </div>
@@ -419,6 +444,66 @@ desired effect
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+    <div class="modal fade" id="modal-default">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width: 800px">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">选择指定时间</h4>
+                </div>
+                <div class="modal-body" style="height: 100px">
+                    <div class="col-md-2" style="line-height: 34px">时间范围</div>
+                    <div class="input-group col-md-6">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" class="form-control pull-right" id="reservation">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left"
+                            data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" class="btn btn-primary" id="getByTime">确定
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="modal-user">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width: 800px">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">选择指定用户组</h4>
+                </div>
+                <div class="modal-body" style="height: 100px">
+                    <div class="col-md-2" style="line-height: 34px">选择用户组</div>
+                    <div class="input-group col-md-6">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <select id="user" class="form-control" style="width: 200px"> </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left"
+                            data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" class="btn btn-primary" id="getByGroup">确定
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 
     <!-- Main Footer -->
     <footer class="main-footer">
@@ -523,6 +608,8 @@ desired effect
 <script src="../bower_components/fastclick/lib/fastclick.js"></script>
 <script src="../bower_components/jquery/dist/jquery.cookie.js"></script>
 <script src="../dist/js/common.js"></script>
+<script src="../bower_components/moment/min/moment.min.js"></script>
+<script src="../bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
 
 <script>
     let url = 'http://localhost:8080';
@@ -587,12 +674,21 @@ desired effect
     var lineChartOptions1 = areaChartOptions1
     lineChartOptions1.datasetFill = false
     getCountAddTime(1);
+    setDaterangepicker();
 
-    function getCountAddTime(i) {
+    function getCountAddTime(i, beginDate, endDate, groupId) {
+        resetCanvas();
+        var param = {};
+        setParam(i, param, beginDate, endDate, groupId);
+
+        type1 = i
+        getText(type1, "#time1");
+
         $.ajax({
-                url: url + '/problem/count/auto/time?type=' + i,
+                url: url + '/problem/count/auto/time',
                 type: 'get',
                 dataType: 'json',
+                data: param,
                 success(res) {
                     var i = 0;
                     let data = res.body.data;
@@ -614,13 +710,13 @@ desired effect
     // This will get the first returned node in the jQuery collection.
 
     $("#addTimeWeek").click(function () {
-        getCountAddTime(1);
+        getCountAddTime(1, null, null, group1);
     })
     $("#addTimeMonth").click(function () {
-        getCountAddTime(2);
+        getCountAddTime(2, null, null, group1);
     })
     $("#addTimeYear").click(function () {
-        getCountAddTime(3);
+        getCountAddTime(3, null, null, group1);
     })
 
 
@@ -646,11 +742,18 @@ desired effect
     lineChartOptions1.datasetFill = false
     getCountAddTime2(1);
 
-    function getCountAddTime2(i) {
+    function getCountAddTime2(i, beginDate, endDate, groupId) {
+        resetCanvas2();
+        var param = {};
+        setParam(i, param, beginDate, endDate, groupId);
+
+        type2 = i
+        getText(type2, "#time2");
         $.ajax({
-                url: url + '/problem/count/auto/resolveTime?type=' + i,
+                url: url + '/problem/count/auto/resolveTime',
                 type: 'get',
                 dataType: 'json',
+                data: param,
                 success(res) {
                     console.log(res)
                     var i = 0;
@@ -673,16 +776,14 @@ desired effect
     // This will get the first returned node in the jQuery collection.
 
     $("#addTimeWeek2").click(function () {
-        getCountAddTime2(1);
+        getCountAddTime2(1, null, null, group2);
     })
     $("#addTimeMonth2").click(function () {
-        getCountAddTime2(2);
+        getCountAddTime2(2, null, null, group2);
     })
     $("#addTimeYear2").click(function () {
-        getCountAddTime2(3);
+        getCountAddTime2(3, null, null, group2);
     })
-
-
 
 
     //-------------
@@ -746,9 +847,16 @@ desired effect
     lineChartOptions3.datasetFill = false
     getCountAddTime3(1);
 
-    function getCountAddTime3(i) {
+    function getCountAddTime3(i, beginDate, endDate, groupId) {
+        resetCanvas3();
+        var param = {};
+        setParam(i, param, beginDate, endDate, groupId);
+        type3 = i
+        getText(type3, "#time3");
+
         $.ajax({
-                url: url + '/problem/count/inspection/time?type=' + i,
+                url: url + '/problem/count/inspection/time',
+                data: param,
                 type: 'get',
                 dataType: 'json',
                 success(res) {
@@ -782,12 +890,10 @@ desired effect
         getCountAddTime3(3);
     })
 
-    var color=["#f56954","#00a65a","#f39c12","#00c0ef","#3c8dbc","#d2d6de","#de0506","#d2d6de","#bbde0c","#DE0051","#4C0ADE","#00DED7"]
+    var color = ["#f56954", "#00a65a", "#f39c12", "#00c0ef", "#3c8dbc", "#d2d6de", "#de0506", "#d2d6de", "#bbde0c", "#DE0051", "#4C0ADE", "#00DED7"]
 
     var pieChartCanvas1 = $('#pieChart1').get(0).getContext('2d')
     var pieChart1 = new Chart(pieChartCanvas1)
-    var pieData1 = [
-    ]
     var pieOptions1 = {
         //Boolean - Whether we should show a stroke on each segment
         segmentShowStroke: true,
@@ -812,24 +918,29 @@ desired effect
         //String - A legend template
         legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
     }
+    getNotResolveCount({})
     //Create pie or douhnut chart
     // You can switch between pie and douhnut using the method below.
-    $.ajax({
+    function getNotResolveCount(param) {
+        var pieData1 = []
+        resetCanvas4();
+        $.ajax({
             url: url + '/problem/count/auto/category',
             type: 'get',
             dataType: 'json',
+            data: param,
             success(res) {
                 let data = res.body.data;
                 $("#category1").empty();
-                $.each(data,function (index, val) {
-                    var pa={};
-                    pa.lable=val.name;
-                    pa.value=val.count;
-                    pa.highlight=color[index];
-                    pa.color=color[index];
+                $.each(data, function (index, val) {
+                    var pa = {};
+                    pa.lable = val.name;
+                    pa.value = val.count;
+                    pa.highlight = color[index];
+                    pa.color = color[index];
                     pieData1.push(pa)
                     let op = $('<li/>').text(val.name);
-                    let i = $('<i/>').attr("class","fa fa-circle-o").css("color",color[index]);
+                    let i = $('<i/>').attr("class", "fa fa-circle-o").css("color", color[index]);
                     op.prepend(i);
                     $("#category1").append(op);
                     console.log(val)
@@ -838,11 +949,12 @@ desired effect
             }
         })
 
+    }
+
 
     var pieChartCanvas3 = $('#pieChart3').get(0).getContext('2d')
-    var pieChart3= new Chart(pieChartCanvas3)
-    var pieData3 = [
-    ]
+    var pieChart3 = new Chart(pieChartCanvas3)
+    var pieData3 = []
     var pieOptions3 = {
         //Boolean - Whether we should show a stroke on each segment
         segmentShowStroke: true,
@@ -867,8 +979,8 @@ desired effect
         //String - A legend template
         legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
     }
-    //Create pie or douhnut chart
-    // You can switch between pie and douhnut using the method below.
+    getResolveCount({});
+
     $.ajax({
             url: url + '/problem/count/inspection/category',
             type: 'get',
@@ -876,15 +988,15 @@ desired effect
             success(res) {
                 let data = res.body.data;
                 $("#category3").empty();
-                $.each(data,function (index, val) {
-                    var pa={};
-                    pa.lable=val.name;
-                    pa.value=val.count;
-                    pa.highlight=color[index];
-                    pa.color=color[index];
+                $.each(data, function (index, val) {
+                    var pa = {};
+                    pa.lable = val.name;
+                    pa.value = val.count;
+                    pa.highlight = color[index];
+                    pa.color = color[index];
                     pieData3.push(pa)
                     let op = $('<li/>').text(val.name);
-                    let i = $('<i/>').attr("class","fa fa-circle-o").css("color",color[index]);
+                    let i = $('<i/>').attr("class", "fa fa-circle-o").css("color", color[index]);
                     op.prepend(i);
                     $("#category3").append(op);
                 })
@@ -894,12 +1006,12 @@ desired effect
     )
 
 
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
 
 
     var pieChartCanvas2 = $('#pieChart2').get(0).getContext('2d')
-    var pieChart2= new Chart(pieChartCanvas2)
-    var pieData2 = [
-    ]
+    var pieChart2 = new Chart(pieChartCanvas2)
     var pieOptions2 = {
         //Boolean - Whether we should show a stroke on each segment
         segmentShowStroke: true,
@@ -926,30 +1038,310 @@ desired effect
     }
     //Create pie or douhnut chart
     // You can switch between pie and douhnut using the method below.
-    $.ajax({
-            url: url + '/problem/count/autoResolve/category',
-            type: 'get',
-            dataType: 'json',
-            success(res) {
-                let data = res.body.data;
-                $("#category2").empty();
-                $.each(data,function (index, val) {
-                    var pa={};
-                    pa.lable=val.name;
-                    pa.value=val.count;
-                    pa.highlight=color[index];
-                    pa.color=color[index];
-                    pieData2.push(pa)
-                    let op = $('<li/>').text(val.name);
-                    let i = $('<i/>').attr("class","fa fa-circle-o").css("color",color[index]);
-                    op.prepend(i);
-                    $("#category2").append(op);
-                })
-                console.log(pieData2)
-                pieChart2.Doughnut(pieData2, pieOptions2);
+    function getResolveCount(param) {
+        var pieData2 = []
+        resetCanvas5();
+
+        $.ajax({
+
+                url: url + '/problem/count/autoResolve/category',
+                type: 'get',
+                dataType: 'json',
+                data: param,
+                success(res) {
+                    let data = res.body.data;
+                    $("#category2").empty();
+                    $.each(data, function (index, val) {
+                        var pa = {};
+                        pa.lable = val.name;
+                        pa.value = val.count;
+                        pa.highlight = color[index];
+                        pa.color = color[index];
+                        pieData2.push(pa)
+                        let op = $('<li/>').text(val.name);
+                        let i = $('<i/>').attr("class", "fa fa-circle-o").css("color", color[index]);
+                        op.prepend(i);
+                        $("#category2").append(op);
+                    })
+                    console.log(pieData2)
+                    pieChart2.Doughnut(pieData2, pieOptions2);
+                }
             }
+        )
+
+    }
+
+    var time;
+    var beginDate1;
+    var endDate1;
+    var beginDate2;
+    var endDate2;
+    var beginDate3;
+    var endDate3;
+    var grou;
+    var group1;
+    var group2;
+    var group3;
+    var group4;
+    var type1;
+    var type2;
+    var type3;
+
+    $("#s1").click(function () {
+        time = 1;
+    })
+    $("#s2").click(function () {
+        time = 2;
+    })
+    $("#s3").click(function () {
+        time = 3;
+    })
+    $("#group1").click(function () {
+        grou = 1;
+    })
+    $("#group2").click(function () {
+        grou = 2;
+    })
+    $("#group3").click(function () {
+        grou = 3;
+    })
+    $("#group4").click(function () {
+        grou = 4;
+    })
+
+    $("#getByTime").click(function () {
+        if (time === 1) {
+            // 开始时间
+            let start_time = handePicker($('#reservation').val(), 0);
+            beginDate1 = start_time;
+            // 结束时间
+            let end_time = handePicker($('#reservation').val(), 1);
+            endDate1 = end_time;
+            console.log(start_time);
+            console.log(end_time);
+            if (start_time == null) {
+                getCountAddTime(type1, null, null, group1);
+            } else {
+                type1 = 4
+                getCountAddTime(4, start_time, end_time, group1)
+            }
+            $("#modal-default").modal('hide');
+        } else if (time === 2) {
+            // 开始时间
+            let start_time = handePicker($('#reservation').val(), 0);
+            beginDate2 = start_time;
+            // 结束时间
+            let end_time = handePicker($('#reservation').val(), 1);
+            endDate2 = end_time;
+            if (start_time == null) {
+                getCountAddTime2(type2, null, null, group2);
+            } else {
+                type1 = 4
+                getCountAddTime2(4, start_time, end_time, group2);
+            }
+            $("#modal-default").modal('hide');
+
+        } else if (time === 3) {
+            // 开始时间
+            let start_time = handePicker($('#reservation').val(), 0);
+            beginDate3 = start_time;
+            // 结束时间
+            let end_time = handePicker($('#reservation').val(), 1);
+            endDate3 = end_time;
+            if (start_time == null) {
+                getCountAddTime3(type3, null, null, group3);
+            } else {
+                type1 = 4
+                getCountAddTime3(4, start_time, end_time);
+            }
+            $("#modal-default").modal('hide');
+
         }
-    )
+    })
+    getGroup();
+
+    function getGroup() {
+        var par = {"currentPage": null};
+        $.ajax({
+            type: 'get',
+            url: url + '/userGroup/list',
+            dataType: 'json',// 返回格式
+            data: par,
+            success(res) {
+                var data = res.body.data
+                if (data) {
+                    $('#user').empty();
+                    $('#user').append($('<option/>'))
+                    $.each(res.body.data.result, function (index, val) {
+                        let op = $('<option/>').attr('value', val.id).text(val.name);
+                        $('#user').append(op);
+                    })
+                }
+            }
+        });
+
+    }
+
+    $("#getByGroup").click(function () {
+        var group = $("#user option:selected").val();
+
+        console.log(group)
+        if (grou === 1) {
+            // 开始时间
+            group1 = group;
+            var groupName = $("#user option:selected").text();
+            var groue = "#groupName1";
+            $(groue).text(groupName);
+            if (group == null) {
+                getCountAddTime(type1, beginDate1, endDate1, null)
+            } else {
+                getCountAddTime(type1, beginDate1, endDate1, group1)
+            }
+            $("#modal-user").modal('hide');
+        } else if (grou === 2) {
+            group2 = group;
+            var groupName = $("#user option:selected").text();
+            var groue = "#groupName2";
+            $(groue).text(groupName);
+            if (group == null) {
+                getCountAddTime2(type2, beginDate2, endDate2, null);
+            } else {
+                getCountAddTime2(type2, beginDate2, endDate2, group2);
+            }
+            $("#modal-user").modal('hide');
+
+        } else if (grou === 3) {
+            var groupName = $("#user option:selected").text();
+            var groue = "#groupName3";
+            $(groue).text(groupName);
+            group3 = group;
+            if (group == null) {
+                getNotResolveCount({});
+            } else {
+                getNotResolveCount({"groupId": group3});
+            }
+            $("#modal-user").modal('hide');
+
+        } else if (grou === 4) {
+            var groupName = $("#user option:selected").text();
+            var groue = "#groupName4";
+            $(groue).text(groupName);
+            group4 = group;
+            if (group == null) {
+                getResolveCount({});
+            } else {
+                getResolveCount({"groupId": group3});
+            }
+            $("#modal-user").modal('hide');
+        }
+    })
+
+    function setParam(i, param, beginDate, endDate, groupId) {
+
+        if (i != null) {
+            param["type"] = i;
+        }
+        if (beginDate != null) {
+            param["beginDate"] = beginDate;
+        }
+        if (endDate != null) {
+            param["endDate"] = endDate;
+        }
+        if (groupId != null) {
+            param["groupId"] = groupId;
+        }
+    }
+
+    function resetCanvas() {
+        let html = '<canvas id="lineChart1" style="height:250px"></canvas>';
+        let chartsContainer = $('#chart1')
+        chartsContainer.empty();
+        chartsContainer.html(html);
+        lineChartCanvas1 = $('#lineChart1').get(0).getContext('2d')
+        lineChart1 = new Chart(lineChartCanvas1)
+
+    }
+
+    function resetCanvas2() {
+        let html = '<canvas id="lineChart2" style="height:250px"></canvas>';
+        let chartsContainer = $('#chart2')
+        chartsContainer.empty();
+        chartsContainer.html(html);
+        lineChartCanvas2 = $('#lineChart2').get(0).getContext('2d')
+        lineChart2 = new Chart(lineChartCanvas2)
+
+    }
+
+    function resetCanvas3() {
+        let html = '<canvas id="lineChart3" style="height:250px"></canvas>';
+        let chartsContainer = $('#chart3')
+        chartsContainer.empty();
+        chartsContainer.html(html);
+        lineChartCanvas3 = $('#lineChart3').get(0).getContext('2d')
+        lineChart3 = new Chart(lineChartCanvas3)
+
+    }
+
+    function resetCanvas4() {
+        let html = '<canvas id="pieChart1" style="height:250px"></canvas>';
+        let chartsContainer = $('#pie1')
+        chartsContainer.empty();
+        chartsContainer.html(html);
+        pieChartCanvas1 = $('#pieChart1').get(0).getContext('2d')
+        pieChart1 = new Chart(pieChartCanvas1)
+    }
+
+    function resetCanvas5() {
+        let html = '<canvas id="pieChart2" style="height:250px"></canvas>';
+        let chartsContainer = $('#pie2')
+        chartsContainer.empty();
+        chartsContainer.html(html);
+        pieChart2 = $('#pieChart2').get(0).getContext('2d')
+        pieChartCanvas2 = new Chart(pieChart2)
+    }
+
+    function getText(type1, time) {
+        if (type1 === 1) {
+            $(time).text("本周");
+        } else if (type1 == 2) {
+            $(time).text("本月");
+        } else if (type1 == 3) {
+            $(time).text("本年");
+        } else if (type1 == 4) {
+            $(time).text("指定时间");
+        }
+    }
+
+    function setDaterangepicker() {
+        $('#reservation').daterangepicker({
+            autoUpdateInput: false,
+            "locale": {
+                format: 'YYYY-MM-DD',//日期格式
+                separator: ' ~ ',
+                applyLabel: "应用",
+                cancelLabel: "取消",
+                resetLabel: "重置",
+                "daysOfWeek": ["日", "一", "二", "三", "四", "五", "六"],//汉化处理
+                "monthNames": ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+            }
+        })
+        $('#reservation').on('apply.daterangepicker', function (ev, picker) {
+            $(this).val(picker.startDate.format('YYYY-MM-DD') + ' ~ ' + picker.endDate.format('YYYY-MM-DD'));
+        });
+
+        $('#reservation').on('cancel.daterangepicker', function (ev, picker) {
+            $(this).val('');
+        });
+    }
+
+    // 处理时间 model 0 获取开始时间 model 1 获取结束时间
+    function handePicker(tangeTime, model) {
+        if (!tangeTime) {
+            return null
+        }
+        var timeArr = tangeTime.split('~');
+        return timeArr[model].trim() + ' 00:00:00';
+    }
 
 </script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
