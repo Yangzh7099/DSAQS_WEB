@@ -302,6 +302,7 @@ desired effect
         <section class="content container-fluid">
             <div class="box">
                 <div class="box-body">
+                    <h4> 巡检历史记录表</h4>
                     <div style="height: 60px;margin-top: 10px;margin-left: 80px">
                         <div class="col-md-2"></div>
                         <div class="col-md-3" style="margin-left: 50px">题目名：
@@ -356,6 +357,7 @@ desired effect
         <div class="modal-dialog">
             <div class="modal-content" style="width: 800px">
                 <div class="modal-header">
+
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">查看详情</h4>
@@ -504,7 +506,7 @@ desired effect
     var nowParams = {};
 
     function searchInfoInspection(params) {
-        params["status"]=1;
+        params["status"] = 1;
         nowParams = params;
 
         $.ajax({
@@ -578,8 +580,8 @@ desired effect
         $.each(data.result, function (index, val) {
             let reportTh = $('<tr></tr>');
             let id = $('<td></td>').text((data.currentPage - 1) * 10 + index + 1).attr('id', val.id);
-            let reportDes = $('<td></td>').text(cutString(val.problemName,30));
-            let reportReason = $('<td></td>').text(cutString(val.answerContent,30));
+            let reportDes = $('<td></td>').text(cutString(val.problemName, 30));
+            let reportReason = $('<td></td>').text(cutString(val.answerContent, 30));
             let reportType = $('<td></td>').text(val.date);
             let reportUser = $('<td></td>').text(val.likes);
 
@@ -675,6 +677,7 @@ desired effect
         })
 
     })
+
     function cutString(str, len) {
         //length属性读出来的汉字长度为1
         if (str.length * 2 <= len) {
@@ -698,10 +701,12 @@ desired effect
         }
         return s;
     }
+
     var nowParams2;
     searchInfoInspection2({});
+
     function searchInfoInspection2(params) {
-        params["status"]=0;
+        params["status"] = 0;
         nowParams2 = params;
 
         $.ajax({
@@ -775,8 +780,8 @@ desired effect
         $.each(data.result, function (index, val) {
             let reportTh = $('<tr></tr>');
             let id = $('<td></td>').text((data.currentPage - 1) * 10 + index + 1).attr('id', val.id);
-            let reportDes = $('<td></td>').text(cutString(val.problemName,30));
-            let reportReason = $('<td></td>').text(cutString(val.answerContent,30));
+            let reportDes = $('<td></td>').text(cutString(val.problemName, 30));
+            let reportReason = $('<td></td>').text(cutString(val.answerContent, 30));
             let reportType = $('<td></td>').text(val.date);
             let reportUser = $('<td></td>').text(val.likes);
 
