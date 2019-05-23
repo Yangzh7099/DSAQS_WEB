@@ -258,7 +258,7 @@ desired effect
             <div class="box">
                 <div class="box-body">
                     <div style="height: 60px;margin-top: 10px;">
-                        <div class="col-md-3">题目类型： <label>
+                        <div class="col-md-2">题目类型： <label>
                             <select class="form-control categorys" id="categorys1">
 
                             </select>
@@ -276,8 +276,13 @@ desired effect
                             </select>
                         </label>
                         </div>
-                        <div class="col-md-1" style="margin-left: 50px">
-                            <button type="button" class="btn btn-info pull-right"
+                        <div class="col-md-2">用户组： <label>
+                            <select id="user" class="form-control" style="width: 100px"> </select>
+                        </label>
+                        </div>
+
+                        <div class="col-md-1" style="margin-left: 20px">
+                            <button type="button" class="btn btn-info"
                                     id="clickSearch">搜索
                             </button>
                         </div>
@@ -608,6 +613,8 @@ desired effect
         let category = $('#categorys1').find('option:selected').attr('id');
         let hasSovle = $('#selectSovle').find('option:selected').attr('id');
         let title = $('#problemName').val()
+        let user = $('#user').find('option:selected').val();
+
         console.log(category)
         console.log(hasSovle)
         console.log(title)
@@ -622,6 +629,10 @@ desired effect
         if (title) {
             param['title'] = title
         }
+        if (user) {
+            param['groupId'] = user;
+        }
+
         searchInfo(param)
     }
 
@@ -1057,6 +1068,30 @@ desired effect
             }
         )
     }
+    getGroup();
+
+    function getGroup() {
+        var par = {"currentPage": null};
+        $.ajax({
+            type: 'get',
+            url: url + '/userGroup/list',
+            dataType: 'json',// 返回格式
+            data: par,
+            success(res) {
+                var data = res.body.data
+                if (data) {
+                    $('#user').empty();
+                    $('#user').append($('<option/>'))
+                    $.each(res.body.data.result, function (index, val) {
+                        let op = $('<option/>').attr('value', val.id).text(val.name);
+                        $('#user').append(op);
+                    })
+                }
+            }
+        });
+
+    }
+
 </script>
 </body>
 </html>

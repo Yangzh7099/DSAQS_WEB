@@ -275,7 +275,7 @@ desired effect
                         </label>
                         </div>
                         <div class="col-md-2" id="group">用户组： <label>
-                            <select class="form-control">
+                            <select class="form-control" id="user">
                             </select>
                         </label>
                         </div>
@@ -400,6 +400,11 @@ desired effect
                                 <option selected="selected" value=''></option>
                                 <option value="1">是</option>
                                 <option value="0">否</option>
+                            </select>
+                        </label>
+                        </div>
+                        <div class="col-md-2">用户组： <label>
+                            <select class="form-control" id="user2">
                             </select>
                         </label>
                         </div>
@@ -633,10 +638,10 @@ desired effect
                     let options = {
                         bootstrapMajorVersion: 3,  // 版本
                         currentPage: data.currentPage,
-                        totalPages: data.totalPage>0?data.totalPage:1,
+                        totalPages: data.totalPage > 0 ? data.totalPage : 1,
                         size: "normal",
                         alignment: "right",
-                        numberOfPages:10,
+                        numberOfPages: 10,
                         itemTexts: function (type, page, currentPage) {
                             switch (type) {
                                 case "first":
@@ -839,6 +844,7 @@ desired effect
             var name = $("#name1").val().trim();
             var type = $("#category option:selected").val();
             var resolve = $("#resolve option:selected").val();
+            let user = $('#user').find('option:selected').val();
 
             if (name !== "") {
                 param["problemName"] = name;
@@ -849,6 +855,10 @@ desired effect
             if (type !== "") {
                 param["type"] = type;
             }
+            if (user !== "") {
+                param["groupId"] = user;
+            }
+
             param["status"] = 1;
 
             searchInfo(param);
@@ -869,6 +879,8 @@ desired effect
             var name = $("#name2").val().trim();
             var type = $("#category2 option:selected").val();
             var resolve = $("#resolve2 option:selected").val();
+            let user = $('#user2').find('option:selected').val();
+
 
             if (name !== "") {
                 param["problemName"] = name;
@@ -878,6 +890,9 @@ desired effect
             }
             if (type !== "") {
                 param["type"] = type;
+            }
+            if (user !== "") {
+                param["groupId"] = user;
             }
             param["status"] = 0;
 
@@ -954,10 +969,10 @@ desired effect
                     let options = {
                         bootstrapMajorVersion: 3,  // 版本
                         currentPage: data.currentPage,
-                        totalPages: data.totalPage,
+                        totalPages: data.totalPage > 0 ? data.totalPage : 1,
                         size: "normal",
                         alignment: "right",
-                        numberOfPages: 10 ,
+                        numberOfPages: 10,
                         itemTexts: function (type, page, currentPage) {
                             switch (type) {
                                 case "first":
@@ -973,7 +988,7 @@ desired effect
                             }
                         },
                         onPageClicked: function (event, originalEvent, type, page) {
-                            mparam = params;
+                            mparam2 = params;
                             params['status'] = 0;
                             params['currentPage'] = page;
                             console.log(params);
@@ -1001,6 +1016,36 @@ desired effect
                 }
             }
         )
+    }
+    getGroup();
+
+    function getGroup() {
+        var par = {"currentPage": null};
+        $.ajax({
+            type: 'get',
+            url: url + '/userGroup/list',
+            dataType: 'json',// 返回格式
+            data: par,
+            success(res) {
+                var data = res.body.data
+                if (data) {
+                    $('#user').empty();
+                    $('#user').append($('<option/>'))
+                    $.each(res.body.data.result, function (index, val) {
+                        let op = $('<option/>').attr('value', val.id).text(val.name);
+                        $('#user').append(op);
+                    })
+                    $('#user2').empty();
+                    $('#user2').append($('<option/>'))
+                    $.each(res.body.data.result, function (index, val) {
+                        let op = $('<option/>').attr('value', val.id).text(val.name);
+                        $('#user2').append(op);
+                    })
+
+                }
+            }
+        });
+
     }
 
 </script>
