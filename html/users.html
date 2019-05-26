@@ -258,16 +258,16 @@ desired effect
                 <div class="box-header with-border">
                     <h3 class="box-title"></h3>
                 </div>
-                <div style="height: 60px;margin-top: 10px;margin-left: 100px">
+                <div style="height: 60px;margin-top: 10px;margin-left: 10px">
 
-                    <div class="col-md-3" style="margin-left: 50px">用户名：
+                    <div class="col-md-3" style="margin-left: 10px">用户名：
                         <label>
                             <input type="text" class="form-control" id="username">
                         </label>
                     </div>
-                    <div class="col-md-3" style="margin-left: 50px">电话：
+                    <div class="col-md-2" style="margin-left: 10px">电话：
                         <label>
-                            <input type="tel" class="form-control" id="telephone">
+                            <input type="tel" class="form-control" id="telephone" style="width: 130px">
                         </label>
                     </div>
                     <div class="col-md-2">封禁状态： <label>
@@ -278,10 +278,18 @@ desired effect
                         </select>
                     </label>
                     </div>
-                    <div class="col-md-1" style="margin-left: 50px">
+                    <div class="col-md-1" style="margin-left: 10px">
                         <button type="button" class="btn btn-info pull-right" id="search">搜索</button>
                     </div>
                     <button type="button" class="btn btn-info" style="width: 120px;float: right" id="export">导出数据</button>
+                    <label class="btn btn-info" for="file"
+                           style="width: 100px;float:right;">导入用户
+                    </label>
+                    <button type="button" class="btn btn-info" style="width: 120px;float: right" id="exportTemplate">导出模板</button>
+
+                    <input type="file" id="file" name="file" value="" style="
+                        opacity: 0">
+
                 </div>
                 <div>
                     <!-- /.box-header -->
@@ -600,6 +608,27 @@ desired effect
             exportUser(nowParams);
             nowParams["pageSize"]=pageSize;
 
+        })
+    })
+    $('#exportTemplate').on('click', function () {
+        window.location.href = url + '/userAccount/export/template' ;
+    })
+    $('input[type="file"]').on('change', function () {
+        let formdata = new FormData();
+        formdata.append('file', $('input[type="file"]')[0].files[0]);
+        $.ajax({
+            url: url + '/userAccount/import/users',
+            type: 'post',
+            contentType:false,
+            data: formdata,
+            processData:false,
+            success(res) {
+                searchInfo(nowParams);
+                alert("导入成功")
+            },
+            error(err) {
+                alert("导入失败")
+            }
         })
     })
 
