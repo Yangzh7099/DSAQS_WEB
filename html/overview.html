@@ -1424,7 +1424,36 @@ desired effect
             }
         })
         getGroup();
+        // 初始化时间设置
+        function setDaterangepicker() {
+            $('#reservation').daterangepicker({
+                autoUpdateInput: false,
+                "locale": {
+                    format: 'YYYY-MM-DD',//日期格式
+                    separator: ' ~ ',
+                    applyLabel: "应用",
+                    cancelLabel: "取消",
+                    resetLabel: "重置",
+                    "daysOfWeek": ["日", "一", "二", "三", "四", "五", "六"],//汉化处理
+                    "monthNames": ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+                }
+            })
+            $('#reservation').on('apply.daterangepicker', function (ev, picker) {
+                $(this).val(picker.startDate.format('YYYY-MM-DD') + ' ~ ' + picker.endDate.format('YYYY-MM-DD'));
+            });
 
+            $('#reservation').on('cancel.daterangepicker', function (ev, picker) {
+                $(this).val('');
+            });
+        }
+        // 处理时间 model 0 获取开始时间 model 1 获取结束时间
+        function handePicker(tangeTime, model) {
+            if (!tangeTime) {
+                return null
+            }
+            var timeArr = tangeTime.split('~');
+            return timeArr[model].trim() + ' 00:00:00';
+        }
         function getGroup() {
             var par = {"currentPage": null};
             $.ajax({
