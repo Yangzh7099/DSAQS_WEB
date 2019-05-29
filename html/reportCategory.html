@@ -475,9 +475,11 @@ desired effect
             let operate = $('<td></td>');
             let handle = $("<a id=delete" + index + "></a>").attr('class', 'handle').attr("url", "#").text('删除');
             let handleupdate = $("<a id=update" + index + "></a>").attr('class', 'handle').attr("url", "#").attr("data-toggle", "modal").attr("data-target", "#modal-default").text('修改');
+            if (val.isDefault == 0) {
+                operate.append(handle);
+                operate.append(" ");
+            }
 
-            operate.append(handle);
-            operate.append(" ");
 
             operate.append(handleupdate);
 
