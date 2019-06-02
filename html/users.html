@@ -108,7 +108,7 @@ desired effect
                             <!-- The user image in the navbar-->
                             <img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image" id="portrait1">
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                            <span class="hidden-xs" id="username1" >Alexander Pierce</span>
+                            <span class="hidden-xs" id="username1">Alexander Pierce</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
@@ -127,7 +127,8 @@ desired effect
                                     <a href="changePassword.html" class="btn btn-default btn-flat">修改密码</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="login.html" class="btn btn-default btn-flat" id="logout"  class="logout">登出</a>
+                                    <a href="login.html" class="btn btn-default btn-flat" id="logout"
+                                       class="logout">登出</a>
                                 </div>
                             </li>
                         </ul>
@@ -254,36 +255,57 @@ desired effect
                     <h3 class="box-title"></h3>
                 </div>
                 <div style="height: 60px;margin-top: 10px;margin-left: 10px">
-
-                    <div class="col-md-3" style="margin-left: 10px">用户名：
-                        <label>
-                            <input type="text" class="form-control" id="username">
+                    <div class="col-md-8">
+                        <div class="col-md-4" style="margin-left: 10px">用户名：
+                            <label>
+                                <input type="text" class="form-control" id="username" style="width: 130px">
+                            </label>
+                        </div>
+                        <div class="col-md-4" style="margin-left: 10px">电话：
+                            <label>
+                                <input type="tel" class="form-control" id="telephone" style="width: 130px">
+                            </label>
+                        </div>
+                        <div class="col-md-3">封禁状态： <label>
+                            <select class="form-control" id="report">
+                                <option value="" selected></option>
+                                <option value="1">封禁</option>
+                                <option value="0">未封禁</option>
+                            </select>
+                        </label></div>
+                        <div class="col-md-4" style="margin-left: 10px">学校： <label>
+                            <input type="text" class="form-control" id="school" style="width: 145px">
                         </label>
-                    </div>
-                    <div class="col-md-2" style="margin-left: 10px">电话：
-                        <label>
-                            <input type="tel" class="form-control" id="telephone" style="width: 130px">
+                        </div>
+                        <div class="col-md-4" style="margin-left: 10px">学号： <label>
+                            <input type="text" class="form-control" id="schoolNumber" style="width: 130px">
                         </label>
-                    </div>
-                    <div class="col-md-2">封禁状态： <label>
-                        <select class="form-control" id="report">
-                            <option value="" selected></option>
-                            <option  value="1" >封禁</option>
-                            <option  value="0" >未封禁</option>
-                        </select>
-                    </label>
-                    </div>
-                    <div class="col-md-1" style="margin-left: 10px">
-                        <button type="button" class="btn btn-info pull-right" id="search">搜索</button>
-                    </div>
-                    <button type="button" class="btn btn-info" style="width: 120px;float: right" id="export">导出数据</button>
-                    <label class="btn btn-info" for="file"
-                           style="width: 100px;float:right;">导入用户
-                    </label>
-                    <button type="button" class="btn btn-info" style="width: 120px;float: right" id="exportTemplate">导出模板</button>
+                        </div>
+                        <div class="col-md-3" style="margin-left: 10px">用户组： <label>
+                            <select class="form-control" id="user" style="width: 100px">
+                            </select>
+                        </label>
+                        </div>
 
-                    <input type="file" id="file" name="file" value="" style="
-                        opacity: 0">
+                    </div>
+                    <div class="col-md-4">
+                        <div class="col-md-1" style="margin-left: 10px">
+                            <button type="button" class="btn btn-info pull-right" id="search">搜索</button>
+                        </div>
+                        <button type="button" class="btn btn-info" style="width: 120px;float: right" id="export">导出数据
+                        </button>
+                        <label class="btn btn-info" for="file"
+                               style="width: 100px;float:right;">导入用户
+                        </label>
+                        <button type="button" class="btn btn-info" style="width: 120px;float: right"
+                                id="exportTemplate">导出模板
+                        </button>
+
+                        <input type="file" id="file" name="file" value="" style="
+                        opacity: 0"></div>
+
+
+
 
                 </div>
                 <div>
@@ -294,8 +316,12 @@ desired effect
                                 <th style="width: 10px">#</th>
                                 <th>用户名</th>
                                 <th>电话号码</th>
-                                <th>被举报次数</th>
-                                <th>是否封禁</th>
+                                <th>学校</th>
+                                <th>学号</th>
+                                <th>用户组</th>
+
+                                <th style="width: 130px">被举报次数</th>
+                                <th style="width: 80px">是否封禁</th>
                                 <th>操作</th>
                             </tr>
                             <tbody id="table-report">
@@ -319,14 +345,6 @@ desired effect
     <!-- /.content-wrapper -->
 
     <!-- Main Footer -->
-    <footer class="main-footer">
-        <!-- To the right -->
-        <div class="pull-right hidden-xs">
-            <!-- /.box -->
-        </div>
-        <!-- Default to the left -->
-        <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
-    </footer>
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
@@ -421,6 +439,7 @@ desired effect
 
 <script>
     let url = 'http://localhost:8080';
+
     function searchInfo(params) {
         nowParams = params;
         $.ajax({
@@ -462,7 +481,7 @@ desired effect
                             console.log(params);
                             nowParams = params;
                             $.ajax({
-                                url: url + '/userAccount/info/list' ,
+                                url: url + '/userAccount/info/list',
                                 type: 'get',
                                 dataType: 'json',
                                 data: params,
@@ -485,6 +504,7 @@ desired effect
             }
         )
     }
+
     var nowParams = {};
 
     function admit(id) {
@@ -492,7 +512,7 @@ desired effect
             url: url + '/userAccount/admit',
             type: 'post',
             dataType: 'json',
-            data: {'id':id},
+            data: {'id': id},
             success(res) {
                 alert("解禁成功");
                 searchInfo(nowParams);
@@ -507,7 +527,7 @@ desired effect
             url: url + '/userAccount/prohibit',
             type: 'post',
             dataType: 'json',
-            data: {'id':id},
+            data: {'id': id},
             success(res) {
                 alert("禁用成功");
                 searchInfo(nowParams);
@@ -525,33 +545,39 @@ desired effect
             let id = $('<td></td>').text((data.currentPage - 1) * 10 + index + 1).attr('id', val["accountId"]);
             let reportDes = $('<td></td>').text(val.username);
             let reportReason = $('<td></td>').text(val.telephone);
+            let school = $('<td></td>').text(val.school);
+            let schoolNumber = $('<td></td>').text(val.schoolNumber);
+            let group = $('<td></td>').text(val.groupp);
             let reportType = $('<td></td>').text(val.reportNums);
             let reportUser = $('<td></td>').text(val.isProhibition);
 
             reportTh.append(id);
             reportTh.append(reportDes);
             reportTh.append(reportReason);
+            reportTh.append(school);
+            reportTh.append(schoolNumber);
+            reportTh.append(group);
             reportTh.append(reportType);
             reportTh.append(reportUser);
             // 处理 和 忽略
             let operate = $('<td></td>');
             let handle;
-            if(val["isProhibition"]===("已封禁")){
-                handle= $("<a id=url" + index + "></a>").attr('class', 'handle').attr("url", "#").text('解封');
+            if (val["isProhibition"] === ("已封禁")) {
+                handle = $("<a id=url" + index + "></a>").attr('class', 'handle').attr("url", "#").text('解封');
             }
-            if(val["isProhibition"]==="未封禁"){
-                handle= $("<a id=url" + index + "></a>").attr('class', 'handle').attr("url", "#").text('封禁');
+            if (val["isProhibition"] === "未封禁") {
+                handle = $("<a id=url" + index + "></a>").attr('class', 'handle').attr("url", "#").text('封禁');
             }
             operate.append(handle);
             reportTh.append(operate);
             reportDom.append(reportTh);
             console.log(val["accountId"])
-            if(val["isProhibition"]===("已封禁")){
+            if (val["isProhibition"] === ("已封禁")) {
                 $("#url" + index).click(function () {
                     admit(val["accountId"])
                 })
             }
-            if(val["isProhibition"]==="未封禁"){
+            if (val["isProhibition"] === "未封禁") {
                 $("#url" + index).click(function () {
                     prohibit(val["accountId"])
                 })
@@ -560,21 +586,43 @@ desired effect
 
         });
     }
+    getGroup();
+    function getGroup() {
+        var par = {"currentPage": null};
+        $.ajax({
+            type: 'get',
+            url: url + '/userGroup/list',
+            dataType: 'json',// 返回格式
+            data: par,
+            success(res) {
+                var data = res.body.data
+                if (data) {
+                    $('#user').empty();
+                    $('#user').append($('<option/>'))
+                    $.each(res.body.data.result, function (index, val) {
+                        let op = $('<option/>').attr('value', val.id).text(val.name);
+                        $('#user').append(op);
+                    })
+                }
+            }
+        });
+
+    }
+
     function exportUser(params) {
-        var i=0;
-        var m="";
-        $.each(params,function (key,val) {
-            console.log(i===0);
-            if(i===0)
-            {
-                m=m+"?"+key+"="+val;
-            }else {
-                m=m+"&"+key+"="+val;
+        var i = 0;
+        var m = "";
+        $.each(params, function (key, val) {
+            console.log(i === 0);
+            if (i === 0) {
+                m = m + "?" + key + "=" + val;
+            } else {
+                m = m + "&" + key + "=" + val;
             }
             i++;
         });
-        window.location.href=url + '/problem/export/user'+m;
-        console.log(url + '/problem/export/user'+m);
+        window.location.href = url + '/problem/export/user' + m;
+        console.log(url + '/problem/export/user' + m);
     }
 
     $(function () {
@@ -583,6 +631,9 @@ desired effect
             var telephone = $("#telephone").val().trim();
             var username = $("#username").val().trim();
             var report = $("#report option:selected").val();
+            var school = $("#school").val();
+            var schoolNumber = $("#schoolNumber").val();
+            var groupId = $("#user option:selected").val();
 
             if (report !== "") {
                 param["prohibition"] = report;
@@ -593,20 +644,30 @@ desired effect
             if (username !== "") {
                 param["username"] = username;
             }
+            if (school !== "") {
+                param["school"] = school;
+            }
+            if (schoolNumber !== "") {
+                param["schoolNumber"] = name;
+            }
+            if (groupId !== "") {
+                param["groupId"] = groupId;
+            }
+
             searchInfo(param);
         })
         searchInfo({});
         $("#export").click(function () {
-            var pageSize=nowParams["pageSize"];
-            nowParams["pageSize"]=-1;
+            var pageSize = nowParams["pageSize"];
+            nowParams["pageSize"] = -1;
             console.log(nowParams)
             exportUser(nowParams);
-            nowParams["pageSize"]=pageSize;
+            nowParams["pageSize"] = pageSize;
 
         })
     })
     $('#exportTemplate').on('click', function () {
-        window.location.href = url + '/userAccount/export/template' ;
+        window.location.href = url + '/userAccount/export/template';
     })
     $('input[type="file"]').on('change', function () {
         let formdata = new FormData();
@@ -614,9 +675,9 @@ desired effect
         $.ajax({
             url: url + '/userAccount/import/users',
             type: 'post',
-            contentType:false,
+            contentType: false,
             data: formdata,
-            processData:false,
+            processData: false,
             success(res) {
                 searchInfo(nowParams);
                 alert("导入成功")

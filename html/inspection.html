@@ -215,7 +215,7 @@ desired effect
 
                     </ul>
                 </li>
-                <li><a href="overview.html"> <span>修改密码</span>
+                <li><a href="changePassword.html"> <span>修改密码</span>
                 </a>
                 </li>
                 <li><a href="login.html" class="logout"> <span>注销</span>
@@ -348,7 +348,7 @@ desired effect
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-    <div class="modal fade" id="modal-default">
+    <div class="modal fade" id="modal-default" style="z-index: -1">
         <div class="modal-dialog">
             <div class="modal-content" style="width: 800px">
                 <div class="modal-header">
@@ -371,7 +371,41 @@ desired effect
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭
                     </button>
-                    <button type="button" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="modal-table" style="z-index: 100">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width: 800px">
+                <div class="modal-header">
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">检测到相似题目，请确认是否添加</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>题目名</th>
+                            <th>题目答案</th>
+                            <th>相似度</th>
+                            <th>操作</th>
+                        </tr>
+                        <tbody id="table-problem">
+                        <tr>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" class="btn btn-primary" id="twiceConfirm">确认添加</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -380,14 +414,6 @@ desired effect
     </div>
 
     <!-- Main Footer -->
-    <footer class="main-footer">
-        <!-- To the right -->
-        <div class="pull-right hidden-xs">
-            Anything you want
-        </div>
-        <!-- Default to the left -->
-        <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
-    </footer>
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
@@ -604,9 +630,11 @@ desired effect
                 cancelInspection(val.id);
             })
             $("#confirm" + index).click(function () {
-                confirmInspection(val.id);
+                nowId=val.id;
+                confirmInspection(val.id,true);
             })
             $("#look" + index).click(function () {
+                console.log(val.problemName)
                 $("#name").html(val.problemName)
                 $("#answer").html(val.answerContent);
 
@@ -616,18 +644,23 @@ desired effect
         });
     }
 
-    function confirmInspection(i) {
-        var param = {"id": i};
+    function confirmInspection(i,isFirst) {
+        var param = {"id": i,"isFirst":isFirst};
         $.ajax({
             url: url + '/problem/confirm/inspection',
             type: 'get',
             dataType: 'json',
             data: param,
             success(res) {
-                alert("确认成功");
-                searchInfoInspection(nowParams);
-                searchInfoInspection2(nowParams2);
+                if(res.head.stateCode===401){
+                    $("#modal-table").modal("show");
+                    addTableInfo4(res.body.data)
+                }else {
+                    alert("确认成功");
+                    searchInfoInspection(nowParams);
+                    searchInfoInspection2(nowParams2);
 
+                }
                 //处理
             }
         });
@@ -788,14 +821,14 @@ desired effect
             // 处理 和 忽略
             // <td><a href="#">处理</a> <a href="#">忽略</a>
             let operate = $('<td></td>');
-            let handle3 = $("<a id=look" + index + "></a>").attr('class', 'handle').attr("data-toggle", "modal").attr("data-target", "#modal-default").attr('href', 'javascript:void(0);').text('查看详情');
+            let handle3 = $("<a id=looktt" + index + "></a>").attr('class', 'handle').attr("data-toggle", "modal").attr("data-target", "#modal-default").attr('href', '#').text('查看详情');
 
             operate.append(handle3);
 
             reportTh.append(operate);
             reportDom.append(reportTh);
-            $("#look" + index).click(function () {
-                $("#name").text(val.problemName)
+            $("#looktt" + index).click(function () {
+                $("#title").text(val.title)
                 $("#answer").text(val.answerContent);
 
             })
@@ -804,6 +837,56 @@ desired effect
         });
     }
 
+    function addTableInfo4(data) {
+        let reportDom = $('#table-problem');
+        reportDom.empty();
+        $.each(data, function (index, val) {
+            let reportTh = $('<tr></tr>');
+            let id = $('<td></td>').text('#');
+            console.log(val);
+            let reportDes = $('<td></td>').text(cutString(val.problem.title, 30));
+            let reportReason = $('<td></td>').text(cutString(val.problem.answerContent, 30));
+            let reportType = $('<td></td>').text(val.similarityDegree+"%");
+
+            reportTh.append(id);
+            reportTh.append(reportDes);
+            reportTh.append(reportReason);
+            reportTh.append(reportType);
+            // 处理 和 忽略
+            // <td><a href="#">处理</a> <a href="#">忽略</a>
+            let operate = $('<td></td>');
+            let handle4 = $("<a id=lookmm" + index + "></a>").attr('class', 'handle').attr("data-toggle", "modal").attr("data-target", "#modal-default").attr('href', 'javascript:void(0);').text('查看详情');
+
+            operate.append(handle4);
+
+            reportTh.append(operate);
+            reportDom.append(reportTh);
+            $("#lookmm" + index).click(function () {
+                console.log(val)
+
+                $("#title").text(val.problem.title);
+                $("#answer").text(val.problem.answerContent);
+            })
+
+
+        });
+    }
+
+    var nowId;
+    $("#twiceConfirm").click(function () {
+        confirmInspection(nowId,false);
+        $("#modal-table").modal("hide");
+    })
+    $(document).ready(function() {
+        // 通过该方法来为每次弹出的模态框设置最新的zIndex值，从而使最新的modal显示在最前面
+        $(document).on('show.bs.modal', '.modal', function() {
+            var zIndex = 1040 + (10 * $('.modal:visible').length);
+            $(this).css('z-index', zIndex);
+            setTimeout(function() {
+                $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
+            }, 0);
+        });
+    });
 
 </script>
 <script src="../dist/js/common.js"></script>
