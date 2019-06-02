@@ -306,7 +306,7 @@ desired effect
                                     <span aria-hidden="true">&times;</span></button>
                                 <h4 class="modal-title">查看详情</h4>
                             </div>
-                            <div class="modal-body" style="height: 100px">
+                            <div class="modal-body" style="padding: 0">
                                 <div class="col-md-2" style="text-align: right">题目名:</div>
                                 <div class="col-md-10" style="text-align: left" id="title">
                                 </div>
@@ -314,7 +314,7 @@ desired effect
                                 <div class="col-md-2" style="text-align: right">
                                     回答答案：
                                 </div>
-                                <div class="col-md-2" id="answer">
+                                <div class="col-md-9" id="answer">
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -733,8 +733,8 @@ desired effect
         $.each(data.result, function (index, val) {
             let reportTh = $('<tr></tr>');
             let id = $('<td></td>').html("<input type=\"checkbox\" name=\"category\" value=" + val.problemId + " /> ");
-            let reportDes = $('<td></td>').text(cutString(val.problemName, 30));
-            let reportReason = $('<td></td>').text(cutString(val.answerContent, 30));
+            let reportDes = $('<td></td>').html(cutString(val.problemName, 30));
+            let reportReason = $('<td></td>').html(cutString(val.answerContent, 30));
             let username = $('<td></td>').text(val.username);
             let resource = $('<td></td>').text(val.resource);
 
@@ -789,8 +789,8 @@ desired effect
     var pid;
 
     function setValue(title, answer) {
-        $("#title").text(title);
-        $("#answer").text(answer);
+        $("#title").html(title);
+        $("#answer").html(answer);
     }
 
     //时间格式化函数
@@ -912,8 +912,8 @@ desired effect
         $.each(data.result, function (index, val) {
             let reportTh = $('<tr></tr>');
             let id = $('<td></td>').html("#");
-            let reportDes = $('<td></td>').text(cutString(val.problemName, 30));
-            let reportReason = $('<td></td>').text(cutString(val.answerContent, 30));
+            let reportDes = $('<td></td>').html(cutString(val.problemName, 30));
+            let reportReason = $('<td></td>').html(cutString(val.answerContent, 30));
             let username = $('<td></td>').text(val.username);
             let resource = $('<td></td>').text(val.resource);
 

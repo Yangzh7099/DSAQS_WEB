@@ -575,8 +575,8 @@ desired effect
         $.each(data.result, function (index, val) {
             let reportTh = $('<tr></tr>');
             let id = $('<td></td>').text((data.currentPage - 1) * 10 + index + 1).attr('id', val.id);
-            let reportDes = $('<td></td>').text(cutString(val.problemName, 30));
-            let reportReason = $('<td></td>').text(cutString(val.answerContent, 30));
+            let reportDes = $('<td></td>').html(cutString(val.problemName, 30));
+            let reportReason = $('<td></td>').html(cutString(val.answerContent, 30));
             let reportType = $('<td></td>').text(val.date);
             let reportUser = $('<td></td>').text(val.likes);
 
@@ -607,8 +607,8 @@ desired effect
                 confirmInspection(val.id);
             })
             $("#look" + index).click(function () {
-                $("#name").text(val.problemName)
-                $("#answer").text(val.answerContent);
+                $("#name").html(val.problemName)
+                $("#answer").html(val.answerContent);
 
             })
 

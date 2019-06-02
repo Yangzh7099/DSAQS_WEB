@@ -601,19 +601,19 @@ desired effect
                     if (res.body.data.problem) {
                         let problem = res.body.data.problem;
                         $('#mymodal-body').find('#type').text('类型：问题');
-                        $('#mymodal-body').find('#report-content').text(problem.title);
+                        $('#mymodal-body').find('#report-content').html(problem.title);
                     }
 
                     if (res.body.data.comment) {
                         let comment = res.body.data.comment;
                         $('#mymodal-body').find('#type').text('类型：评论');
-                        $('#mymodal-body').find('#report-content').text(comment.comments);
+                        $('#mymodal-body').find('#report-content').html(comment.comments);
                     }
 
                     if (res.body.data.reply) {
                         let reply = res.body.data.reply;
                         $('#mymodal-body').find('#type').text('类型：回复');
-                        $('#mymodal-body').find('#report-content').text(reply.content);
+                        $('#mymodal-body').find('#report-content').html(reply.content);
                     }
 
 
@@ -688,7 +688,7 @@ desired effect
         $.each(data.records, function (index, val) {
             let reportTh = $('<tr></tr>');
             let id = $('<td></td>').text((data.current - 1) * 10 + index + 1).attr('id', val.id);
-            let reportDes = $('<td></td>').text(val.reportReason);
+            let reportDes = $('<td></td>').html(val.reportReason);
             let reportReason = $('<td></td>').text(reasonArray[val.reportReasonId]);
             let reportType = $('<td></td>').text(reportTypeArray[val.reportType]);
             let reportUser = $('<td></td>').text(val.user.username).attr('userId', val.userId);

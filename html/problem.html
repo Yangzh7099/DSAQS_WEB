@@ -797,7 +797,7 @@ desired effect
         $.each(data.records, function (index, val) {
             let replyTh = $('<tr></tr>');
             let id = $('<td></td>').text((data.current - 1) * 10 + index + 1).attr('id', val.id);
-            let replyDes = $('<td></td>').text(val.comments);
+            let replyDes = $('<td></td>').html(val.comments);
             let replyType = $('<td></td>').text(val.awesome);
             let replyUser = $('<td></td>').text(new Date(val.time).Format("yyyy-MM-dd HH:mm:ss"))
             let replyToUser = $('<td></td>').text(val.username);
@@ -827,13 +827,13 @@ desired effect
     // answerTitle
     function answerProblem() {
         problemId = $(this).parent().siblings().first().attr('id')
-        $('#answerTitle').text($(this).parent().siblings().eq(1).text())
+        $('#answerTitle').text($(this).parent().siblings().eq(1).html())
     }
 
     // 点击更新题目a标签
     function updateProblem() {
         problemId = $(this).parent().siblings().first().attr('id')
-        $('#newTitle').val($(this).parent().siblings().eq(1).text());
+        $('#newTitle').val($(this).parent().siblings().eq(1).html());
 
 
     }
@@ -907,10 +907,10 @@ desired effect
         $.each(data.records, function (index, val) {
             let problemTh = $('<tr></tr>');
             let id = $('<td></td>').text((data.current - 1) * 10 + index + 1).attr('id', val.id);
-            let problemDes = $('<td></td>').text(val.title);
+            let problemDes = $('<td></td>').html(val.title);
             let problemType = $('<td></td>').text(catagoryArray[val.category]);
             let problemUser = $('<td></td>').text(new Date(val.time).Format("yyyy-MM-dd HH:mm:ss"))
-            let problemToUser = $('<td></td>').text(hasSovle(val.answerContent));
+            let problemToUser = $('<td></td>').html(hasSovle(val.answerContent));
 
             problemTh.append(id);
             problemTh.append(problemDes);
