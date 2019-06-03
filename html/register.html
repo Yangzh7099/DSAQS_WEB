@@ -44,7 +44,7 @@
 
             <div class="form-group has-feedback">
                 <input type="tel" class="form-control" id="phone" placeholder="电话号码" style="width: 250px;display: inline" >
-                <span class="glyphicon  glyphicon-phone form-control-feedback"></span><input type="button" value="确认">
+                <span class="glyphicon  glyphicon-phone form-control-feedback"></span><input type="button" id="sendCode" value="确认">
             </div>
             <div class="form-group has-feedback">
                 <input type="password" class="form-control" id="code" placeholder="验证码">
@@ -126,7 +126,39 @@
             }
         })
     }
+    // 手机号码校验规则
+    let valid_rule = /^(13[0-9]|14[5-9]|15[012356789]|166|17[0-8]|18[0-9]|19[8-9])[0-9]{8}$/;
+    // 确认监听
+    $('#sendCode').on('click', function () {
+        // 获取手机号
+        let phoneNum = $('#phone').val().trim();
+        if (phoneNum === '') {
+            alert('请输入手机号！')
+            return
+        }
+        if (!valid_rule.test(phoneNum)) {
+            alert('手机号码格式有误');
+            return;
+        }
 
+        // 发送验证码
+        $.ajax({
+            url: url + '/userAccount/code',
+            type: 'post',
+            dataType: 'json',
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            data: {
+                phone: phoneNum
+            },
+            success: function (res) {
+                alert("发送验证码成功")
+            },
+            error(res) {
+                console.log(res)
+            }
+        })
+
+    })
 
     $(function () {
 
