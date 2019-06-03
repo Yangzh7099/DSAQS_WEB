@@ -257,17 +257,16 @@ desired effect
                     <h3 class="box-title">举报信息</h3>
                 </div>
                 <div style="height: 60px;margin-top: 10px">
-                    <div class="col-md-3" style="margin-left: 20px">
-
-                        <div class="col-md-4" style="line-height: 34px">举报原因</div>
+                    <div class="col-md-2" style="padding-left: 10px;">
+                        <div class="col-md-4" style="line-height: 34px;margin: 0;padding: 0">举报原因</div>
                         <div class="input-group  col-md-8">
                             <select class="form-control" id="report_reasons">
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-3" style="margin-left:20px">
-                        <div class="col-md-4" style="line-height: 34px">举报类型</div>
-                        <div class="input-group col-md-8">
+                    <div class="col-md-2" style="margin-left:2px">
+                        <div class="col-md-6" style="line-height: 34px">举报类型</div>
+                        <div class="input-group col-md-6">
                             <select class="form-control" id="report_type">
                                 <option></option>
                                 <option id="0">用户</option>
@@ -287,10 +286,14 @@ desired effect
                             <input type="text" class="form-control pull-right" id="reservation">
                         </div>
                     </div>
-                    <div class="col-md-1" style="margin-left: 0">
+                    <div class="col-md-2" style="margin-left: 0">
+                        <button type="button" class="btn btn-info pull-right" style="margin-left: 20px" id="exportAuto">
+                            导出数据
+                        </button>
                         <button type="button" id="search" class="btn btn-info pull-right"
                         >搜索
                         </button>
+
                     </div>
                 </div>
                 <div>
@@ -457,6 +460,10 @@ desired effect
     let reasonArray = [];
     // 举报类型数组
     let reportTypeArray = ['用户', '问题', '评论', '回复'];
+
+    $('#exportAuto').on('click',function () {
+        alert('asd')
+    })
 
     //搜索事件
     function searchInfo(params) {
