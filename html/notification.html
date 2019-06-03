@@ -108,7 +108,7 @@ desired effect
                             <!-- The user image in the navbar-->
                             <img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image" id="portrait1">
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                            <span class="hidden-xs" id="username1" >Alexander Pierce</span>
+                            <span class="hidden-xs" id="username1">Alexander Pierce</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
@@ -127,7 +127,8 @@ desired effect
                                     <a href="changePassword.html" class="btn btn-default btn-flat">修改密码</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="login.html" class="btn btn-default btn-flat" id="logout"  class="logout">登出</a>
+                                    <a href="login.html" class="btn btn-default btn-flat" id="logout"
+                                       class="logout">登出</a>
                                 </div>
                             </li>
                         </ul>
@@ -268,6 +269,10 @@ desired effect
                             data-toggle="modal"
                             data-target="#modal-default">发送通知
                     </button>
+                    <button type="button" class="btn btn-info" style="width: 240px;float: right;margin-right: 30px"
+                            id="sendMesGroup" data-toggle="modal"
+                            data-target="#modal-group">发送通知给指定用户组
+                    </button>
 
                     <button type="button" class="btn btn-info" style="width: 240px;float: right;margin-right: 30px"
                             id="sendMesAll" data-toggle="modal"
@@ -335,92 +340,138 @@ desired effect
                     </div>
                     <!-- /.modal-dialog -->
                 </div>
+                <div class="modal fade" id="modal-group">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="width: 800px">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"
+                                        aria-label="Close">
+                                    <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">发送通知</h4>
+                            </div>
+                            <div class="modal-body" style="height: 180px">
 
+                                <div class="col-md-2" style="text-align: right">指定用户组:
+                                </div>
+                                <div class="col-md-2" style="text-align: right">
+                                    <select id="user" class="form-control" style="width: 100px"> </select>
+
+                                </div>
+
+
+                                <div class="col-md-2" style="text-align: right">通知内容:</div>
+                                <div class="col-md-5" style="text-align: left">
+                                    <textarea class="form-control" rows="4" id="title"
+                                              placeholder="Enter ..."></textarea>
+                                </div>
+                                <div class="col-md-2" style="text-align: right">
+                                    通知类型：
+                                </div>
+                                <div class="col-md-2">
+                                    <label style="text-align: left">
+                                        <select class="form-control categorys" id="categorys1">
+
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default pull-left"
+                                        data-dismiss="modal">关闭
+                                </button>
+                                <button type="button" class="btn btn-primary" id="sendMsg1">发送
+                                </button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                </div>
+                <!-- /.modal-dialog -->
             </div>
 
-        </section>
-        <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
 
-    <!-- Main Footer -->
+<!-- Main Footer -->
 
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Create the tabs -->
-        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-            <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
-        </ul>
-        <!-- Tab panes -->
-        <div class="tab-content">
-            <!-- Home tab content -->
-            <div class="tab-pane active" id="control-sidebar-home-tab">
-                <h3 class="control-sidebar-heading">Recent Activity</h3>
-                <ul class="control-sidebar-menu">
-                    <li>
-                        <a href="javascript:;">
-                            <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+    <!-- Create the tabs -->
+    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+        <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+        <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <!-- Home tab content -->
+        <div class="tab-pane active" id="control-sidebar-home-tab">
+            <h3 class="control-sidebar-heading">Recent Activity</h3>
+            <ul class="control-sidebar-menu">
+                <li>
+                    <a href="javascript:;">
+                        <i class="menu-icon fa fa-birthday-cake bg-red"></i>
 
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+                        <div class="menu-info">
+                            <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
 
-                                <p>Will be 23 on April 24th</p>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <!-- /.control-sidebar-menu -->
+                            <p>Will be 23 on April 24th</p>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            <!-- /.control-sidebar-menu -->
 
-                <h3 class="control-sidebar-heading">Tasks Progress</h3>
-                <ul class="control-sidebar-menu">
-                    <li>
-                        <a href="javascript:;">
-                            <h4 class="control-sidebar-subheading">
-                                Custom Template Design
-                                <span class="pull-right-container">
+            <h3 class="control-sidebar-heading">Tasks Progress</h3>
+            <ul class="control-sidebar-menu">
+                <li>
+                    <a href="javascript:;">
+                        <h4 class="control-sidebar-subheading">
+                            Custom Template Design
+                            <span class="pull-right-container">
                     <span class="label label-danger pull-right">70%</span>
                   </span>
-                            </h4>
+                        </h4>
 
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <!-- /.control-sidebar-menu -->
+                        <div class="progress progress-xxs">
+                            <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            <!-- /.control-sidebar-menu -->
 
-            </div>
-            <!-- /.tab-pane -->
-            <!-- Stats tab content -->
-            <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-            <!-- /.tab-pane -->
-            <!-- Settings tab content -->
-            <div class="tab-pane" id="control-sidebar-settings-tab">
-                <form method="post">
-                    <h3 class="control-sidebar-heading">General Settings</h3>
-
-                    <div class="form-group">
-                        <label class="control-sidebar-subheading">
-                            Report panel usage
-                            <input type="checkbox" class="pull-right" checked>
-                        </label>
-
-                        <p>
-                            Some information about this general settings option
-                        </p>
-                    </div>
-                    <!-- /.form-group -->
-                </form>
-            </div>
-            <!-- /.tab-pane -->
         </div>
-    </aside>
-    <!-- /.control-sidebar -->
-    <!-- Add the sidebar's background. This div must be placed
-    immediately after the control sidebar -->
-    <div class="control-sidebar-bg"></div>
+        <!-- /.tab-pane -->
+        <!-- Stats tab content -->
+        <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+        <!-- /.tab-pane -->
+        <!-- Settings tab content -->
+        <div class="tab-pane" id="control-sidebar-settings-tab">
+            <form method="post">
+                <h3 class="control-sidebar-heading">General Settings</h3>
+
+                <div class="form-group">
+                    <label class="control-sidebar-subheading">
+                        Report panel usage
+                        <input type="checkbox" class="pull-right" checked>
+                    </label>
+
+                    <p>
+                        Some information about this general settings option
+                    </p>
+                </div>
+                <!-- /.form-group -->
+            </form>
+        </div>
+        <!-- /.tab-pane -->
+    </div>
+</aside>
+<!-- /.control-sidebar -->
+<!-- Add the sidebar's background. This div must be placed
+immediately after the control sidebar -->
+<div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
 
@@ -505,7 +556,6 @@ desired effect
     var nowParams = {};
 
 
-
     function addTableInfo(data) {
         let reportDom = $('#table-report');
         reportDom.empty();
@@ -538,6 +588,29 @@ desired effect
         par.msgId = $('#categorys').find('option:selected').attr('id');
         par.msg = $("#newTitle").val();
         return par;
+    }
+
+    $("#sendMsg1").click(function () {
+        sendMsgGroup({});
+    })
+
+    function sendMsgGroup(param) {
+        param.msgId = $('#categorys1').find('option:selected').attr('id');
+        param.msg = $("#title").val();
+        param.groupId = $('#user').find('option:selected').val();
+
+        $.ajax({
+            url: url + '/sysMessage/insert/group',
+            type: 'post',
+            dataType: 'json',
+            contentType: "application/json", // 指定这个协议很重要
+            data: JSON.stringify(param), //只有这一个参数，json格式，后台解析为实体，后台可以直接用
+            success() {
+                alert("发送成功");
+                $('#modal-default').modal('hide')
+            }
+        });
+
     }
 
     function sendMsg(params) {
@@ -597,11 +670,16 @@ desired effect
             type: 'get',
             dataType: 'json',
             success(res) {
-                $('.categorys').empty();
-                $('.categorys').append($('<option/>'))
+                $('#categorys').empty();
+                $('#categorys').append($('<option/>'));
+                $('#categorys1').empty();
+                $('#categorys1').append($('<option/>'))
+
                 $.each(res, function (index, val) {
                     let op = $('<option/>').attr('id', val.id).text(val.category);
-                    $('.categorys').append(op);
+                    $('#categorys').append(op);
+                    $('#categorys1').append(op);
+
                 })
             }
         });
@@ -620,6 +698,28 @@ desired effect
             sendMsg();
         })
     })
+    getGroup();
+    function getGroup() {
+        var par = {"currentPage": null};
+        $.ajax({
+            type: 'get',
+            url: url + '/userGroup/list',
+            dataType: 'json',// 返回格式
+            data: par,
+            success(res) {
+                var data = res.body.data
+                if (data) {
+                    $('#user').empty();
+                    $('#user').append($('<option/>'))
+                    $.each(res.body.data.result, function (index, val) {
+                        let op = $('<option/>').attr('value', val.id).text(val.name);
+                        $('#user').append(op);
+                    })
+
+                }
+            }
+        });
+    }
 
 </script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.

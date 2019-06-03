@@ -254,7 +254,7 @@ desired effect
 
                     <div style="height: 60px;margin-top: 10px;margin-left: 30px">
                         <div class="col-md-2">题目类型： <label>
-                            <select class="form-control" id="category" style="width: 100px">
+                            <select class="form-control" id="category" style="width: 80px">
                             </select>
                         </label></div>
                         <div class="col-md-3" style="margin-left: 50px">题目名：
@@ -271,7 +271,7 @@ desired effect
                         </label>
                         </div>
                         <div class="col-md-2" id="group">用户组： <label>
-                            <select class="form-control" id="user">
+                            <select class="form-control" id="user" style="width: 100px">
                             </select>
                         </label>
                         </div>
@@ -334,10 +334,10 @@ desired effect
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">反馈</h4>
+                                <h4 class="modal-title">回答</h4>
                             </div>
                             <div class="modal-body" style="height: 100px">
-                                <div class="col-md-3" style="text-align: right">请输入反馈信息:</div>
+                                <div class="col-md-3" style="text-align: right">请输入回答信息:</div>
                                 <div class="col-md-9" style="text-align: left"><textarea id="news" rows="3"
                                                                                          cols="80"></textarea>
                                 </div>
@@ -594,7 +594,7 @@ desired effect
                 type: 'post',
                 data: p,
                 success: function () {
-                    alert("反馈成功")
+                    alert("回答成功")
                     searchInfo({});
                     $('#modal-default1').modal('hide')
 
@@ -748,7 +748,7 @@ desired effect
             let handle = $("<a id=url" + index + "></a>").attr('class', 'handle').attr("url", "#").attr("data-toggle", "modal").attr("data-target", "#modal-default").text('查看详情');
 
             let handle2 = $("<a id=delete" + index + "></a>").attr('class', 'handle').attr("url", "#").text('确认');
-            let handle3 = $("<a id=feedback" + index + "></a>").attr('class', 'handle').attr("data-toggle", "modal").attr("data-target", "#modal-default1").attr("url", "#").text('反馈');
+            let handle3 = $("<a id=feedback" + index + "></a>").attr('class', 'handle').attr("data-toggle", "modal").attr("data-target", "#modal-default1").attr("url", "#").text('回答');
 
             operate.append(handle);
             operate.append(" ");
