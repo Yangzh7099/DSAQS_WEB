@@ -305,8 +305,6 @@ desired effect
                         opacity: 0"></div>
 
 
-
-
                 </div>
                 <div>
                     <!-- /.box-header -->
@@ -568,7 +566,11 @@ desired effect
             if (val["isProhibition"] === "未封禁") {
                 handle = $("<a id=url" + index + "></a>").attr('class', 'handle').attr("url", "#").text('封禁');
             }
+            var handle2 = $("<a id=delete" + index + "></a>").attr('class', 'handle').attr("url", "#").text('注销');
             operate.append(handle);
+            operate.append(" ");
+            operate.append(handle2);
+
             reportTh.append(operate);
             reportDom.append(reportTh);
             console.log(val["accountId"])
@@ -582,11 +584,30 @@ desired effect
                     prohibit(val["accountId"])
                 })
             }
+            $("#delete" + index).click(function () {
+                deleteUser(val.accountId);
+            })
 
 
         });
     }
+
+    function deleteUser(id) {
+        var par = {"id": id};
+        $.ajax({
+            type: 'post',
+            url: url + '/userAccount/delete/user',
+            dataType: 'json',// 返回格式
+            data: par,
+            success(res) {
+                searchInfo(nowParams);
+                alert("删除成功");
+            }
+        });
+    }
+
     getGroup();
+
     function getGroup() {
         var par = {"currentPage": null};
         $.ajax({
