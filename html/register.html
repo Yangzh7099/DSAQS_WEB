@@ -128,6 +128,20 @@
     }
     // 手机号码校验规则
     let valid_rule = /^(13[0-9]|14[5-9]|15[012356789]|166|17[0-8]|18[0-9]|19[8-9])[0-9]{8}$/;
+    function f() {
+        if (i < 60) {
+            i++;
+            $('#sendCode').val(i);
+            $("#sendCode").attr("disabled", "disabled");
+        } else {
+            $("#sendCode").removeAttr("disabled");
+            $('#sendCode').val("确认");
+            clearInterval(interval);
+            i = 0;
+        }
+    }
+    var interval;
+var i=0;
     // 确认监听
     $('#sendCode').on('click', function () {
         // 获取手机号
@@ -140,6 +154,7 @@
             alert('手机号码格式有误');
             return;
         }
+        interval= setInterval(f, 1000);
 
         // 发送验证码
         $.ajax({
