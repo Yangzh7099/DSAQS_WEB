@@ -284,7 +284,7 @@ desired effect
                     </div>
                     <div class="box box-info">
                         <div class="box-header with-border">
-                            <h3 class="box-title">本周举报新增数</h3>
+                            <h3 class="box-title"><span id="time"></span>举报新增数</h3>
                             <!-- LINE CHART -->
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
@@ -501,6 +501,15 @@ desired effect
         lineChartOptions1.datasetFill = false
         getCountAddTime(1);
         function getCountAddTime(i, beginDate, endDate) {
+            if(i===1){
+                $("#time").text("本周");
+            }else if(i===2){
+                $("#time").text("本月");
+            }else if(i===3){
+                $("#time").text("本年");
+            }else if(i===4){
+                $("#time").text("指定时间");
+            }
             resetCanvas();
             var areaChartData1 = {
                 datasets: [

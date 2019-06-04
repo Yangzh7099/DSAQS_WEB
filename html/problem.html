@@ -111,7 +111,7 @@ desired effect
                             <!-- The user image in the navbar-->
                             <img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image" id="portrait1">
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                            <span class="hidden-xs" id="username1" >Alexander Pierce</span>
+                            <span class="hidden-xs" id="username1">Alexander Pierce</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
@@ -130,7 +130,8 @@ desired effect
                                     <a href="changePassword.html" class="btn btn-default btn-flat">修改密码</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="login.html" class="btn btn-default btn-flat" id="logout"  class="logout">登出</a>
+                                    <a href="login.html" class="btn btn-default btn-flat" id="logout"
+                                       class="logout">登出</a>
                                 </div>
                             </li>
                         </ul>
@@ -419,9 +420,9 @@ desired effect
                                 </table>
 
                             </div>
-<!--                            <div class="box-footer clearfix">-->
+                            <!--                            <div class="box-footer clearfix">-->
 
-<!--                            </div>-->
+                            <!--                            </div>-->
                             <div class="modal-footer">
                                 <ul class="pagination pagination-sm no-margin pull-right">
                                     <div id="pagination" style="text-align: center">
@@ -456,7 +457,7 @@ desired effect
     <!-- /.content-wrapper -->
 
     <!-- Main Footer -->
-\
+    \
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Create the tabs -->
@@ -585,15 +586,13 @@ desired effect
                     $('#categorys1').append(op2);
 
                 })
-                console.log( $('#categorys1'))
+                console.log($('#categorys1'))
             }
         });
 
         searchInfo({})
         $('#clickSearch').on('click', clickSearch)
     });
-
-
 
 
     function clickSearch() {
@@ -627,8 +626,8 @@ desired effect
     let problemId
 
     $('#table-problem').on('click', '.deleteProblem', deleteProblem)
-    $('#table-problem').on('click', '.updateProblem', updateProblem);
-    $('#table-problem').on('click', '.answerProblem', answerProblem);
+    // $('#table-problem').on('click', '.updateProblem', updateProblem);
+    // $('#table-problem').on('click', '.answerProblem', answerProblem);
     $('#table-problem').on('click', '.queryReply', queryReply);
 
     $('#table-reply').on('click', '.deletereply', deletereply);
@@ -645,7 +644,7 @@ desired effect
                 success(res) {
                     let params = {
                         problemId: problemId,
-                        size:3
+                        size: 3
                     }
                     replySet(params)
                     alert("删除成功");
@@ -682,7 +681,7 @@ desired effect
         // confirm("确定删除？") //和alert区别在于含有取消按钮
         if (confirm("确定删除？")) {
             $.ajax({
-                url: url + '/problem/delete/'+$(this).parent().siblings().first().attr('id'),
+                url: url + '/problem/delete/' + $(this).parent().siblings().first().attr('id'),
                 type: 'post',
                 success(res) {
                     searchInfo({});
@@ -768,12 +767,13 @@ desired effect
             }
         })
     }
+
     function queryReply() {
         problemId = $(this).parent().siblings().first().attr('id');
         // 通过id 请求评论数据
         let params = {
             problemId: problemId,
-            size:3
+            size: 3
         }
         pageInfo = params;
         replySet(params)
@@ -813,19 +813,19 @@ desired effect
         });
     }
 
-    // answerTitle
-    function answerProblem() {
-        problemId = $(this).parent().siblings().first().attr('id')
-        $('#answerTitle').text($(this).parent().siblings().eq(1).html())
-    }
+    // // answerTitle
+    // function answerProblem() {
+    //     problemId = $(this).parent().siblings().first().attr('id')
+    //     $('#answerTitle').text($(this).parent().siblings().eq(1).html())
+    // }
 
-    // 点击更新题目a标签
-    function updateProblem() {
-        problemId = $(this).parent().siblings().first().attr('id')
-        $('#newTitle').val($(this).parent().siblings().eq(1).html());
-
-
-    }
+    // // 点击更新题目a标签
+    // function updateProblem() {
+    //     problemId = $(this).parent().siblings().first().attr('id')
+    //     $('#newTitle').val($(this).parent().siblings().eq(1).html());
+    //
+    //
+    // }
 
     // 保存回复答案
     function saveAnswer() {
@@ -841,8 +841,8 @@ desired effect
             type: 'post',
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
             data: {
-                id:newProblem.id,
-                answerContent:newProblem.answerContent
+                id: newProblem.id,
+                answerContent: newProblem.answerContent
             },
             dataType: 'json',
             success(res) {
@@ -874,9 +874,9 @@ desired effect
             type: 'post',
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
             data: {
-                id:newProblem.id,
-                category:newProblem.category,
-                title:newProblem.title
+                id: newProblem.id,
+                category: newProblem.category,
+                title: newProblem.title
             },
             dataType: 'json',
             success(res) {
@@ -899,10 +899,11 @@ desired effect
         $.each(data.records, function (index, val) {
             let problemTh = $('<tr></tr>');
             let id = $('<td></td>').text((data.current - 1) * 10 + index + 1).attr('id', val.id);
-            let problemDes = $('<td></td>').html(cutString(val.title,30));
+            let problemDes = $('<td></td>').html(cutString(val.title, 30));
             let problemType = $('<td></td>').text(catagoryArray[val.category]);
             let problemUser = $('<td></td>').text(new Date(val.time).Format("yyyy-MM-dd HH:mm:ss"))
-            let problemToUser = $('<td></td>').html(cutString(hasSovle(val.answerContent),30));
+            var resolve = hasSovle(val.answerContent);
+            let problemToUser = $('<td></td>').html(cutString(resolve, 30));
 
             problemTh.append(id);
             problemTh.append(problemDes);
@@ -919,24 +920,44 @@ desired effect
                 .attr('class', 'updateProblem')
                 .attr('href', 'javascript:void(0);').text('更新题目 ')
                 .attr('data-toggle', 'modal')
-                .attr('data-target', '#modal-default');
-            let answerProblem = $("<a></a>")
-                .attr('class', 'answerProblem')
-                .attr('href', 'javascript:void(0);').text('回答 ')
-                .attr('data-toggle', 'modal')
-                .attr('data-target', '#modal-answer');
+                .attr('data-target', '#modal-default')
+                .attr('id', 'id'+index);
+            ;
+            let answerProblem;
+            if (resolve === "未解决") {
+                answerProblem = $("<a></a>")
+                    .attr('class', 'answerProblem')
+                    .attr('href', 'javascript:void(0);').text('回答 ')
+                    .attr('data-toggle', 'modal')
+                    .attr('data-target', '#modal-answer')
+                    .attr('id', 'mid'+index);
+
+                ;
+
+            }
             let showReply = $("<a></a>")
                 .attr('class', 'queryReply')
                 .attr('href', 'javascript:void(0);').text('回复 ')
                 .attr('data-toggle', 'modal')
                 .attr('data-target', '#modal-comment');
-
             operate.append(deleteProblem);
             operate.append(updateProblem);
-            operate.append(answerProblem);
+            if (resolve === "未解决") {
+                operate.append(answerProblem);
+            }
             operate.append(showReply);
             problemTh.append(operate);
             problemDom.append(problemTh);
+            $("#id"+index).click(function () {
+                $("#newTitle").text(val.title);
+                problemId=val.id;
+            })
+            $("#mid"+index).click(function () {
+                $("#answerTitle").text(val.title);
+                problemId=val.id;
+
+            })
+
         });
     }
 
@@ -973,8 +994,8 @@ desired effect
             if (key === 'current') {
                 key = 'currentPage'
             }
-            if(key === 'size'){
-                key='pageSize'
+            if (key === 'size') {
+                key = 'pageSize'
             }
             if (index === 0) {
                 queryParam = "?" + key + "=" + val;
@@ -1053,6 +1074,7 @@ desired effect
             }
         )
     }
+
     getGroup();
 
     function getGroup() {
@@ -1076,6 +1098,7 @@ desired effect
         });
 
     }
+
     function cutString(str, len) {
         //length属性读出来的汉字长度为1
         if (str.length * 2 <= len) {
