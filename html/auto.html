@@ -383,7 +383,7 @@ desired effect
 
                     <div style="height: 60px;margin-top: 10px;margin-left: 80px">
                         <div class="col-md-2">题目类型： <label>
-                            <select class="form-control" id="category2" style="width: 100px">
+                            <select class="form-control" id="category2" style="width: 80px">
                             </select>
                         </label></div>
                         <div class="col-md-3" style="margin-left: 50px">题目名：
@@ -400,16 +400,20 @@ desired effect
                         </label>
                         </div>
                         <div class="col-md-2">用户组： <label>
-                            <select class="form-control" id="user2">
+                            <select class="form-control" id="user2"  style="width: 100px">
                             </select>
                         </label>
                         </div>
-                        <div class="col-md-1" style="margin-left: 50px">
+                        <div class="col-md-1" style="margin-left: 20px">
                             <button type="button" class="btn btn-info pull-right" id="autoSearch2">搜索</button>
+
                         </div>
-                        <button type="button" class="btn btn-info" style="width: 100px;float: right" id="exportAuto2">
-                            导出数据
-                        </button>
+                        <div class="col-md-1" style="float: right">
+                            <button type="button" class="btn btn-info" style="width: 100px;float: right" id="exportAuto2">
+                                导出数据
+                            </button>
+                        </div>
+
                     </div>
                     <div>
                         <table class="table table-bordered">
@@ -576,6 +580,8 @@ desired effect
             success: function () {
                 alert("确认成功");
                 searchInfo({});
+                searchInfo2({});
+
             }
         })
     })
@@ -713,6 +719,8 @@ desired effect
             success() {
                 console.log(mparam)
                 searchInfo(mparam);
+                searchInfo2({});
+
                 alert("确认成功")
             }
 
@@ -888,11 +896,11 @@ desired effect
         })
 
         $("#exportAuto2").click(function () {
-            var pageSize = mparam["pageSize"];
-            mparam["pageSize"] = -1;
-            console.log(mparam)
-            exportAuto(mparam);
-            mparam["pageSize"] = pageSize;
+            var pageSize = mparam2["pageSize"];
+            mparam2["pageSize"] = -1;
+            console.log(mparam2)
+            exportAuto(mparam2);
+            mparam2["pageSize"] = pageSize;
         })
 
     })

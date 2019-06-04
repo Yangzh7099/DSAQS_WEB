@@ -696,12 +696,32 @@ desired effect
             console.log(param);
             searchInfoInspection(param);
         })
+        $("#search3").click(function () {
+            var name = $("#name3").val();
+            var param = {};
+            console.log(name);
+            if (name !== "") {
+                param["problemName"] = name;
+            }
+            console.log(param);
+            searchInfoInspection2(param);
+        })
+
         $("#exportInspection").click(function () {
             var pageSize = nowParams["pageSize"];
             nowParams["pageSize"] = -1;
             console.log(nowParams)
             exportInspection(nowParams);
             nowParams["pageSize"] = pageSize;
+        })
+
+
+        $("#exportInspection3").click(function () {
+            var pageSize = nowParams2["pageSize"];
+            nowParams2["pageSize"] = -1;
+            console.log(nowParams2)
+            exportInspection(nowParams2);
+            nowParams2["pageSize"] = pageSize;
         })
 
     })

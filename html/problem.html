@@ -804,7 +804,7 @@ desired effect
                 replyTh.css("background","#87CEFA");
             }
             let id = $('<td></td>').text((data.current - 1) * 10 + index + 1).attr('id', val.id);
-            let replyDes = $('<td></td>').html(val.comments);
+            let replyDes = $('<td></td>').html(cutString(val.comments,200));
             let replyType = $('<td></td>').text(val.awesome);
             let replyUser = $('<td></td>').text(new Date(val.time).Format("yyyy-MM-dd HH:mm:ss"))
             let replyToUser = $('<td></td>').text(val.username);

@@ -885,6 +885,13 @@ desired effect
             params["userId"] = obj.id;
             params["memo"] = $("#memo").val();
             params["name"] = $("#name").val();
+            if($("#name").val()===""||$("#name").val()==null){
+                alert("请输入用户组名");
+            }
+            console.log(idList.size())
+            if(idList.length<=0) {
+                alert("请选择用户");
+            }
             console.log(params);
             $.ajax({
                 url: url + '/userGroup/update',
@@ -893,7 +900,7 @@ desired effect
                 dataType: 'json',
                 data: JSON.stringify(params), //只有这一个参数，json格式，后台解析为实体，后台可以直接用
                 success() {
-                    alert("发送成功");
+                    alert("创建成功");
                     idlist = [];
                     $('#modal-default').modal('hide')
                     searchInfo(params, false);
@@ -905,7 +912,13 @@ desired effect
             params["userId"] = obj.id;
             params["memo"] = $("#memo").val();
             params["name"] = $("#name").val();
-            console.log(params);
+            if($("#name").val()===""||$("#name").val()==null){
+                alert("请输入用户组名");
+            }
+            if(idList.length<=0) {
+                alert("请选择用户");
+            }
+                console.log(params);
             $.ajax({
                 url: url + '/userGroup/save',
                 type: 'post',
