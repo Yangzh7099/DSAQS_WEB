@@ -677,10 +677,15 @@ immediately after the control sidebar -->
 
                 $.each(res, function (index, val) {
                     let op = $('<option/>').attr('id', val.id).text(val.category);
-                    $('#categorys').append(op);
                     $('#categorys1').append(op);
 
                 })
+                $.each(res, function (index, val) {
+                    let op = $('<option/>').attr('id', val.id).text(val.category);
+                    $('#categorys').append(op);
+
+                })
+
             }
         });
         $("#sendMesAll").click(function () {

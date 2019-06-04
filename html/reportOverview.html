@@ -595,22 +595,17 @@ desired effect
                 $(this).val('');
             });
         }
-
-
-    })
-
-    function handePicker(tangeTime, model) {
-        if (!tangeTime) {
-            return null
+        function handePicker(tangeTime, model) {
+            if (!tangeTime) {
+                return null
+            }
+            var timeArr = tangeTime.split('~');
+            return timeArr[model].trim() + ' 00:00:00';
         }
-        var timeArr = tangeTime.split('~');
-        return timeArr[model].trim() + ' 00:00:00';
-    }
 
 
 
-    $("#getByTime").click(function () {
-        if (str === 1) {
+        $("#getByTime").click(function () {
             // 开始时间
             let start_time = handePicker($('#reservation').val(), 0);
             start1 = start_time;
@@ -626,8 +621,12 @@ desired effect
                 getCountAddTime(4, start_time, end_time)
             }
             $("#modal-default").modal('hide');
-        }
+
+        })
+
+
     })
+
 </script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the

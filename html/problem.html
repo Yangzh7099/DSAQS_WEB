@@ -682,11 +682,8 @@ desired effect
         // confirm("确定删除？") //和alert区别在于含有取消按钮
         if (confirm("确定删除？")) {
             $.ajax({
-                url: url + '/control/problem/id',
+                url: url + '/problem/delete/'+$(this).parent().siblings().first().attr('id'),
                 type: 'post',
-                data: {
-                    id: $(this).parent().siblings().first().attr('id')
-                },
                 success(res) {
                     searchInfo({});
                     alert("删除成功");
@@ -849,11 +846,12 @@ desired effect
             },
             dataType: 'json',
             success(res) {
-                alert("修改成功!")
+                alert("回答成功!")
+                $("#modal-answer").modal('hide');
                 searchInfo({});
             },
             error(res) {
-                alert("修改失败")
+                alert("回答失败")
             }
         })
         console.log(newProblem)
@@ -883,6 +881,8 @@ desired effect
             dataType: 'json',
             success(res) {
                 alert("更新成功");
+                $("#modal-default").modal('hide');
+
                 searchInfo({});
             },
             error(res) {
