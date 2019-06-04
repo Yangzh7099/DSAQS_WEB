@@ -785,6 +785,10 @@ desired effect
         replyDom.empty();
         $.each(data.records, function (index, val) {
             let replyTh = $('<tr></tr>');
+            if(val.adopt===1)
+            {
+                replyTh.css("background","#87CEFA");
+            }
             let id = $('<td></td>').text((data.current - 1) * 10 + index + 1).attr('id', val.id);
             let replyDes = $('<td></td>').html(val.comments);
             let replyType = $('<td></td>').text(val.awesome);
