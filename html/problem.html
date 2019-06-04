@@ -799,9 +799,8 @@ desired effect
         replyDom.empty();
         $.each(data.records, function (index, val) {
             let replyTh = $('<tr></tr>');
-            if(val.adopt===1)
-            {
-                replyTh.css("background","#87CEFA");
+            if (val.adopt === 1) {
+                replyTh.css("background", "#87CEFA");
             }
             let id = $('<td></td>').text((data.current - 1) * 10 + index + 1).attr('id', val.id);
             let replyDes = $('<td></td>').html(cutString(val.comments,200));
@@ -854,13 +853,19 @@ desired effect
         }
         newProblem['id'] = problemId
         newProblem['answerContent'] = $('#answerVal').val();
+        let user = JSON.parse($.cookie('token'));
+        user.username = '';
         $.ajax({
-            url: url + "/control/problem/problemInfo",
+            url: url + "/control/problem/answer",
             type: 'post',
             contentType: "application/x-www-form-urlencoded; charset=utf-8",
             data: {
-                id: newProblem.id,
-                answerContent: newProblem.answerContent
+                questionId: newProblem.id,
+                userId: user.id,
+                comments: newProblem.answerContent
+            },
+            headers: {
+                Authorization: JSON.stringify(user)
             },
             dataType: 'json',
             success(res) {
