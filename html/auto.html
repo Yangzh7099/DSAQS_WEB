@@ -306,7 +306,7 @@ desired effect
                                     <span aria-hidden="true">&times;</span></button>
                                 <h4 class="modal-title">查看详情</h4>
                             </div>
-                            <div class="modal-body" style="padding: 0">
+                            <div class="modal-body" style="padding: 0;height: 120px">
                                 <div class="col-md-2" style="text-align: right">题目名:</div>
                                 <div class="col-md-10" style="text-align: left" id="title">
                                 </div>
@@ -825,9 +825,15 @@ desired effect
                     console.log(index)
                     let op = $('<option/>').attr('value', val.id).text(val.categoryName);
                     $('#category').append(op);
+
+                })
+                $.each(res.body.data, function (index, val) {
+                    console.log(index)
+                    let op = $('<option/>').attr('value', val.id).text(val.categoryName);
                     $('#category2').append(op);
 
                 })
+
             }
         });
         $("#all").click(function () {

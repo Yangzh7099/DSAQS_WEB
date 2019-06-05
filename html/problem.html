@@ -605,7 +605,7 @@ desired effect
 
 
     function clickSearch() {
-        let category = $('#categorys1').find('option:selected').attr('id');
+        let category = $('#categorys1').find('option:selected').attr('categoryId');
         let hasSovle = $('#selectSovle').find('option:selected').attr('id');
         let title = $('#problemName').val()
         let user = $('#user').find('option:selected').val();
@@ -682,6 +682,7 @@ desired effect
                     size: 3
                 }
                 replySet(params)
+                searchInfo(pageInfo);
             },
             error(res) {
                 alert("设置失败");
@@ -716,6 +717,7 @@ desired effect
 
     // answerVal
     function replySet(params) {
+        pageInfo1=params;
         $.ajax({
             url: url + '/problemInfo/comments/page',
             type: 'get',
@@ -789,7 +791,7 @@ desired effect
             problemId: problemId,
             size: 3
         }
-        pageInfo = params;
+        pageInfo1 = params;
         replySet(params)
     }
 
@@ -803,7 +805,7 @@ desired effect
                 replyTh.css("background", "#87CEFA");
             }
             let id = $('<td></td>').text((data.current - 1) * 10 + index + 1).attr('id', val.id);
-            let replyDes = $('<td></td>').html(cutString(val.comments,200));
+            let replyDes = $('<td></td>').html(cutString(val.comments, 40));
             let replyType = $('<td></td>').text(val.awesome);
             let replyUser = $('<td></td>').text(new Date(val.time).Format("yyyy-MM-dd HH:mm:ss"))
             let replyToUser = $('<td></td>').text(val.username);
@@ -925,7 +927,7 @@ desired effect
             let problemDes = $('<td></td>').html(cutString(val.title, 30));
             let problemType = $('<td></td>').text(catagoryArray[val.category]);
             let problemUser = $('<td></td>').text(new Date(val.time).Format("yyyy-MM-dd HH:mm:ss"))
-            var resolve = hasSovle(val.answerContent);
+            var resolve = hasSovle(val);
             let problemToUser = $('<td></td>').html(cutString(resolve, 30));
 
             problemTh.append(id);
@@ -985,11 +987,11 @@ desired effect
     }
 
     // 判断是否解决
-    function hasSovle(answerContent) {
-        if (answerContent) {
+    function hasSovle(val) {
+        if (val.answerContent || val.open === 3) {
             return '已解决'
         }
-        return '未解决'
+        return '未解决';
     }
 
 
@@ -1014,14 +1016,12 @@ desired effect
         let index = 0;
         let queryParam = '';
         $.each(pageInfo, function (key, val) {
-            if (key === 'current') {
-                key = 'currentPage'
-            }
-            if (key === 'size') {
-                key = 'pageSize'
+            if (key ==="category") {
+                key = "type";
             }
             if (index === 0) {
-                queryParam = "?" + key + "=" + val;
+                queryParam = "?"+key+"="+val;
+                index++;
             } else {
                 queryParam = queryParam + '&' + key + '=' + val;
             }

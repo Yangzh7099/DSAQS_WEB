@@ -702,6 +702,7 @@ desired effect
             success(res) {
                 searchInfo(nowParams);
                 alert("导入成功")
+                $('input[type="file"]').val("");
             },
             error(err) {
                 alert("导入失败")
