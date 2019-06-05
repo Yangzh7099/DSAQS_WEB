@@ -825,9 +825,15 @@ desired effect
                     console.log(index)
                     let op = $('<option/>').attr('value', val.id).text(val.categoryName);
                     $('#category').append(op);
+
+                })
+                $.each(res.body.data, function (index, val) {
+                    console.log(index)
+                    let op = $('<option/>').attr('value', val.id).text(val.categoryName);
                     $('#category2').append(op);
 
                 })
+
             }
         });
         $("#all").click(function () {

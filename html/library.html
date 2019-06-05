@@ -632,48 +632,9 @@ desired effect
                 }
             }
         )
-        $('input[type="file"]').on('change', function () {
-            let formdata = new FormData();
-            formdata.append('file', $('input[type="file"]')[0].files[0]);
-            $.ajax({
-                url: url + '/problem/import/template',
-                type: 'post',
-                contentType:false,
-                data: formdata,
-                processData:false,
-                success(res) {
-                    searchInfo(param);
-                    alert("导入成功")
-                },
-                error(err) {
-                    alert("导入失败")
-                }
-            })
-        })
-        $('#table-problem').on('click', '.changeLibrary', changeLibrary)
-        $('#table-problem').on('click', '.deleteLibarary', deleteLibarary)
 
         let changeStoreId = null;
 
-        // 修改题库
-        function changeLibrary() {
-            changeStoreId = $(this).parent().attr('id');
-            // 获取题库信息
-            $.ajax({
-                url: url + '/problemStore/' + changeStoreId,
-                type: 'get',
-                dataType: 'json',
-                success(res) {
-                    console.log(res)
-                    $('#store-name').val(res.title);
-                    $('#store-anwser').val(res.answerContent);
-                },
-                error(err) {
-
-                }
-            })
-
-        }
 
         // 保存修改题库
         $('#store-save').on('click', function () {
@@ -715,21 +676,6 @@ desired effect
             }
         });
 
-        // 删除题库
-        function deleteLibarary() {
-            $.ajax({
-                url: url + '/problemStore/delete/' + $(this).parent().attr('id'),
-                type: 'post',
-                dataType: 'json',
-                success(res) {
-                    searchInfo(param);
-                    alert('删除成功')
-                },
-                error(err) {
-                    alert("删除失败")
-                }
-            })
-        }
 
         // 添加到tbody中
         function addTableInfo(data) {
@@ -756,11 +702,13 @@ desired effect
                     .attr('class', 'changeLibrary')
                     .attr('href', 'javascript:void(0);').text('修改题库 ')
                     .attr('data-toggle', 'modal')
-                    .attr('data-target', '#modal-default');
+                    .attr('id', 'changeLibrary'+val.problemId)
+                        .attr('data-target', '#modal-default');
                 let updateProblem = $("<a></a>")
                     .attr('class', 'deleteLibarary')
                     .attr('href', 'javascript:void(0);').text('移除 ')
-                    .attr('data-toggle', 'modal')
+                    .attr('id', 'deleteLibarary'+val.problemId)
+                        .attr('data-toggle', 'modal')
                     .attr('data-target', '#modal-answer');
                 let mm = $("<a></a>")
                     .attr('class', 'searchLibrary')
@@ -779,9 +727,67 @@ desired effect
                     $("#answer").text(val.answerContent)
 
                 })
+                $("#deleteLibarary"+val.problemId+"").click(function () {
+                    $.ajax({
+                        url: url + '/problemStore/delete/' + $(this).parent().attr('id'),
+                        type: 'post',
+                        dataType: 'json',
+                        success(res) {
+                            searchInfo(param);
+                            alert('删除成功')
+                        },
+                        error(err) {
+                            alert("删除失败")
+                        }
+                    })
+
+                })
+                $("#changeLibrary"+val.problemId+"").click(function () {
+                    changeStoreId = $(this).parent().attr('id');
+                    // 获取题库信息
+                    $.ajax({
+                        url: url + '/problemStore/' + changeStoreId,
+                        type: 'get',
+                        dataType: 'json',
+                        success(res) {
+                            console.log(res)
+                            $('#store-name').val(res.title);
+                            $('#store-anwser').val(res.answerContent);
+                            searchInfo(param);
+                        },
+                        error(err) {
+
+                        }
+                    })
+
+                })
+
             });
-        }
+
     }
+    }
+    $('input[type="file"]').on('change', function () {
+        let formdata = new FormData();
+
+        formdata.append('file', $('input[type="file"]')[0].files[0]);
+        console.log($('input[type="file"]')[0].files[0])
+        $.ajax({
+            url: url + '/problem/import/template',
+            type: 'post',
+            contentType:false,
+            data: formdata,
+            processData:false,
+            success(res) {
+                searchInfo(param);
+                alert("导入成功");
+                $('input[type="file"]').val('');
+            },
+            error(err) {
+                alert("导入失败")
+            }
+        })
+    })
+
     function cutString(str, len) {
         //length属性读出来的汉字长度为1
         if (str.length * 2 <= len) {
