@@ -653,6 +653,8 @@ desired effect
                 },
                 success(res) {
                     searchInfo(param)
+                    $("#modal-default").modal("hide");
+
                     alert('修改成功')
                 },
                 error(res){
